@@ -33,7 +33,7 @@ import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_DOUBLE
 import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_NORMAL
 import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_TALL
 import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_WIDE
-import org.jraf.klibminitel.internal.codes.Codes
+import org.jraf.klibminitel.internal.codes.Misc
 
 enum class CharacterSize(
     internal val characterSizeCode: String,
@@ -81,7 +81,7 @@ enum class CharacterSize(
             while (i < length) {
                 val c = this[i]
                 when (c) {
-                    Codes.ESC -> {
+                    Misc.ESC -> {
                         when (this[i + 1]) {
                             PARAM_SIZE_NORMAL -> curCharWidth = CharacterSize.NORMAL.characterWidth
                             PARAM_SIZE_TALL -> curCharWidth = CharacterSize.TALL.characterWidth

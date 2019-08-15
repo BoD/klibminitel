@@ -26,11 +26,11 @@ package org.jraf.klibminitel.imageconvert
 
 import org.jraf.klibminitel.core.SCREEN_HEIGHT_NORMAL
 import org.jraf.klibminitel.core.SCREEN_WIDTH_NORMAL
-import org.jraf.klibminitel.internal.codes.Character.GRAPHICS_CHARACTER_ON
-import org.jraf.klibminitel.internal.codes.Codes.CLEAR_SCREEN_AND_HOME
+import org.jraf.klibminitel.internal.codes.Character.GRAPHICS_MODE_ON
 import org.jraf.klibminitel.internal.codes.Color.colorBackground
 import org.jraf.klibminitel.internal.codes.Color.colorForeground
 import org.jraf.klibminitel.internal.codes.Cursor.moveCursor
+import org.jraf.klibminitel.internal.codes.Screen.CLEAR_SCREEN_AND_HOME
 import java.io.File
 import javax.imageio.ImageIO
 
@@ -107,7 +107,7 @@ object App {
         val outputFile = File(outputPath)
         val output = outputFile.printWriter()
         output.print(CLEAR_SCREEN_AND_HOME)
-        output.print(GRAPHICS_CHARACTER_ON)
+        output.print(GRAPHICS_MODE_ON)
 
         var y = emptyLeadingLines - 1
 
@@ -128,7 +128,7 @@ object App {
 
             if (needMoveCursor) {
                 output.print(moveCursor(x, y))
-                output.print(GRAPHICS_CHARACTER_ON)
+                output.print(GRAPHICS_MODE_ON)
             }
             for (c in line) {
                 if (curBg != c.bgColor) {

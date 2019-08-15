@@ -25,8 +25,13 @@
 package org.jraf.klibminitel.internal.codes
 
 // See http://millevaches.hydraule.org/info/minitel/specs/codes.htm
-internal object Codes {
+// and https://archive.org/stream/minitel-stum1b/minitel-stum1b_djvu.txt
+// and https://grandzebu.net/informatique/utiles/videotex.rtf
+internal object Misc {
     const val ESC = '\u001B'
 
-    const val CLEAR_SCREEN_AND_HOME = '\u000C'
+    private const val REPEAT = '\u0012'
+
+    fun repeatCharacter(c: Char, times: Int): String = "$c$REPEAT${(0x40 + times - 1).toChar()}"
+    fun repeatLastCharacter(times: Int): String = "$REPEAT${(0x40 + times).toChar()}"
 }

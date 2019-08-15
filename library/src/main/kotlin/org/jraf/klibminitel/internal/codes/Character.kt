@@ -24,15 +24,18 @@
 
 package org.jraf.klibminitel.internal.codes
 
-import org.jraf.klibminitel.internal.codes.Codes.ESC
+import org.jraf.klibminitel.internal.codes.Misc.ESC
 
 internal object Character {
-    const val GRAPHICS_CHARACTER_ON = '\u000E'
-    const val GRAPHICS_CHARACTER_OFF = '\u000F'
+    const val GRAPHICS_MODE_ON = '\u000E'
+    const val GRAPHICS_MODE_OFF = '\u000F'
 
     const val INVERT_ON = "$ESC\u005D"
     const val INVERT_OFF = "$ESC\u005C"
 
     const val UNDERLINE_ON = "$ESC\u005A"
     const val UNDERLINE_OFF = "$ESC\u0059"
+
+    fun graphicsCharacter(value: Int, alreadyInGraphicsMode: Boolean): String =
+        "${if (alreadyInGraphicsMode) "" else GRAPHICS_MODE_ON}${(32 + value).toChar()}"
 }

@@ -26,9 +26,9 @@
 
 package org.jraf.klibminitel.core
 
-import org.jraf.klibminitel.internal.codes.Character.GRAPHICS_CHARACTER_OFF
-import org.jraf.klibminitel.internal.codes.Character.GRAPHICS_CHARACTER_ON
-import org.jraf.klibminitel.internal.codes.Codes.CLEAR_SCREEN_AND_HOME
+import org.jraf.klibminitel.internal.codes.Character
+import org.jraf.klibminitel.internal.codes.Character.GRAPHICS_MODE_OFF
+import org.jraf.klibminitel.internal.codes.Character.GRAPHICS_MODE_ON
 import org.jraf.klibminitel.internal.codes.Color
 import org.jraf.klibminitel.internal.codes.Cursor
 import org.jraf.klibminitel.internal.codes.Cursor.HIDE_CURSOR
@@ -37,6 +37,10 @@ import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_LEFT
 import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_RIGHT
 import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_TOP
 import org.jraf.klibminitel.internal.codes.Cursor.SHOW_CURSOR
+import org.jraf.klibminitel.internal.codes.Misc
+import org.jraf.klibminitel.internal.codes.Screen.CLEAR_BOTTOM_OF_SCREEN
+import org.jraf.klibminitel.internal.codes.Screen.CLEAR_END_OF_LINE
+import org.jraf.klibminitel.internal.codes.Screen.CLEAR_SCREEN_AND_HOME
 import org.jraf.klibminitel.internal.codes.escapeAccents
 import org.jraf.klibminitel.internal.codes.escapeSpecialChars
 import java.io.File
@@ -94,7 +98,7 @@ class Minitel(filePath: String) {
     fun print(s: String) = out(s.escapeAccents().escapeSpecialChars())
     fun print(c: Char) = out(c)
     fun clearScreenAndHome() = out(CLEAR_SCREEN_AND_HOME)
-    fun graphicsCharacter(on: Boolean) = out(if (on) GRAPHICS_CHARACTER_ON else GRAPHICS_CHARACTER_OFF)
+    fun graphicsMode(on: Boolean) = out(if (on) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
     fun moveCursor(x: Int, y: Int) = out(Cursor.moveCursor(x, y))
     fun showCursor(visible: Boolean) = out(if (visible) SHOW_CURSOR else HIDE_CURSOR)
     fun colorForeground(color: Int) = out(Color.colorForeground(color))
@@ -114,6 +118,19 @@ class Minitel(filePath: String) {
     fun moveCursorRight() = out(MOVE_CURSOR_RIGHT)
     fun moveCursorTop() = out(MOVE_CURSOR_TOP)
     fun moveCursorBottom() = out(MOVE_CURSOR_BOTTOM)
+
+    fun clearEndOfLine() = out(CLEAR_END_OF_LINE)
+    fun clearBottomOfScreen() = out(CLEAR_BOTTOM_OF_SCREEN)
+
+    fun repeatCharacter(c: Char, times: Int) = out(Misc.repeatCharacter(c, times))
+    fun repeatLastCharacter(times: Int) = out(Misc.repeatLastCharacter(times))
+
+    fun graphicsCharacter(value: Int, alreadyInGraphicsMode: Boolean = false) = out(
+        Character.graphicsCharacter(
+            value,
+            alreadyInGraphicsMode
+        )
+    )
 
     sealed class ReadEvent {
         data class CharacterReadEvent(val char: Char) : ReadEvent()
