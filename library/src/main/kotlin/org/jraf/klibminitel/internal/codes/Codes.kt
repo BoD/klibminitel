@@ -22,17 +22,11 @@
  * limitations under the License.
  */
 
-package org.jraf.klibminitel.escaping
+package org.jraf.klibminitel.internal.codes
 
-enum class CharacterSize(
-    val characterSizeEscape: String,
-    val maxCharactersHorizontal: Int,
-    val maxCharactersVertical: Int,
-    val characterWidth: Int,
-    val characterHeight: Int
-) {
-    NORMAL(SIZE_NORMAL, SCREEN_WIDTH_NORMAL, SCREEN_HEIGHT_NORMAL, 1, 1),
-    TALL(SIZE_TALL, SCREEN_WIDTH_TALL, SCREEN_HEIGHT_TALL, 1, 2),
-    WIDE(SIZE_WIDE, SCREEN_WIDTH_WIDE, SCREEN_HEIGHT_WIDE, 2, 1),
-    DOUBLE(SIZE_DOUBLE, SCREEN_WIDTH_DOUBLE, SCREEN_HEIGHT_DOUBLE, 2, 2),
+// See http://millevaches.hydraule.org/info/minitel/specs/codes.htm
+internal object Codes {
+    const val ESC = '\u001B'
+
+    const val CLEAR_SCREEN_AND_HOME = '\u000C'
 }

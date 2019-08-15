@@ -22,18 +22,22 @@
  * limitations under the License.
  */
 
-package org.jraf.klibminitel.color
+package org.jraf.klibminitel.internal.util.color
 
-typealias AwtColor = java.awt.Color
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
-fun rgbToHsl(color: AwtColor): Triple<Float, Float, Float> {
+internal typealias AwtColor = java.awt.Color
+
+internal fun rgbToHsl(color: AwtColor): Triple<Float, Float, Float> {
     val components = color.getRGBColorComponents(null)
     return rgbToHsl(components[0], components[1], components[2])
 }
 
-fun rgbToHsl(r: Float, g: Float, b: Float): Triple<Float, Float, Float> {
-    val max = Math.max(Math.max(r, g), b)
-    val min = Math.min(Math.min(r, g), b)
+internal fun rgbToHsl(r: Float, g: Float, b: Float): Triple<Float, Float, Float> {
+    val max = max(max(r, g), b)
+    val min = min(min(r, g), b)
     val c = (max - min)
 
     var h_ = 0f
@@ -55,7 +59,7 @@ fun rgbToHsl(r: Float, g: Float, b: Float): Triple<Float, Float, Float> {
     if (c == 0f) {
         s = 0f
     } else {
-        s = c / (1 - Math.abs(2f * l - 1f))
+        s = c / (1 - abs(2f * l - 1f))
     }
 
     return Triple(h, s, l)
