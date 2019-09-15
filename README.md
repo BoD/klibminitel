@@ -1,6 +1,6 @@
 # klibminitel
 
-A Kotlin (JVM) library to interact with Minitel.
+A Kotlin (JVM) library to interact with the Minitel.
 
 
 ## Author and License
