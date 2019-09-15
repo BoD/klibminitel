@@ -85,18 +85,24 @@ class Minitel(filePath: String) {
         readListeners -= listener
     }
 
-    private fun out(s: String) = output.apply {
-        print(s)
-        flush()
+    private fun out(s: String): Int {
+        output.apply {
+            print(s)
+            flush()
+        }
+        return s.length
     }
 
-    private fun out(c: Char) = output.apply {
-        print(c)
-        flush()
+    private fun out(c: Char): Int {
+        output.apply {
+            print(c)
+            flush()
+        }
+        return 1
     }
 
-    fun print(s: String) = out(s.escapeAccents().escapeSpecialChars())
-    fun print(c: Char) = out(c)
+    fun print(s: String): Int = out(s.escapeAccents().escapeSpecialChars())
+    fun print(c: Char): Int = out(c)
     fun clearScreenAndHome() = out(CLEAR_SCREEN_AND_HOME)
     fun graphicsMode(on: Boolean) = out(if (on) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
     fun moveCursor(x: Int, y: Int) = out(Cursor.moveCursor(x, y))
