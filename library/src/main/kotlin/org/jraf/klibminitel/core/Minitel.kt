@@ -46,11 +46,13 @@ import org.jraf.klibminitel.internal.codes.escapeSpecialChars
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.io.PrintWriter
 import kotlin.concurrent.thread
 
 class Minitel(filePath: String) {
-    private val output: PrintWriter = PrintWriter(FileOutputStream(filePath))
+    private val fileOutputStream = FileOutputStream(filePath)
+    private val output: PrintWriter = PrintWriter(fileOutputStream)
     private val input = FileInputStream(File(filePath))
 
     private val readListeners = mutableSetOf<ReadListener>()
@@ -103,6 +105,12 @@ class Minitel(filePath: String) {
 
     fun print(s: String): Int = out(s.escapeAccents().escapeSpecialChars())
     fun print(c: Char): Int = out(c)
+
+    fun print(inputStream: InputStream) {
+        inputStream.copyTo(fileOutputStream)
+        fileOutputStream.flush()
+    }
+
     fun clearScreenAndHome() = out(CLEAR_SCREEN_AND_HOME)
     fun graphicsMode(on: Boolean) = out(if (on) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
     fun moveCursor(x: Int, y: Int) = out(Cursor.moveCursor(x, y))
