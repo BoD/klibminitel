@@ -1,8 +1,12 @@
-build
-out
-.gradle
 *.iml
+.gradle
+local.properties
 .DS_Store
+build
+captures
+.externalNativeBuild
+.cxx
+
 .idea/*
-!.idea/codeStyles
-!.idea/copyright
+!.idea/codeStyles/
+!.idea/copyright/
