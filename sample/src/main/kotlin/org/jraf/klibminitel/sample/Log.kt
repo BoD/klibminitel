@@ -7,8 +7,7 @@
  *                              /___/
  * repository.
  *
- * Copyright (C) 2023-present Benoit 'BoD' Lubek (BoD@JRAF.org)
- * and contributors (https://github.com/BoD/klibnotion/graphs/contributors)
+ * Copyright (C) 2024-present Benoit 'BoD' Lubek (BoD@JRAF.org)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +22,8 @@
  * limitations under the License.
  */
 
-import org.jraf.klibminitel.core.Minitel
+package org.jraf.klibminitel.sample
+
 import org.slf4j.LoggerFactory
 import org.slf4j.simple.SimpleLogger
 
@@ -36,17 +36,6 @@ private val LOGGER = run {
   LoggerFactory.getLogger("Main")
 }
 
-suspend fun main(av: Array<String>) {
-  LOGGER.info("Hello, world!")
-
-  val minitel = Minitel(av[0])
-  minitel.addReadListener { e ->
-    LOGGER.info("Read: ${e}")
-  }
-  minitel.addSystemListener { e ->
-    LOGGER.info("System: ${e}")
-    minitel.localEcho(false)
-  }
-
-  minitel.localEcho(false)
+fun logd(message: String) {
+  LOGGER.debug(message)
 }

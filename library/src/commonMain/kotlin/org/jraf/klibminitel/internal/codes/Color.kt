@@ -64,6 +64,8 @@ internal object Color {
   const val COLOR_BACKGROUND_6 = COLOR_BACKGROUND_YELLOW
   const val COLOR_BACKGROUND_7 = COLOR_BACKGROUND_WHITE
 
+  const val INVERSE_ON = "${Control.ESC}\u005D"
+  const val INVERSE_OFF = "${Control.ESC}\u005C"
 
   fun colorForeground(lightness: Float): String {
     return when {
@@ -120,6 +122,5 @@ internal object Color {
   }
 
   fun colorBackground(awtColor: AwtColor): String =
-    colorBackground(org.jraf.klibminitel.internal.util.color.rgbToHsl(awtColor).third)
-
+    colorBackground(rgbToHsl(awtColor).third)
 }

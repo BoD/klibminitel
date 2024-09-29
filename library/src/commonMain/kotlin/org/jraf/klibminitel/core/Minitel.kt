@@ -58,6 +58,8 @@ class Minitel(filePath: String) {
   private val readListeners = mutableSetOf<ReadListener>()
   private val systemListeners = mutableSetOf<SystemListener>()
 
+  var isCursorVisible = false
+
   init {
     startReadLoop()
   }
@@ -78,7 +80,7 @@ class Minitel(filePath: String) {
           val functionKey = FunctionKey.fromCode(read1)
           dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
         } else if (read0 == '~'.code) {
-          // Here's the sequence we receive when turning on: ~ ESC CONNEXION_FIN ESC 83 ESC 84
+          input.mark(6)
           val read1 = input.read()
           if (read1 == FunctionKey.CONTROL_KEY_ESCAPE) {
             val read2 = input.read()
@@ -96,34 +98,22 @@ class Minitel(filePath: String) {
                     if (functionKey6 == FunctionKey.UNKNOWN(84)) {
                       dispatchSystemEvent(SystemEvent.TurnedOnEvent)
                     } else {
-                      dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
-                      dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey2))
-                      dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey4))
-                      dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey6))
+                      input.reset()
                     }
                   } else {
-                    dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
-                    dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey2))
-                    dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey4))
-                    dispatchReadEvent(ReadEvent.CharacterReadEvent(read5.toChar()))
+                    input.reset()
                   }
                 } else {
-                  dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
-                  dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey2))
-                  dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey4))
+                  input.reset()
                 }
               } else {
-                dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
-                dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey2))
-                dispatchReadEvent(ReadEvent.CharacterReadEvent(read3.toChar()))
+                input.reset()
               }
             } else {
-              dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
-              dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey2))
+              input.reset()
             }
           } else {
-            dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
-            dispatchReadEvent(ReadEvent.CharacterReadEvent(read1.toChar()))
+            input.reset()
           }
         } else {
           dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
@@ -185,14 +175,34 @@ class Minitel(filePath: String) {
   }
 
   fun clearScreenAndHome() = out(CLEAR_SCREEN_AND_HOME)
-  fun graphicsMode(on: Boolean) = out(if (on) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
+  fun graphicsMode(graphicsMode: Boolean) = out(if (graphicsMode) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
   fun moveCursor(x: Int, y: Int) = out(Cursor.moveCursor(x, y))
-  fun showCursor(visible: Boolean) = out(if (visible) SHOW_CURSOR else HIDE_CURSOR)
-  fun colorForeground(color: Int) = out(Color.colorForeground(color))
-  fun colorBackground(color: Int) = out(Color.colorBackground(color))
-  fun color(background: Int, foreground: Int) {
-    colorBackground(background)
-    colorForeground(foreground)
+  fun showCursor(showCursor: Boolean): Int {
+    if (isCursorVisible == showCursor) {
+      return 0
+    }
+    isCursorVisible = showCursor
+    return out(if (showCursor) SHOW_CURSOR else HIDE_CURSOR)
+  }
+
+  fun colorForeground(color0To7: Int) = out(Color.colorForeground(color0To7))
+  fun colorBackground(color0To7: Int) = out(Color.colorBackground(color0To7))
+
+  /**
+   * Weird behavior: the background color works only when printing at least one space.
+   * This does not happen with inverse colors.
+   * For this reason, prefer calling colorWithInverse() instead.
+   */
+  fun color(background0To7: Int, foreground0To7: Int) {
+    colorBackground(background0To7)
+    colorForeground(foreground0To7)
+  }
+
+  fun inverse(inverse: Boolean) = out(if (inverse) Color.INVERSE_ON else Color.INVERSE_OFF)
+
+  fun colorWithInverse(background0To7: Int, foreground0To7: Int) {
+    inverse(true)
+    color(foreground0To7, background0To7)
   }
 
   fun characterSize(characterSize: CharacterSize) = out(characterSize.characterSizeCode)
@@ -214,6 +224,12 @@ class Minitel(filePath: String) {
     return out(if (localEcho) Control.LOCAL_ECHO_ON else Control.LOCAL_ECHO_OFF)
   }
 
+  fun beep() = out(Control.BEEP)
+
+  /**
+   * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
+   * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
+   */
   fun graphicsCharacter(value: Int, alreadyInGraphicsMode: Boolean = false) = out(
     Character.graphicsCharacter(
       value,

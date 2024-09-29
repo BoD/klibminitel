@@ -8,7 +8,7 @@ kotlin {
 }
 
 application {
-  mainClass.set("MainKt")
+  mainClass.set("org.jraf.klibminitel.sample.MainKt")
 }
 
 dependencies {

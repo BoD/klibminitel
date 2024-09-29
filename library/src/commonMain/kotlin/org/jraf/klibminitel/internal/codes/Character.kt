@@ -36,6 +36,10 @@ internal object Character {
   const val UNDERLINE_ON = "$ESC\u005A"
   const val UNDERLINE_OFF = "$ESC\u0059"
 
+  /**
+   * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
+   * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
+   */
   fun graphicsCharacter(value: Int, alreadyInGraphicsMode: Boolean): String =
     "${if (alreadyInGraphicsMode) "" else GRAPHICS_MODE_ON}${(32 + value).toChar()}"
 }

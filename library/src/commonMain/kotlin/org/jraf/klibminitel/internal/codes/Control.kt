@@ -39,6 +39,8 @@ internal object Control {
   // ESC, PRO3, AIGUILLAGE_OFF, RCPT_ECRAN, EMET_MODEM
   const val LOCAL_ECHO_ON = "$ESC\u003B\u0061\u0058\u0052"
 
+  const val BEEP = "$ESC\u0007"
+
   fun repeatCharacter(c: Char, times: Int): String = "$c$REPEAT${(0x40 + times - 1).toChar()}"
   fun repeatLastCharacter(times: Int): String = "$REPEAT${(0x40 + times).toChar()}"
 }
