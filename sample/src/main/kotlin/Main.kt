@@ -41,6 +41,12 @@ suspend fun main(av: Array<String>) {
 
   val minitel = Minitel(av[0])
   minitel.addReadListener { e ->
-    LOGGER.info("Received: ${e}")
+    LOGGER.info("Read: ${e}")
   }
+  minitel.addSystemListener { e ->
+    LOGGER.info("System: ${e}")
+    minitel.localEcho(false)
+  }
+
+  minitel.localEcho(false)
 }

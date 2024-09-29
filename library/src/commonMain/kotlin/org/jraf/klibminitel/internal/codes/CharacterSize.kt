@@ -30,8 +30,8 @@ internal object CharacterSize {
   const val PARAM_SIZE_WIDE = 'N'
   const val PARAM_SIZE_DOUBLE = 'O'
 
-  const val SIZE_NORMAL = "${Misc.ESC}$PARAM_SIZE_NORMAL"
-  const val SIZE_TALL = "${Misc.ESC}$PARAM_SIZE_TALL"
-  const val SIZE_WIDE = "${Misc.ESC}$PARAM_SIZE_WIDE"
-  const val SIZE_DOUBLE = "${Misc.ESC}$PARAM_SIZE_DOUBLE"
+  const val SIZE_NORMAL = "${Control.ESC}$PARAM_SIZE_NORMAL"
+  const val SIZE_TALL = "${Control.ESC}$PARAM_SIZE_TALL"
+  const val SIZE_WIDE = "${Control.ESC}$PARAM_SIZE_WIDE"
+  const val SIZE_DOUBLE = "${Control.ESC}$PARAM_SIZE_DOUBLE"
 }

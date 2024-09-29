@@ -24,7 +24,7 @@
 
 package org.jraf.klibminitel.internal.codes
 
-import org.jraf.klibminitel.internal.codes.Misc.ESC
+import org.jraf.klibminitel.internal.codes.Control.ESC
 
 internal object Character {
   const val GRAPHICS_MODE_ON = '\u000E'

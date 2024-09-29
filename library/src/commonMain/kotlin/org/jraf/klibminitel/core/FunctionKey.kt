@@ -24,23 +24,23 @@
 
 package org.jraf.klibminitel.core
 
-enum class FunctionKey(private val code: Int) {
-  ENVOI(0x41),
-  RETOUR(0x42),
-  REPETITION(0x43),
-  GUIDE(0x44),
-  ANNULATION(0x45),
-  SOMMAIRE(0x46),
-  CORRECTION(0x47),
-  SUITE(0x48),
-  CONNEXION_FIN(0x59),
-
-  UNKNOWN(-1),
-  ;
-
+sealed class FunctionKey(private val code: Int) {
   companion object {
     const val CONTROL_KEY_ESCAPE = 0x13
 
-    fun fromCode(code: Int) = values().firstOrNull { it.code == code } ?: UNKNOWN
+    private val knownKeys = arrayOf(ENVOI, RETOUR, REPETITION, GUIDE, ANNULATION, SOMMAIRE, CORRECTION, SUITE, CONNEXION_FIN)
+
+    fun fromCode(code: Int) = knownKeys.firstOrNull { it.code == code } ?: UNKNOWN(code)
   }
+
+  data object ENVOI : FunctionKey(0x41)
+  data object RETOUR : FunctionKey(0x42)
+  data object REPETITION : FunctionKey(0x43)
+  data object GUIDE : FunctionKey(0x44)
+  data object ANNULATION : FunctionKey(0x45)
+  data object SOMMAIRE : FunctionKey(0x46)
+  data object CORRECTION : FunctionKey(0x47)
+  data object SUITE : FunctionKey(0x48)
+  data object CONNEXION_FIN : FunctionKey(0x59)
+  data class UNKNOWN(val code: Int) : FunctionKey(code)
 }
