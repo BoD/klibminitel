@@ -20,4 +20,7 @@ dependencies {
 
   // Library
   implementation(project(":klibminitel"))
+
+  // OpenAI
+  implementation("org.jraf:klibopenai:_")
 }

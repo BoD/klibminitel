@@ -24,13 +24,22 @@
 
 package org.jraf.klibminitel.sample
 
+import kotlinx.coroutines.runBlocking
 import org.jraf.klibminitel.core.FunctionKey
 import org.jraf.klibminitel.core.Minitel
 import org.jraf.klibminitel.core.SCREEN_HEIGHT_NORMAL
 import org.jraf.klibminitel.core.SCREEN_WIDTH_NORMAL
+import org.jraf.klibopenai.client.OpenAIClient
+import org.jraf.klibopenai.client.configuration.ClientConfiguration
 
-class MinitelApp(filePath: String) {
+class MinitelApp(
+  filePath: String,
+  authBearerToken: String,
+) {
   private val minitel = Minitel(filePath)
+  private val openAIClient = OpenAIClient(
+    ClientConfiguration(authBearerToken = authBearerToken)
+  )
 
   enum class Mode {
     DRAWING,
@@ -40,7 +49,8 @@ class MinitelApp(filePath: String) {
   private var mode = Mode.DRAWING
 
   private var input: String = ""
-  private var buffer = mutableListOf<Line>()
+  private val buffer = mutableListOf<Line>()
+  private val messages = mutableListOf<OpenAIClient.Message>()
 
   fun start() {
     logd("MinitelApp start")
@@ -127,10 +137,12 @@ class MinitelApp(filePath: String) {
     minitel.showCursor(false)
     minitel.moveCursor(0, 0)
     for (line in buffer.takeLast(SCREEN_HEIGHT_NORMAL - 3)) {
-      minitel.colorForeground(line.color)
-      minitel.print(line.text)
       minitel.clearEndOfLine()
-      minitel.print("\r\n")
+      minitel.colorForeground(if (line.isBot) 7 else 3)
+      minitel.print(line.text)
+      if (line.text.length < SCREEN_WIDTH_NORMAL) {
+        minitel.print("\r\n")
+      }
     }
   }
 
@@ -140,9 +152,22 @@ class MinitelApp(filePath: String) {
 
   private fun handleInput() {
     logd("Input: $input")
-    buffer += Line("<Me> $input", 3).splitIfTooLong(SCREEN_WIDTH_NORMAL)
+    buffer += Line(input, isBot = false).splitIfTooLong(SCREEN_WIDTH_NORMAL)
+    messages += OpenAIClient.Message.User(input)
 
-    buffer += Line("<Bot> OK!", 7).splitIfTooLong(SCREEN_WIDTH_NORMAL)
+    val response = runBlocking {
+      openAIClient.chatCompletion(
+        model = "gpt-4o",
+        systemMessage = SYSTEM_MESSAGE,
+        messages = messages,
+      )
+    } ?: "Error! Check the logs"
+    buffer += Line(response, isBot = true).splitIfTooLong(SCREEN_WIDTH_NORMAL)
+    messages += OpenAIClient.Message.Assistant(response)
+
+    val lastMessages = messages.takeLast(30)
+    messages.clear()
+    messages.addAll(lastMessages)
 
     input = ""
     mode = Mode.DRAWING
@@ -158,7 +183,7 @@ private fun Char.invertCase(): Char {
 }
 
 private fun Line.splitIfTooLong(maxLength: Int): List<Line> {
-  return text.splitIfTooLong(maxLength).map { Line(it, color) }
+  return text.splitIfTooLong(maxLength).map { copy(text = it) }
 }
 
 private fun String.splitIfTooLong(maxLength: Int): List<String> {
@@ -181,5 +206,8 @@ private fun String.splitIfTooLong(maxLength: Int): List<String> {
 
 data class Line(
   val text: String,
-  val color: Int,
+  val isBot: Boolean,
 )
+
+private const val SYSTEM_MESSAGE =
+  "Tu es un bot Français qui tourne sur Minitel. Fais comme si on était au début des années 90. Tes réponses doivent être courtes."

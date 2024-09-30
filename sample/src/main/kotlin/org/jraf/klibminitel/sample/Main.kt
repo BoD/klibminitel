@@ -25,5 +25,5 @@
 package org.jraf.klibminitel.sample
 
 suspend fun main(av: Array<String>) {
-  MinitelApp(av[0]).start()
+  MinitelApp(filePath = av[0], authBearerToken = av[1]).start()
 }
