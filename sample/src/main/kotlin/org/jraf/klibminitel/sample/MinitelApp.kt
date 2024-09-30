@@ -133,15 +133,30 @@ class MinitelApp(
     minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
   }
 
+  private var bufferCursor = 0
+
   private fun drawBuffer() {
     minitel.showCursor(false)
-    minitel.moveCursor(0, 0)
-    for (line in buffer.takeLast(SCREEN_HEIGHT_NORMAL - 3)) {
-      minitel.clearEndOfLine()
-      minitel.colorForeground(if (line.isBot) 7 else 3)
-      minitel.print(line.text)
-      if (line.text.length < SCREEN_WIDTH_NORMAL) {
-        minitel.print("\r\n")
+    val bufferWindow = buffer.takeLast(SCREEN_HEIGHT_NORMAL - 3)
+    if (bufferWindow.size < SCREEN_HEIGHT_NORMAL - 3) {
+      val currentBufferCursor = bufferCursor
+      for (i in bufferWindow.indices) {
+        if (i >= currentBufferCursor) {
+          minitel.moveCursor(0, i)
+          minitel.clearEndOfLine()
+          val line = bufferWindow[i]
+          minitel.colorForeground(if (line.isBot) 7 else 3)
+          minitel.print(line.text)
+          bufferCursor++
+        }
+      }
+    } else {
+      for (i in bufferWindow.indices.reversed()) {
+        minitel.moveCursor(0, i)
+        minitel.clearEndOfLine()
+        val line = bufferWindow[i]
+        minitel.colorForeground(if (line.isBot) 7 else 3)
+        minitel.print(line.text)
       }
     }
   }
@@ -165,7 +180,7 @@ class MinitelApp(
     buffer += Line(response, isBot = true).splitIfTooLong(SCREEN_WIDTH_NORMAL)
     messages += OpenAIClient.Message.Assistant(response)
 
-    val lastMessages = messages.takeLast(30)
+    val lastMessages = messages.takeLast(50)
     messages.clear()
     messages.addAll(lastMessages)
 
