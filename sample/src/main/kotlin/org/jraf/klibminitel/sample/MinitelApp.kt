@@ -25,6 +25,7 @@
 package org.jraf.klibminitel.sample
 
 import kotlinx.coroutines.runBlocking
+import org.jraf.klibminitel.core.CharacterSize
 import org.jraf.klibminitel.core.FunctionKey
 import org.jraf.klibminitel.core.Minitel
 import org.jraf.klibminitel.core.SCREEN_HEIGHT_NORMAL
@@ -108,10 +109,23 @@ class MinitelApp(
   private fun drawScreen() {
     mode = Mode.DRAWING
     minitel.clearScreenAndHome()
+    drawHeader()
     drawBuffer()
     drawInputWindow()
     drawInput()
     waitForInput()
+  }
+
+  private fun drawHeader() {
+    minitel.moveCursor(0, 1)
+    minitel.colorWithInverse(2, 5)
+    minitel.characterSize(CharacterSize.TALL)
+    minitel.print(" 3615 ")
+    minitel.characterSize(CharacterSize.DOUBLE)
+    minitel.print("Chat")
+    minitel.characterSize(CharacterSize.TALL)
+    minitel.print("!")
+    minitel.clearEndOfLine()
   }
 
   private fun drawInputWindow() {
@@ -137,12 +151,12 @@ class MinitelApp(
 
   private fun drawBuffer() {
     minitel.showCursor(false)
-    val bufferWindow = buffer.takeLast(SCREEN_HEIGHT_NORMAL - 3)
-    if (bufferWindow.size < SCREEN_HEIGHT_NORMAL - 3) {
+    val bufferWindow = buffer.takeLast(SCREEN_HEIGHT_NORMAL - 3 - 2)
+    if (bufferWindow.size < SCREEN_HEIGHT_NORMAL - 3 - 2) {
       val currentBufferCursor = bufferCursor
       for (i in bufferWindow.indices) {
         if (i >= currentBufferCursor) {
-          minitel.moveCursor(0, i)
+          minitel.moveCursor(0, i + 2)
           minitel.clearEndOfLine()
           val line = bufferWindow[i]
           minitel.colorForeground(if (line.isBot) 7 else 3)
@@ -152,7 +166,7 @@ class MinitelApp(
       }
     } else {
       for (i in bufferWindow.indices.reversed()) {
-        minitel.moveCursor(0, i)
+        minitel.moveCursor(0, i + 2)
         minitel.clearEndOfLine()
         val line = bufferWindow[i]
         minitel.colorForeground(if (line.isBot) 7 else 3)

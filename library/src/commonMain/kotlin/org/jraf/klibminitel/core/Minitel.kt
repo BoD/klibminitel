@@ -58,18 +58,18 @@ class Minitel(filePath: String) {
   private val readListeners = mutableSetOf<ReadListener>()
   private val systemListeners = mutableSetOf<SystemListener>()
 
-  var isCursorVisible: Boolean? = null
+  private var isCursorVisible: Boolean? = null
 
-  var isGraphicsMode: Boolean? = null
+  private var isGraphicsMode: Boolean? = null
 
-  var colorForeground: Int? = null
-  var colorBackground: Int? = null
+  private var colorForeground: Int? = null
+  private var colorBackground: Int? = null
 
-  var isInverse: Boolean? = null
+  private var isInverse: Boolean? = null
 
-  var characterSize: CharacterSize? = null
+  private var characterSize: CharacterSize? = null
 
-  var isLocalEcho: Boolean? = null
+  private var isLocalEcho: Boolean? = null
 
   private var skipRead = 0
 
