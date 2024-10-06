@@ -48,6 +48,8 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.PrintWriter
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.LinkedBlockingDeque
 import kotlin.concurrent.thread
 
 class Minitel(filePath: String) {
@@ -60,12 +62,6 @@ class Minitel(filePath: String) {
 
   private var isCursorVisible: Boolean? = null
 
-  private var isGraphicsMode: Boolean? = null
-
-  private var colorForeground: Int? = null
-  private var colorBackground: Int? = null
-
-  private var isInverse: Boolean? = null
   private var isBlink: Boolean? = null
   private var isUnderline: Boolean? = null
 
@@ -73,7 +69,12 @@ class Minitel(filePath: String) {
 
   private var isLocalEcho: Boolean? = null
 
+  private var isScroll: Boolean? = null
+
   private var skipRead = 0
+
+  private var isReadingCursorPosition = false
+  private var getCursorPositionBlockingQueue: BlockingQueue<Pair<Int, Int>> = LinkedBlockingDeque()
 
   init {
     startReadLoop()
@@ -81,26 +82,30 @@ class Minitel(filePath: String) {
 
   private fun reset() {
     isCursorVisible = null
-    isGraphicsMode = null
-    colorForeground = null
-    colorBackground = null
-    isInverse = null
     characterSize = null
     isLocalEcho = null
     skipRead = 0
-  }
-
-  private fun resetColors() {
-    colorForeground = null
-    colorBackground = null
-    isInverse = null
   }
 
   private fun startReadLoop() {
     thread(name = "Minitel-read-loop") {
       while (true) {
         val read0 = input.read()
+        if (isReadingCursorPosition) {
+          val read1 = input.read()
+          val read2 = input.read()
+          if (read0 == -1 || read1 == -1 || read2 == -1) {
+            getCursorPositionBlockingQueue.offer(-1 to -1)
+            break
+          }
+          val x = read2 - 0x41
+          val y = read1 - 0x41
+          getCursorPositionBlockingQueue.offer(x to y)
+          continue
+        }
+
         if (read0 == -1) break
+
         if (skipRead > 0) {
           skipRead--
           continue
@@ -110,7 +115,7 @@ class Minitel(filePath: String) {
           val functionKey = FunctionKey.fromCode(read1)
           dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
         } else if (read0 == '~'.code) {
-          // Here's the sequence we receive when turning on: ~ ESC CONNEXION_FIN ESC 83 ESC 84
+          // Here's the sequence we receive when turning on: ESC CONNEXION_FIN ESC 83 ESC 84
           input.mark(6)
           val read1 = input.read()
           if (read1 == FunctionKey.CONTROL_KEY_ESCAPE) {
@@ -130,22 +135,22 @@ class Minitel(filePath: String) {
                       reset()
                       dispatchSystemEvent(SystemEvent.TurnedOnEvent)
                     } else {
-                      input.reset()
+                      kotlin.runCatching { input.reset() }
                     }
                   } else {
-                    input.reset()
+                    kotlin.runCatching { input.reset() }
                   }
                 } else {
-                  input.reset()
+                  kotlin.runCatching { input.reset() }
                 }
               } else {
-                input.reset()
+                kotlin.runCatching { input.reset() }
               }
             } else {
-              input.reset()
+              kotlin.runCatching { input.reset() }
             }
           } else {
-            input.reset()
+            kotlin.runCatching { input.reset() }
           }
         } else {
           dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
@@ -209,10 +214,6 @@ class Minitel(filePath: String) {
   fun clearScreenAndHome() = out(CLEAR_SCREEN_AND_HOME)
 
   fun graphicsMode(graphicsMode: Boolean): Int {
-    if (isGraphicsMode == graphicsMode) {
-      return 0
-    }
-    isGraphicsMode = graphicsMode
     return out(if (graphicsMode) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
   }
 
@@ -223,18 +224,10 @@ class Minitel(filePath: String) {
   fun graphicsCharacter(value: Int) = out(Graphics.graphicsCharacter(value))
 
   fun colorForeground(color0To7: Int): Int {
-    if (colorForeground == color0To7) {
-      return 0
-    }
-    colorForeground = color0To7
     return out(Color.colorForeground(color0To7))
   }
 
   fun colorBackground(color0To7: Int): Int {
-    if (colorBackground == color0To7) {
-      return 0
-    }
-    colorBackground = color0To7
     return out(Color.colorBackground(color0To7))
   }
 
@@ -249,10 +242,6 @@ class Minitel(filePath: String) {
   }
 
   fun inverse(inverse: Boolean): Int {
-    if (isInverse == inverse) {
-      return 0
-    }
-    isInverse = inverse
     return out(if (inverse) Color.INVERSE_ON else Color.INVERSE_OFF)
   }
 
@@ -278,9 +267,9 @@ class Minitel(filePath: String) {
   }
 
   fun characterSize(characterSize: CharacterSize): Int {
-    if (this.characterSize == characterSize) {
-      return 0
-    }
+//    if (this.characterSize == characterSize) {
+//      return 0
+//    }
     this.characterSize = characterSize
     return out(characterSize.characterSizeCode)
   }
@@ -294,28 +283,33 @@ class Minitel(filePath: String) {
   }
 
   fun moveCursor(x: Int, y: Int): Int {
-    resetColors()
     return out(Cursor.moveCursor(x, y))
   }
 
   fun moveCursorLeft(): Int {
-    resetColors()
     return out(MOVE_CURSOR_LEFT)
   }
 
   fun moveCursorRight(): Int {
-    resetColors()
     return out(MOVE_CURSOR_RIGHT)
   }
 
   fun moveCursorTop(): Int {
-    resetColors()
     return out(MOVE_CURSOR_TOP)
   }
 
   fun moveCursorBottom(): Int {
-    resetColors()
     return out(MOVE_CURSOR_BOTTOM)
+  }
+
+  fun getCursorPosition(): Pair<Int, Int> {
+    isReadingCursorPosition = true
+    out(Cursor.GET_CURSOR_POSITION)
+    return try {
+      getCursorPositionBlockingQueue.take()
+    } finally {
+      isReadingCursorPosition = false
+    }
   }
 
   fun clearEndOfLine() = out(CLEAR_END_OF_LINE)
@@ -329,16 +323,31 @@ class Minitel(filePath: String) {
       return 0
     }
     isLocalEcho = localEcho
-    // We get 5 characters back when we change the local echo setting, ignore them
+    // We get 5 bytes back when we change the local echo setting, ignore them
     skipRead += 5
     return out(if (localEcho) Control.LOCAL_ECHO_ON else Control.LOCAL_ECHO_OFF)
+  }
+
+  fun scroll(scroll: Boolean): Int {
+    if (isScroll == scroll) {
+      return 0
+    }
+    isScroll = scroll
+    // We get 4 bytes back when we change the scroll setting, ignore them
+    skipRead += 4
+    return out(if (scroll) Control.SCROLL_ON else Control.SCROLL_OFF)
   }
 
   fun beep() = out(Control.BEEP)
 
 
   sealed class ReadEvent {
-    data class CharacterReadEvent(val char: Char) : ReadEvent()
+    data class CharacterReadEvent(val char: Char) : ReadEvent() {
+      @OptIn(ExperimentalStdlibApi::class)
+      override fun toString(): String {
+        return "$char (${char.code.toHexString()})"
+      }
+    }
     data class FunctionKeyReadEvent(val functionKey: FunctionKey) : ReadEvent()
   }
 

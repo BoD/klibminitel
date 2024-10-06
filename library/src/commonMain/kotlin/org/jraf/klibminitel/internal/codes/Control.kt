@@ -35,9 +35,15 @@ internal object Control {
   // See https://forum.arduino.cc/t/aller-plus-loin-avec-un-minitel/484922/9
   // ESC, PRO3, AIGUILLAGE_ON, RCPT_ECRAN, EMET_MODEM
   const val LOCAL_ECHO_OFF = "$ESC\u003B\u0060\u0058\u0052"
-
   // ESC, PRO3, AIGUILLAGE_OFF, RCPT_ECRAN, EMET_MODEM
   const val LOCAL_ECHO_ON = "$ESC\u003B\u0061\u0058\u0052"
+
+  // See https://jbellue.github.io/stum1b/
+  // ESC, PRO2, START, ROULEAU
+  const val SCROLL_ON = "$ESC\u003A\u0069\u0043"
+
+  // ESC, PRO2, STOP, ROULEAU
+  const val SCROLL_OFF = "$ESC\u003A\u006A\u0043"
 
   const val BEEP = "$ESC\u0007"
 

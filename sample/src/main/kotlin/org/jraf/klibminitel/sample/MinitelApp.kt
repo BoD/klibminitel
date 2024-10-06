@@ -32,6 +32,10 @@ import org.jraf.klibminitel.core.SCREEN_HEIGHT_NORMAL
 import org.jraf.klibminitel.core.SCREEN_WIDTH_NORMAL
 import org.jraf.klibopenai.client.OpenAIClient
 import org.jraf.klibopenai.client.configuration.ClientConfiguration
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import kotlin.concurrent.thread
 
 class MinitelApp(
   filePath: String,
@@ -53,11 +57,32 @@ class MinitelApp(
   private val buffer = mutableListOf<Line>()
   private val messages = mutableListOf<OpenAIClient.Message>()
 
+  private var lastReadEvent = 0L
+
   fun start() {
     logd("MinitelApp start")
 
+    thread(name = "Date and time") {
+      while (true) {
+        Thread.sleep(System.currentTimeMillis() % 60_000)
+        if (mode == Mode.WAIT_FOR_INPUT) {
+          // Avoid moving the cursor while the user is typing
+          if (System.currentTimeMillis() - lastReadEvent < 1_000) {
+            continue
+          }
+          val cursorPosition = minitel.getCursorPosition()
+          minitel.showCursor(false)
+          drawDateTime()
+          minitel.moveCursor(cursorPosition.first, cursorPosition.second)
+          minitel.colorWithInverse(5, 0)
+          minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
+        }
+      }
+    }
+
     minitel.addReadListener { e ->
       logd("Read: ${e}")
+      lastReadEvent = System.currentTimeMillis()
 
       if (mode == Mode.WAIT_FOR_INPUT) {
         when (e) {
@@ -90,6 +115,10 @@ class MinitelApp(
                 handleInput()
               }
 
+              FunctionKey.SOMMAIRE -> {
+                drawScreen()
+              }
+
               else -> {}
             }
           }
@@ -108,8 +137,11 @@ class MinitelApp(
 
   private fun drawScreen() {
     mode = Mode.DRAWING
+    minitel.showCursor(false)
     minitel.clearScreenAndHome()
     drawHeader()
+    drawDateTime()
+    bufferCursor = 0
     drawBuffer()
     drawInputWindow()
     drawInput()
@@ -126,6 +158,18 @@ class MinitelApp(
     minitel.characterSize(CharacterSize.TALL)
     minitel.print("!")
     minitel.clearEndOfLine()
+  }
+
+  private fun drawDateTime() {
+    val date = getDate()
+    minitel.moveCursor(SCREEN_WIDTH_NORMAL - date.length - 1, 0)
+    minitel.colorWithInverse(2, 0)
+    minitel.print(date)
+
+    val time = getTime()
+    minitel.moveCursor(SCREEN_WIDTH_NORMAL - time.length - 1, 1)
+    minitel.colorWithInverse(2, 0)
+    minitel.print(time)
   }
 
   private fun drawInputWindow() {
@@ -187,7 +231,7 @@ class MinitelApp(
     val response = runBlocking {
       openAIClient.chatCompletion(
         model = "gpt-4o",
-        systemMessage = SYSTEM_MESSAGE,
+        systemMessage = getSystemMessage(),
         messages = messages,
       )
     } ?: "Error! Check the logs"
@@ -242,5 +286,13 @@ data class Line(
   val isBot: Boolean,
 )
 
-private const val SYSTEM_MESSAGE =
-  "Tu es un bot Français qui tourne sur Minitel. Fais comme si on était au début des années 90. Tes réponses doivent être courtes."
+private fun getSystemMessage() =
+  "Tu es un bot Français qui tourne sur Minitel. Fais comme si on était le${getDate()}. Tes réponses doivent être courtes."
+
+private fun getDate(): String = SimpleDateFormat("' 'dd/MM/yyyy").format(
+  Calendar.getInstance()
+    .apply { add(Calendar.YEAR, -30) }
+    .time
+)
+
+private fun getTime(): String = SimpleDateFormat("' 'HH:mm").format(Date())

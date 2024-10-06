@@ -24,6 +24,8 @@
 
 package org.jraf.klibminitel.internal.codes
 
+import org.jraf.klibminitel.internal.codes.Control.ESC
+
 internal object Cursor {
   const val MOVE_CURSOR = '\u001F'
   const val MOVE_CURSOR_LEFT = '\u0008'
@@ -33,6 +35,8 @@ internal object Cursor {
 
   const val SHOW_CURSOR = '\u0011'
   const val HIDE_CURSOR = '\u0014'
+
+  const val GET_CURSOR_POSITION = "$ESC\u0061"
 
   fun moveCursor(x: Int, y: Int): String = "$MOVE_CURSOR${(0x41 + y).toChar()}${(0x41 + x).toChar()}"
 }
