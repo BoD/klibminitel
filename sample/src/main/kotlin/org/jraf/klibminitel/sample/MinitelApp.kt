@@ -181,8 +181,8 @@ class MinitelApp(
 
   private fun handleInput() {
     logd("Input: $input")
-    buffer += Line(input, isBot = false).splitIfTooLong(SCREEN_WIDTH_NORMAL)
     messages += OpenAIClient.Message.User(input)
+    buffer += Line(input, isBot = false).splitIfTooLong(SCREEN_WIDTH_NORMAL)
 
     val response = runBlocking {
       openAIClient.chatCompletion(
@@ -191,8 +191,12 @@ class MinitelApp(
         messages = messages,
       )
     } ?: "Error! Check the logs"
-    buffer += Line(response, isBot = true).splitIfTooLong(SCREEN_WIDTH_NORMAL)
+
+    logd("OpenAI response: $response")
     messages += OpenAIClient.Message.Assistant(response)
+    buffer += response.split('\n').map { Line(it, isBot = true) }.flatMap {
+      it.splitIfTooLong(SCREEN_WIDTH_NORMAL)
+    }
 
     val lastMessages = messages.takeLast(50)
     messages.clear()

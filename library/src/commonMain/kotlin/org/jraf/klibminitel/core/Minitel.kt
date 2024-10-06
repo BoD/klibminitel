@@ -26,9 +26,6 @@
 
 package org.jraf.klibminitel.core
 
-import org.jraf.klibminitel.internal.codes.Character
-import org.jraf.klibminitel.internal.codes.Character.GRAPHICS_MODE_OFF
-import org.jraf.klibminitel.internal.codes.Character.GRAPHICS_MODE_ON
 import org.jraf.klibminitel.internal.codes.Color
 import org.jraf.klibminitel.internal.codes.Control
 import org.jraf.klibminitel.internal.codes.Cursor
@@ -38,11 +35,14 @@ import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_LEFT
 import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_RIGHT
 import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_TOP
 import org.jraf.klibminitel.internal.codes.Cursor.SHOW_CURSOR
+import org.jraf.klibminitel.internal.codes.Formatting
+import org.jraf.klibminitel.internal.codes.Graphics
+import org.jraf.klibminitel.internal.codes.Graphics.GRAPHICS_MODE_OFF
+import org.jraf.klibminitel.internal.codes.Graphics.GRAPHICS_MODE_ON
 import org.jraf.klibminitel.internal.codes.Screen.CLEAR_BOTTOM_OF_SCREEN
 import org.jraf.klibminitel.internal.codes.Screen.CLEAR_END_OF_LINE
 import org.jraf.klibminitel.internal.codes.Screen.CLEAR_SCREEN_AND_HOME
-import org.jraf.klibminitel.internal.codes.escapeAccents
-import org.jraf.klibminitel.internal.codes.escapeSpecialChars
+import org.jraf.klibminitel.internal.codes.replaceSpecialCharacters
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -66,6 +66,8 @@ class Minitel(filePath: String) {
   private var colorBackground: Int? = null
 
   private var isInverse: Boolean? = null
+  private var isBlink: Boolean? = null
+  private var isUnderline: Boolean? = null
 
   private var characterSize: CharacterSize? = null
 
@@ -196,7 +198,7 @@ class Minitel(filePath: String) {
     return 1
   }
 
-  fun print(s: String): Int = out(s.escapeAccents().escapeSpecialChars())
+  fun print(s: String): Int = out(s.replaceSpecialCharacters())
   fun print(c: Char): Int = out(c)
 
   fun print(inputStream: InputStream) {
@@ -205,6 +207,7 @@ class Minitel(filePath: String) {
   }
 
   fun clearScreenAndHome() = out(CLEAR_SCREEN_AND_HOME)
+
   fun graphicsMode(graphicsMode: Boolean): Int {
     if (isGraphicsMode == graphicsMode) {
       return 0
@@ -212,6 +215,12 @@ class Minitel(filePath: String) {
     isGraphicsMode = graphicsMode
     return out(if (graphicsMode) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
   }
+
+  /**
+   * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
+   * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
+   */
+  fun graphicsCharacter(value: Int) = out(Graphics.graphicsCharacter(value))
 
   fun colorForeground(color0To7: Int): Int {
     if (colorForeground == color0To7) {
@@ -250,6 +259,22 @@ class Minitel(filePath: String) {
   fun colorWithInverse(background0To7: Int, foreground0To7: Int) {
     inverse(true)
     color(foreground0To7, background0To7)
+  }
+
+  fun blink(blink: Boolean): Int {
+    if (isBlink == blink) {
+      return 0
+    }
+    isBlink = blink
+    return out(if (blink) Formatting.BLINK_ON else Formatting.BLINK_OFF)
+  }
+
+  fun underline(underline: Boolean): Int {
+    if (isUnderline == underline) {
+      return 0
+    }
+    isUnderline = underline
+    return out(if (underline) Formatting.UNDERLINE_ON else Formatting.UNDERLINE_OFF)
   }
 
   fun characterSize(characterSize: CharacterSize): Int {
@@ -311,16 +336,6 @@ class Minitel(filePath: String) {
 
   fun beep() = out(Control.BEEP)
 
-  /**
-   * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
-   * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
-   */
-  fun graphicsCharacter(value: Int, alreadyInGraphicsMode: Boolean = false) = out(
-    Character.graphicsCharacter(
-      value,
-      alreadyInGraphicsMode
-    )
-  )
 
   sealed class ReadEvent {
     data class CharacterReadEvent(val char: Char) : ReadEvent()

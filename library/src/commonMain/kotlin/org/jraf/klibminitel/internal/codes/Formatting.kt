@@ -26,20 +26,10 @@ package org.jraf.klibminitel.internal.codes
 
 import org.jraf.klibminitel.internal.codes.Control.ESC
 
-internal object Character {
-  const val GRAPHICS_MODE_ON = '\u000E'
-  const val GRAPHICS_MODE_OFF = '\u000F'
-
-  const val INVERT_ON = "$ESC\u005D"
-  const val INVERT_OFF = "$ESC\u005C"
-
+internal object Formatting {
   const val UNDERLINE_ON = "$ESC\u005A"
   const val UNDERLINE_OFF = "$ESC\u0059"
 
-  /**
-   * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
-   * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
-   */
-  fun graphicsCharacter(value: Int, alreadyInGraphicsMode: Boolean): String =
-    "${if (alreadyInGraphicsMode) "" else GRAPHICS_MODE_ON}${(32 + value).toChar()}"
+  const val BLINK_ON = "$ESC\u0048"
+  const val BLINK_OFF = "$ESC\u0049"
 }

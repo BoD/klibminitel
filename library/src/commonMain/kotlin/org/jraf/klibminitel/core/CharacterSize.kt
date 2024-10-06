@@ -24,23 +24,17 @@
 
 package org.jraf.klibminitel.core
 
-import org.jraf.klibminitel.internal.codes.Accents
-import org.jraf.klibminitel.internal.codes.CharacterSize.PARAM_SIZE_DOUBLE
-import org.jraf.klibminitel.internal.codes.CharacterSize.PARAM_SIZE_NORMAL
-import org.jraf.klibminitel.internal.codes.CharacterSize.PARAM_SIZE_TALL
-import org.jraf.klibminitel.internal.codes.CharacterSize.PARAM_SIZE_WIDE
 import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_DOUBLE
 import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_NORMAL
 import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_TALL
 import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_WIDE
-import org.jraf.klibminitel.internal.codes.Control
 
 enum class CharacterSize(
-    internal val characterSizeCode: String,
-    val maxCharactersHorizontal: Int,
-    val maxCharactersVertical: Int,
-    val characterWidth: Int,
-    val characterHeight: Int,
+  internal val characterSizeCode: String,
+  val maxCharactersHorizontal: Int,
+  val maxCharactersVertical: Int,
+  val characterWidth: Int,
+  val characterHeight: Int,
 ) {
   NORMAL(
     SIZE_NORMAL,
@@ -72,37 +66,4 @@ enum class CharacterSize(
   ),
 
   ;
-
-  companion object {
-    fun String.getWidth(baseCharacterSize: CharacterSize): Int {
-      var res = 0
-      var i = 0
-      var curCharWidth = baseCharacterSize.characterWidth
-      while (i < length) {
-        val c = this[i]
-        when (c) {
-          Control.ESC -> {
-            when (this[i + 1]) {
-              PARAM_SIZE_NORMAL -> curCharWidth = CharacterSize.NORMAL.characterWidth
-              PARAM_SIZE_TALL -> curCharWidth = CharacterSize.TALL.characterWidth
-              PARAM_SIZE_WIDE -> curCharWidth = CharacterSize.WIDE.characterWidth
-              PARAM_SIZE_DOUBLE -> curCharWidth = CharacterSize.DOUBLE.characterWidth
-            }
-            i += 2
-          }
-
-          Accents.ACCENT -> {
-            res += curCharWidth
-            i += 2
-          }
-
-          else -> {
-            res += curCharWidth
-            i++
-          }
-        }
-      }
-      return res
-    }
-  }
 }

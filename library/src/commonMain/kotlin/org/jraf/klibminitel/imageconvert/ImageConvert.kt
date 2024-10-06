@@ -26,10 +26,10 @@ package org.jraf.klibminitel.imageconvert
 
 import org.jraf.klibminitel.core.SCREEN_HEIGHT_NORMAL
 import org.jraf.klibminitel.core.SCREEN_WIDTH_NORMAL
-import org.jraf.klibminitel.internal.codes.Character.GRAPHICS_MODE_ON
 import org.jraf.klibminitel.internal.codes.Color.colorBackground
 import org.jraf.klibminitel.internal.codes.Color.colorForeground
 import org.jraf.klibminitel.internal.codes.Cursor.moveCursor
+import org.jraf.klibminitel.internal.codes.Graphics.GRAPHICS_MODE_ON
 import org.jraf.klibminitel.internal.codes.Screen.CLEAR_SCREEN_AND_HOME
 import java.io.File
 import javax.imageio.ImageIO
