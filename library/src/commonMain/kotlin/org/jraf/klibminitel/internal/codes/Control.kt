@@ -33,9 +33,9 @@ internal object Control {
   private const val REPEAT = '\u0012'
 
   // See https://forum.arduino.cc/t/aller-plus-loin-avec-un-minitel/484922/9
-  // ESC, PRO3, AIGUILLAGE_ON, RCPT_ECRAN, EMET_MODEM
-  const val LOCAL_ECHO_OFF = "$ESC\u003B\u0060\u0058\u0052"
   // ESC, PRO3, AIGUILLAGE_OFF, RCPT_ECRAN, EMET_MODEM
+  const val LOCAL_ECHO_OFF = "$ESC\u003B\u0060\u0058\u0052"
+  // ESC, PRO3, AIGUILLAGE_ON, RCPT_ECRAN, EMET_MODEM
   const val LOCAL_ECHO_ON = "$ESC\u003B\u0061\u0058\u0052"
 
   // See https://jbellue.github.io/stum1b/

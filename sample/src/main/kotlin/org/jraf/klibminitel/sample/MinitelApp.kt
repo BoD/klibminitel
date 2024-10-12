@@ -115,7 +115,7 @@ class MinitelApp(
                 handleInput()
               }
 
-              FunctionKey.SOMMAIRE -> {
+              FunctionKey.REPETITION -> {
                 drawScreen()
               }
 
