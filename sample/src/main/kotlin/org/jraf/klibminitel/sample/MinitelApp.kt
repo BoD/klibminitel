@@ -131,11 +131,14 @@ class MinitelApp(
           if (System.currentTimeMillis() - lastReadEvent < 1_000) {
             continue
           }
-          val cursorPosition = minitel.getCursorPosition()
+          val savedCursorPosition = minitel.getCursorPosition()
           minitel.showCursor(false)
           drawDateTime()
-          minitel.moveCursor(cursorPosition.first, cursorPosition.second)
-          minitel.color(background0To7 = 5, foreground0To7 = 0)
+
+          // Go btack to the input
+          minitel.moveCursor(savedCursorPosition.first, savedCursorPosition.second)
+          minitel.inverse(true)
+          minitel.color(background0To7 = 0, foreground0To7 = 5)
           minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
         }
       }
