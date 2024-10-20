@@ -50,7 +50,7 @@ import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 import kotlin.concurrent.thread
 
-@Suppress("unused")
+@Suppress("unused", "MemberVisibilityCanBePrivate")
 class Minitel(
   private val keyboard: Source,
   private val screen: Sink,
@@ -64,9 +64,6 @@ class Minitel(
   private val systemListeners = mutableSetOf<SystemListener>()
 
   private var isCursorVisible: Boolean? = null
-
-  private var isBlink: Boolean? = null
-  private var isUnderline: Boolean? = null
 
   private var isLocalEcho: Boolean? = null
 
@@ -85,8 +82,6 @@ class Minitel(
 
   private fun reset() {
     isCursorVisible = null
-    isBlink = null
-    isUnderline = null
     isLocalEcho = null
     isScroll = null
     readAcknowledgements = true
@@ -228,9 +223,7 @@ class Minitel(
   }
 
   /**
-   * Weird behavior: the background color works only when printing at least one space.
-   * This does not happen with inverse colors.
-   * For this reason, prefer calling colorWithInverse() instead.
+   * Note: the background color works only when printing at least one space.
    */
   fun color(background0To7: Int, foreground0To7: Int) {
     colorBackground(background0To7)
@@ -241,20 +234,11 @@ class Minitel(
     out(if (inverse) Color.INVERSE_ON else Color.INVERSE_OFF)
   }
 
-  fun colorWithInverse(background0To7: Int, foreground0To7: Int) {
-    inverse(true)
-    color(foreground0To7, background0To7)
-  }
-
   fun blink(blink: Boolean) {
-    if (isBlink == blink) return
-    isBlink = blink
     out(if (blink) Formatting.BLINK_ON else Formatting.BLINK_OFF)
   }
 
   fun underline(underline: Boolean) {
-    if (isUnderline == underline) return
-    isUnderline = underline
     out(if (underline) Formatting.UNDERLINE_ON else Formatting.UNDERLINE_OFF)
   }
 

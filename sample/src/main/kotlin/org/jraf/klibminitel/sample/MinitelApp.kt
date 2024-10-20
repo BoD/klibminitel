@@ -135,7 +135,7 @@ class MinitelApp(
           minitel.showCursor(false)
           drawDateTime()
           minitel.moveCursor(cursorPosition.first, cursorPosition.second)
-          minitel.colorWithInverse(5, 0)
+          minitel.color(background0To7 = 5, foreground0To7 = 0)
           minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
         }
       }
@@ -157,7 +157,7 @@ class MinitelApp(
 
   private fun drawHeader() {
     minitel.moveCursor(0, 1)
-    minitel.colorWithInverse(2, 5)
+    minitel.color(background0To7 = 2, foreground0To7 = 5)
     minitel.characterSize(CharacterSize.TALL)
     minitel.print(" 3615 ")
     minitel.characterSize(CharacterSize.DOUBLE)
@@ -170,18 +170,19 @@ class MinitelApp(
   private fun drawDateTime() {
     val date = getDate()
     minitel.moveCursor(SCREEN_WIDTH_NORMAL - date.length - 1, 0)
-    minitel.colorWithInverse(2, 0)
+    minitel.color(background0To7 = 2, foreground0To7 = 0)
     minitel.print(date)
 
     val time = getTime()
     minitel.moveCursor(SCREEN_WIDTH_NORMAL - time.length - 1, 1)
-    minitel.colorWithInverse(2, 0)
+    minitel.color(background0To7 = 2, foreground0To7 = 0)
     minitel.print(time)
   }
 
   private fun drawInputWindow() {
     minitel.moveCursor(0, SCREEN_HEIGHT_NORMAL - 3)
-    minitel.colorWithInverse(5, 0)
+    minitel.inverse(true)
+    minitel.color(background0To7 = 0, foreground0To7 = 5)
     minitel.clearEndOfLine()
 
     minitel.moveCursorBottom()
@@ -193,7 +194,8 @@ class MinitelApp(
 
   private fun drawInput() {
     minitel.moveCursor(0, SCREEN_HEIGHT_NORMAL - 3)
-    minitel.colorWithInverse(5, 0)
+    minitel.inverse(true)
+    minitel.color(background0To7 = 0, foreground0To7 = 5)
     minitel.print(input)
     minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
   }
