@@ -22,15 +22,15 @@
  * limitations under the License.
  */
 
-package org.jraf.klibminitel.internal.codes
+package org.jraf.klibminitel.internal.protocol
 
-import org.jraf.klibminitel.internal.codes.Control.ESC
+import org.jraf.klibminitel.internal.protocol.Control.ESC
 
 // See https://jbellue.github.io/stum1b/#2-2-1-2-4-2
 internal object Formatting {
-  const val UNDERLINE_ON = "$ESC\u005A"
-  const val UNDERLINE_OFF = "$ESC\u0059"
+  val UNDERLINE_ON = byteArrayOf(ESC, 0x5A)
+  val UNDERLINE_OFF = byteArrayOf(ESC, 0x59)
 
-  const val BLINK_ON = "$ESC\u0048"
-  const val BLINK_OFF = "$ESC\u0049"
+  val BLINK_ON = byteArrayOf(ESC, 0x48)
+  val BLINK_OFF = byteArrayOf(ESC, 0x49)
 }

@@ -24,10 +24,10 @@
 
 package org.jraf.klibminitel.internal.util.html
 
-import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_NORMAL
-import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_TALL
-import org.jraf.klibminitel.internal.codes.Color.COLOR_FOREGROUND_7
-import org.jraf.klibminitel.internal.codes.Color.colorForeground
+import org.jraf.klibminitel.internal.protocol.CharacterSize.SIZE_NORMAL
+import org.jraf.klibminitel.internal.protocol.CharacterSize.SIZE_TALL
+import org.jraf.klibminitel.internal.protocol.Color.COLOR_FOREGROUND_7
+import org.jraf.klibminitel.internal.protocol.Color.colorForeground
 import org.jraf.klibminitel.internal.util.color.AwtColor
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -36,18 +36,18 @@ import org.xml.sax.InputSource
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
 
-internal fun String.escapeHtml(defaultColor: String = COLOR_FOREGROUND_7, defaultSize: String = SIZE_TALL): String {
+internal fun String.escapeHtml(defaultColor: ByteArray = COLOR_FOREGROUND_7, defaultSize: ByteArray = SIZE_TALL): ByteArray {
   val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
   val document = documentBuilder.parse(InputSource(StringReader("<root>${this.replace("&", "&amp;")}</root>")))
   return escapeHtml(document.childNodes, defaultColor, defaultSize)
 }
 
-private fun escapeHtml(nodeList: NodeList, defaultColor: String, defaultSize: String): String {
-  var res = ""
+private fun escapeHtml(nodeList: NodeList, defaultColor: ByteArray, defaultSize: ByteArray): ByteArray {
+  var res = ByteArray(0)
   for (i in 0 until nodeList.length) {
     val node = nodeList.item(i)
     res += when (node.nodeType) {
-      Node.TEXT_NODE -> node.textContent
+      Node.TEXT_NODE -> node.textContent.toByteArray()
 
       else -> {
         val element = node as Element

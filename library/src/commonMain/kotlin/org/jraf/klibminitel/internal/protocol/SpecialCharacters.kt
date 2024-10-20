@@ -22,7 +22,7 @@
  * limitations under the License.
  */
 
-package org.jraf.klibminitel.internal.codes
+package org.jraf.klibminitel.internal.protocol
 
 // See https://jbellue.github.io/stum1b/#2-3-5-1-2
 internal object SpecialCharacters {

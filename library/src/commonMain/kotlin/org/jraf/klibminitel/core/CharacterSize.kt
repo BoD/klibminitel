@@ -24,13 +24,13 @@
 
 package org.jraf.klibminitel.core
 
-import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_DOUBLE
-import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_NORMAL
-import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_TALL
-import org.jraf.klibminitel.internal.codes.CharacterSize.SIZE_WIDE
+import org.jraf.klibminitel.internal.protocol.CharacterSize.SIZE_DOUBLE
+import org.jraf.klibminitel.internal.protocol.CharacterSize.SIZE_NORMAL
+import org.jraf.klibminitel.internal.protocol.CharacterSize.SIZE_TALL
+import org.jraf.klibminitel.internal.protocol.CharacterSize.SIZE_WIDE
 
 enum class CharacterSize(
-  internal val characterSizeCode: String,
+  internal val characterSizeCode: ByteArray,
   val maxCharactersHorizontal: Int,
   val maxCharactersVertical: Int,
   val characterWidth: Int,

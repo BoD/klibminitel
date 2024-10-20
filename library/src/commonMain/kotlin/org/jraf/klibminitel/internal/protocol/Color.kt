@@ -22,54 +22,54 @@
  * limitations under the License.
  */
 
-package org.jraf.klibminitel.internal.codes
+package org.jraf.klibminitel.internal.protocol
 
-import org.jraf.klibminitel.internal.codes.Control.ESC
+import org.jraf.klibminitel.internal.protocol.Control.ESC
 import org.jraf.klibminitel.internal.util.color.AwtColor
 import org.jraf.klibminitel.internal.util.color.rgbToHsl
 
 // See https://jbellue.github.io/stum1b/#2-2-1-2-4-2
 internal object Color {
-  const val COLOR_FOREGROUND_BLACK = "$ESC\u0040"
-  const val COLOR_FOREGROUND_RED = "$ESC\u0041"
-  const val COLOR_FOREGROUND_GREEN = "$ESC\u0042"
-  const val COLOR_FOREGROUND_YELLOW = "$ESC\u0043"
-  const val COLOR_FOREGROUND_BLUE = "$ESC\u0044"
-  const val COLOR_FOREGROUND_PURPLE = "$ESC\u0045"
-  const val COLOR_FOREGROUND_CYAN = "$ESC\u0046"
-  const val COLOR_FOREGROUND_WHITE = "$ESC\u0047"
+  val COLOR_FOREGROUND_BLACK = byteArrayOf(ESC, 0x40)
+  val COLOR_FOREGROUND_RED = byteArrayOf(ESC, 0x41)
+  val COLOR_FOREGROUND_GREEN = byteArrayOf(ESC, 0x42)
+  val COLOR_FOREGROUND_YELLOW = byteArrayOf(ESC, 0x43)
+  val COLOR_FOREGROUND_BLUE = byteArrayOf(ESC, 0x44)
+  val COLOR_FOREGROUND_PURPLE = byteArrayOf(ESC, 0x45)
+  val COLOR_FOREGROUND_CYAN = byteArrayOf(ESC, 0x46)
+  val COLOR_FOREGROUND_WHITE = byteArrayOf(ESC, 0x47)
 
-  const val COLOR_FOREGROUND_0 = COLOR_FOREGROUND_BLACK
-  const val COLOR_FOREGROUND_1 = COLOR_FOREGROUND_BLUE
-  const val COLOR_FOREGROUND_2 = COLOR_FOREGROUND_RED
-  const val COLOR_FOREGROUND_3 = COLOR_FOREGROUND_PURPLE
-  const val COLOR_FOREGROUND_4 = COLOR_FOREGROUND_GREEN
-  const val COLOR_FOREGROUND_5 = COLOR_FOREGROUND_CYAN
-  const val COLOR_FOREGROUND_6 = COLOR_FOREGROUND_YELLOW
-  const val COLOR_FOREGROUND_7 = COLOR_FOREGROUND_WHITE
+  val COLOR_FOREGROUND_0 = COLOR_FOREGROUND_BLACK
+  val COLOR_FOREGROUND_1 = COLOR_FOREGROUND_BLUE
+  val COLOR_FOREGROUND_2 = COLOR_FOREGROUND_RED
+  val COLOR_FOREGROUND_3 = COLOR_FOREGROUND_PURPLE
+  val COLOR_FOREGROUND_4 = COLOR_FOREGROUND_GREEN
+  val COLOR_FOREGROUND_5 = COLOR_FOREGROUND_CYAN
+  val COLOR_FOREGROUND_6 = COLOR_FOREGROUND_YELLOW
+  val COLOR_FOREGROUND_7 = COLOR_FOREGROUND_WHITE
 
-  const val COLOR_BACKGROUND_BLACK = "$ESC\u0050"
-  const val COLOR_BACKGROUND_RED = "$ESC\u0051"
-  const val COLOR_BACKGROUND_GREEN = "$ESC\u0052"
-  const val COLOR_BACKGROUND_YELLOW = "$ESC\u0053"
-  const val COLOR_BACKGROUND_BLUE = "$ESC\u0054"
-  const val COLOR_BACKGROUND_PURPLE = "$ESC\u0055"
-  const val COLOR_BACKGROUND_CYAN = "$ESC\u0056"
-  const val COLOR_BACKGROUND_WHITE = "$ESC\u0057"
+  val COLOR_BACKGROUND_BLACK = byteArrayOf(ESC, 0x50)
+  val COLOR_BACKGROUND_RED = byteArrayOf(ESC, 0x51)
+  val COLOR_BACKGROUND_GREEN = byteArrayOf(ESC, 0x52)
+  val COLOR_BACKGROUND_YELLOW = byteArrayOf(ESC, 0x53)
+  val COLOR_BACKGROUND_BLUE = byteArrayOf(ESC, 0x54)
+  val COLOR_BACKGROUND_PURPLE = byteArrayOf(ESC, 0x55)
+  val COLOR_BACKGROUND_CYAN = byteArrayOf(ESC, 0x56)
+  val COLOR_BACKGROUND_WHITE = byteArrayOf(ESC, 0x57)
 
-  const val COLOR_BACKGROUND_0 = COLOR_BACKGROUND_BLACK
-  const val COLOR_BACKGROUND_1 = COLOR_BACKGROUND_BLUE
-  const val COLOR_BACKGROUND_2 = COLOR_BACKGROUND_RED
-  const val COLOR_BACKGROUND_3 = COLOR_BACKGROUND_PURPLE
-  const val COLOR_BACKGROUND_4 = COLOR_BACKGROUND_GREEN
-  const val COLOR_BACKGROUND_5 = COLOR_BACKGROUND_CYAN
-  const val COLOR_BACKGROUND_6 = COLOR_BACKGROUND_YELLOW
-  const val COLOR_BACKGROUND_7 = COLOR_BACKGROUND_WHITE
+  val COLOR_BACKGROUND_0 = COLOR_BACKGROUND_BLACK
+  val COLOR_BACKGROUND_1 = COLOR_BACKGROUND_BLUE
+  val COLOR_BACKGROUND_2 = COLOR_BACKGROUND_RED
+  val COLOR_BACKGROUND_3 = COLOR_BACKGROUND_PURPLE
+  val COLOR_BACKGROUND_4 = COLOR_BACKGROUND_GREEN
+  val COLOR_BACKGROUND_5 = COLOR_BACKGROUND_CYAN
+  val COLOR_BACKGROUND_6 = COLOR_BACKGROUND_YELLOW
+  val COLOR_BACKGROUND_7 = COLOR_BACKGROUND_WHITE
 
-  const val INVERSE_ON = "$ESC\u005D"
-  const val INVERSE_OFF = "$ESC\u005C"
+  val INVERSE_ON = byteArrayOf(ESC, 0x5D)
+  val INVERSE_OFF = byteArrayOf(ESC, 0x5C)
 
-  fun colorForeground(lightness: Float): String {
+  fun colorForeground(lightness: Float): ByteArray {
     return when {
       lightness < 1F / 8F -> COLOR_FOREGROUND_0
       lightness < 2F / 8F -> COLOR_FOREGROUND_1
@@ -82,7 +82,7 @@ internal object Color {
     }
   }
 
-  fun colorForeground(color0To7: Int): String {
+  fun colorForeground(color0To7: Int): ByteArray {
     return when (color0To7) {
       0 -> COLOR_FOREGROUND_0
       1 -> COLOR_FOREGROUND_1
@@ -95,9 +95,9 @@ internal object Color {
     }
   }
 
-  fun colorForeground(awtColor: AwtColor): String = colorForeground(rgbToHsl(awtColor).third)
+  fun colorForeground(awtColor: AwtColor): ByteArray = colorForeground(rgbToHsl(awtColor).third)
 
-  fun colorBackground(lightness: Float): String {
+  fun colorBackground(lightness: Float): ByteArray {
     return when {
       lightness < 1F / 8F -> COLOR_BACKGROUND_0
       lightness < 2F / 8F -> COLOR_BACKGROUND_1
@@ -110,7 +110,7 @@ internal object Color {
     }
   }
 
-  fun colorBackground(color0To7: Int): String {
+  fun colorBackground(color0To7: Int): ByteArray {
     return when (color0To7) {
       0 -> COLOR_BACKGROUND_0
       1 -> COLOR_BACKGROUND_1
@@ -123,6 +123,6 @@ internal object Color {
     }
   }
 
-  fun colorBackground(awtColor: AwtColor): String =
+  fun colorBackground(awtColor: AwtColor): ByteArray =
     colorBackground(rgbToHsl(awtColor).third)
 }

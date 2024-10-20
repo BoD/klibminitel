@@ -36,13 +36,13 @@ kotlin {
   sourceSets {
     val commonMain by getting {
       kotlin.srcDir(tasks.getByName("generateVersionKt").outputs.files)
+      dependencies {
+        api("org.jetbrains.kotlinx:kotlinx-io-core:_")
+      }
     }
 
     val jvmMain by getting {
       dependencies {
-        // Slf4j
-        implementation("org.slf4j:slf4j-api:_")
-        implementation("org.slf4j:slf4j-simple:_")
         implementation(KotlinX.coroutines.jdk9)
       }
     }

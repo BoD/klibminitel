@@ -22,32 +22,18 @@
  * limitations under the License.
  */
 
-package org.jraf.klibminitel.internal.codes
+package org.jraf.klibminitel.internal.protocol
 
-import org.jraf.klibminitel.internal.codes.Control.ESC
+import org.jraf.klibminitel.internal.protocol.Control.ESC
 
 // See https://jbellue.github.io/stum1b/#2-2-1-2-5-2
-internal object Cursor {
-  /** Also known as Backspace */
-  const val MOVE_CURSOR_LEFT = '\u0008'
+internal object Screen {
+  const val CLEAR_SCREEN_AND_HOME: Byte = 0x0C
 
-  /** Also known as Horizontal Tab */
-  const val MOVE_CURSOR_RIGHT = '\u0009'
+  const val CLEAR_END_OF_LINE: Byte = 0x18
 
-  /* Also known as Line Feed */
-  const val MOVE_CURSOR_BOTTOM = '\u000A'
+  // See https://jbellue.github.io/stum1b/#2-2-1-2-4-1
+  val CSI = byteArrayOf(ESC, 0x5B)
 
-  /* Also known as Vertical Tabulation */
-  const val MOVE_CURSOR_TOP = '\u000B'
-
-  const val SHOW_CURSOR = '\u0011'
-  const val HIDE_CURSOR = '\u0014'
-
-  // See https://jbellue.github.io/stum1b/#2-6-6-2
-  const val GET_CURSOR_POSITION = "$ESC\u0061"
-
-  /** Also known as Unit Separator */
-  // See https://jbellue.github.io/stum1b/#2-2-1-2-5-3
-  const val MOVE_CURSOR = '\u001F'
-  fun moveCursor(x: Int, y: Int): String = "$MOVE_CURSOR${(0x41 + y).toChar()}${(0x41 + x).toChar()}"
+  val CLEAR_BOTTOM_OF_SCREEN = CSI + 0x4A
 }

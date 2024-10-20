@@ -22,14 +22,17 @@
  * limitations under the License.
  */
 
-package org.jraf.klibminitel.internal.codes
+package org.jraf.klibminitel.internal.protocol
 
-import org.jraf.klibminitel.internal.codes.Control.ESC
+internal object Graphics {
+  // See https://jbellue.github.io/stum1b/#2-2-1-2-3-3
+  const val GRAPHICS_MODE_ON: Byte = 0x0E
+  const val GRAPHICS_MODE_OFF: Byte = 0x0F
 
-// See https://jbellue.github.io/stum1b/#2-2-1-2-4-2
-internal object CharacterSize {
-  const val SIZE_NORMAL = "$ESC\u004C"
-  const val SIZE_TALL = "$ESC\u004D"
-  const val SIZE_WIDE = "$ESC\u004E"
-  const val SIZE_DOUBLE = "$ESC\u004F"
+  /**
+   * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
+   * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
+   */
+  // See https://jbellue.github.io/stum1b/#schema2-6
+  fun graphicsCharacter(value: Byte): Byte = (0x20 + value).toByte()
 }

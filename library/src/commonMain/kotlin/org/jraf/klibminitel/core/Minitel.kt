@@ -24,36 +24,41 @@
 
 package org.jraf.klibminitel.core
 
-import org.jraf.klibminitel.internal.codes.Color
-import org.jraf.klibminitel.internal.codes.Control
-import org.jraf.klibminitel.internal.codes.Cursor
-import org.jraf.klibminitel.internal.codes.Cursor.HIDE_CURSOR
-import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_BOTTOM
-import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_LEFT
-import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_RIGHT
-import org.jraf.klibminitel.internal.codes.Cursor.MOVE_CURSOR_TOP
-import org.jraf.klibminitel.internal.codes.Cursor.SHOW_CURSOR
-import org.jraf.klibminitel.internal.codes.Formatting
-import org.jraf.klibminitel.internal.codes.Graphics
-import org.jraf.klibminitel.internal.codes.Graphics.GRAPHICS_MODE_OFF
-import org.jraf.klibminitel.internal.codes.Graphics.GRAPHICS_MODE_ON
-import org.jraf.klibminitel.internal.codes.Screen.CLEAR_BOTTOM_OF_SCREEN
-import org.jraf.klibminitel.internal.codes.Screen.CLEAR_END_OF_LINE
-import org.jraf.klibminitel.internal.codes.Screen.CLEAR_SCREEN_AND_HOME
-import org.jraf.klibminitel.internal.codes.SpecialCharacters.replaceSpecialCharacters
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.PrintWriter
+import kotlinx.io.Sink
+import kotlinx.io.Source
+import kotlinx.io.buffered
+import kotlinx.io.files.Path
+import kotlinx.io.files.SystemFileSystem
+import org.jraf.klibminitel.internal.protocol.Color
+import org.jraf.klibminitel.internal.protocol.Control
+import org.jraf.klibminitel.internal.protocol.Cursor
+import org.jraf.klibminitel.internal.protocol.Cursor.HIDE_CURSOR
+import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_BOTTOM
+import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_LEFT
+import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_RIGHT
+import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_TOP
+import org.jraf.klibminitel.internal.protocol.Cursor.SHOW_CURSOR
+import org.jraf.klibminitel.internal.protocol.Formatting
+import org.jraf.klibminitel.internal.protocol.Graphics
+import org.jraf.klibminitel.internal.protocol.Graphics.GRAPHICS_MODE_OFF
+import org.jraf.klibminitel.internal.protocol.Graphics.GRAPHICS_MODE_ON
+import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_BOTTOM_OF_SCREEN
+import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_END_OF_LINE
+import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_SCREEN_AND_HOME
+import org.jraf.klibminitel.internal.protocol.SpecialCharacters.replaceSpecialCharacters
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 import kotlin.concurrent.thread
 
-class Minitel(filePath: String) {
-  private val fileOutputStream = FileOutputStream(filePath)
-  private val output: PrintWriter = PrintWriter(fileOutputStream)
-  private val input = FileInputStream(File(filePath))
+@Suppress("unused")
+class Minitel(
+  private val keyboard: Source,
+  private val screen: Sink,
+) {
+  constructor(filePath: String) : this(
+    SystemFileSystem.source(Path(filePath)).buffered(),
+    SystemFileSystem.sink(Path(filePath)).buffered(),
+  )
 
   private val readListeners = mutableSetOf<ReadListener>()
   private val systemListeners = mutableSetOf<SystemListener>()
@@ -92,22 +97,16 @@ class Minitel(filePath: String) {
   private fun startReadLoop() {
     thread(name = "Minitel-read-loop") {
       while (true) {
-        val read0 = input.read()
+        val read0 = keyboard.readByte()
         if (isReadingCursorPosition) {
           // See https://jbellue.github.io/stum1b/#2-6-6-2
-          val read1 = input.read()
-          val read2 = input.read()
-          if (read0 == -1 || read1 == -1 || read2 == -1) {
-            getCursorPositionBlockingQueue.offer(-1 to -1)
-            break
-          }
+          val read1 = keyboard.readByte()
+          val read2 = keyboard.readByte()
           val x = read2 - 0x41
           val y = read1 - 0x41
           getCursorPositionBlockingQueue.offer(x to y)
           continue
         }
-
-        if (read0 == -1) break
 
         if (skipRead > 0) {
           skipRead--
@@ -115,38 +114,38 @@ class Minitel(filePath: String) {
         }
         if (read0 == FunctionKey.SEP) {
           // Here's the sequence we receive when turning on: SEP 0x59 SEP 0x53 SEP 0x54 (See https://jbellue.github.io/stum1b/#2-6-13-1)
-          val read1 = input.read()
-          if (read1 == 0x59) {
-            val read2 = input.read()
+          val read1 = keyboard.readByte()
+          if (read1 == FunctionKey.CONNEXION_FIN.code) {
+            val read2 = keyboard.readByte()
             if (read2 == FunctionKey.SEP) {
-              val read3 = input.read()
-              if (read3 == 0x53) {
-                val read4 = input.read()
+              val read3 = keyboard.readByte()
+              if (read3 == FunctionKey.TURN_ON_2.code) {
+                val read4 = keyboard.readByte()
                 if (read4 == FunctionKey.SEP) {
-                  val read5 = input.read()
-                  if (read5 == 0x54) {
+                  val read5 = keyboard.readByte()
+                  if (read5 == FunctionKey.TURN_ON_3.code) {
                     reset()
                     dispatchSystemEvent(SystemEvent.TurnedOnEvent)
                   } else {
-                    val functionKey = FunctionKey.fromCode(read5.toUByte())
+                    val functionKey = FunctionKey.fromCode(read5)
                     dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
                   }
                 } else {
-                  dispatchReadEvent(ReadEvent.CharacterReadEvent(read4.toChar()))
+                  dispatchReadEvent(ReadEvent.CharacterReadEvent(Char(read4.toInt())))
                 }
               } else {
-                val functionKey = FunctionKey.fromCode(read3.toUByte())
+                val functionKey = FunctionKey.fromCode(read3)
                 dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
               }
             } else {
-              dispatchReadEvent(ReadEvent.CharacterReadEvent(read2.toChar()))
+              dispatchReadEvent(ReadEvent.CharacterReadEvent(Char(read2.toInt())))
             }
           } else {
-            val functionKey = FunctionKey.fromCode(read1.toUByte())
+            val functionKey = FunctionKey.fromCode(read1)
             dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
           }
         } else {
-          dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
+          dispatchReadEvent(ReadEvent.CharacterReadEvent(Char(read0.toInt())))
         }
       }
     }
@@ -180,28 +179,28 @@ class Minitel(filePath: String) {
     }
   }
 
-  private fun out(s: String): Int {
-    output.apply {
-      print(s)
+  private fun out(s: ByteArray) {
+    screen.apply {
+      write(s)
       flush()
     }
-    return s.length
   }
 
-  private fun out(c: Char): Int {
-    output.apply {
-      print(c)
+  private fun out(b: Byte) {
+    screen.apply {
+      writeByte(b)
       flush()
     }
-    return 1
   }
 
-  fun print(s: String): Int = out(s.replaceSpecialCharacters())
-  fun print(c: Char): Int = out("$c".replaceSpecialCharacters())
+  fun print(s: String): Int {
+    val replaced = s.replaceSpecialCharacters()
+    out(replaced.toByteArray())
+    return replaced.length
+  }
 
-  fun print(inputStream: InputStream) {
-    inputStream.copyTo(fileOutputStream)
-    fileOutputStream.flush()
+  fun print(c: Char): Int {
+    return print("$c")
   }
 
   fun clearScreenAndHome() {
@@ -216,7 +215,7 @@ class Minitel(filePath: String) {
    * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
    * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
    */
-  fun graphicsCharacter(value: Int) {
+  fun graphicsCharacter(value: Byte) {
     out(Graphics.graphicsCharacter(value))
   }
 

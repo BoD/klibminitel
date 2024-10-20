@@ -24,28 +24,32 @@
 
 package org.jraf.klibminitel.core
 
-sealed class FunctionKey(private val code: UByte) {
+// See https://jbellue.github.io/stum1b/#2-3-6
+sealed class FunctionKey(internal open val code: Byte) {
   companion object {
-    const val SEP = 0x13
+    internal const val SEP: Byte = 0x13
 
     private val knownKeys = arrayOf(ENVOI, RETOUR, REPETITION, GUIDE, ANNULATION, SOMMAIRE, CORRECTION, SUITE, CONNEXION_FIN)
 
-    fun fromCode(code: UByte) = knownKeys.firstOrNull { it.code == code } ?: UNKNOWN(code)
+    internal fun fromCode(code: Byte) = knownKeys.firstOrNull { it.code == code } ?: UNKNOWN(code)
   }
 
-  // See https://jbellue.github.io/stum1b/#2-3-6
-  data object ENVOI : FunctionKey(0x41.toUByte())
-  data object RETOUR : FunctionKey(0x42.toUByte())
-  data object REPETITION : FunctionKey(0x43.toUByte())
-  data object GUIDE : FunctionKey(0x44.toUByte())
-  data object ANNULATION : FunctionKey(0x45.toUByte())
-  data object SOMMAIRE : FunctionKey(0x46.toUByte())
-  data object CORRECTION : FunctionKey(0x47.toUByte())
-  data object SUITE : FunctionKey(0x48.toUByte())
+  data object ENVOI : FunctionKey(0x41)
+  data object RETOUR : FunctionKey(0x42)
+  data object REPETITION : FunctionKey(0x43)
+  data object GUIDE : FunctionKey(0x44)
+  data object ANNULATION : FunctionKey(0x45)
+  data object SOMMAIRE : FunctionKey(0x46)
+  data object CORRECTION : FunctionKey(0x47)
+  data object SUITE : FunctionKey(0x48)
 
   // See https://jbellue.github.io/stum1b/#1-5-3-1-1
-  data object CONNEXION_FIN : FunctionKey(0x59.toUByte())
-  data class UNKNOWN(val code: UByte) : FunctionKey(code) {
+  data object CONNEXION_FIN : FunctionKey(0x59)
+
+  internal data object TURN_ON_2 : FunctionKey(0x53)
+  internal data object TURN_ON_3 : FunctionKey(0x54)
+
+  data class UNKNOWN(override val code: Byte) : FunctionKey(code) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun toString() = "UNKNOWN(${code.toHexString()})"
   }
