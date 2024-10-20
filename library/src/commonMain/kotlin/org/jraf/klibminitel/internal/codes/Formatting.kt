@@ -26,6 +26,7 @@ package org.jraf.klibminitel.internal.codes
 
 import org.jraf.klibminitel.internal.codes.Control.ESC
 
+// See https://jbellue.github.io/stum1b/#2-2-1-2-4-2
 internal object Formatting {
   const val UNDERLINE_ON = "$ESC\u005A"
   const val UNDERLINE_OFF = "$ESC\u0059"

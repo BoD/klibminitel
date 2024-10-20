@@ -22,8 +22,6 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused", "MemberVisibilityCanBePrivate")
-
 package org.jraf.klibminitel.core
 
 import org.jraf.klibminitel.internal.codes.Color
@@ -42,7 +40,7 @@ import org.jraf.klibminitel.internal.codes.Graphics.GRAPHICS_MODE_ON
 import org.jraf.klibminitel.internal.codes.Screen.CLEAR_BOTTOM_OF_SCREEN
 import org.jraf.klibminitel.internal.codes.Screen.CLEAR_END_OF_LINE
 import org.jraf.klibminitel.internal.codes.Screen.CLEAR_SCREEN_AND_HOME
-import org.jraf.klibminitel.internal.codes.replaceSpecialCharacters
+import org.jraf.klibminitel.internal.codes.SpecialCharacters.replaceSpecialCharacters
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -65,11 +63,11 @@ class Minitel(filePath: String) {
   private var isBlink: Boolean? = null
   private var isUnderline: Boolean? = null
 
-  private var characterSize: CharacterSize? = null
-
   private var isLocalEcho: Boolean? = null
 
   private var isScroll: Boolean? = null
+
+  private var readAcknowledgements: Boolean = true
 
   private var skipRead = 0
 
@@ -82,8 +80,12 @@ class Minitel(filePath: String) {
 
   private fun reset() {
     isCursorVisible = null
-    characterSize = null
+    isBlink = null
+    isUnderline = null
     isLocalEcho = null
+    isScroll = null
+    readAcknowledgements = true
+    isReadingCursorPosition = false
     skipRead = 0
   }
 
@@ -92,6 +94,7 @@ class Minitel(filePath: String) {
       while (true) {
         val read0 = input.read()
         if (isReadingCursorPosition) {
+          // See https://jbellue.github.io/stum1b/#2-6-6-2
           val read1 = input.read()
           val read2 = input.read()
           if (read0 == -1 || read1 == -1 || read2 == -1) {
@@ -110,47 +113,37 @@ class Minitel(filePath: String) {
           skipRead--
           continue
         }
-        if (read0 == FunctionKey.CONTROL_KEY_ESCAPE) {
+        if (read0 == FunctionKey.SEP) {
+          // Here's the sequence we receive when turning on: SEP 0x59 SEP 0x53 SEP 0x54 (See https://jbellue.github.io/stum1b/#2-6-13-1)
           val read1 = input.read()
-          val functionKey = FunctionKey.fromCode(read1)
-          dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
-        } else if (read0 == '~'.code) {
-          // Here's the sequence we receive when turning on: ESC CONNEXION_FIN ESC 83 ESC 84
-          input.mark(6)
-          val read1 = input.read()
-          if (read1 == FunctionKey.CONTROL_KEY_ESCAPE) {
+          if (read1 == 0x59) {
             val read2 = input.read()
-            val functionKey2 = FunctionKey.fromCode(read2)
-            if (functionKey2 == FunctionKey.CONNEXION_FIN) {
+            if (read2 == FunctionKey.SEP) {
               val read3 = input.read()
-              if (read3 == FunctionKey.CONTROL_KEY_ESCAPE) {
+              if (read3 == 0x53) {
                 val read4 = input.read()
-                val functionKey4 = FunctionKey.fromCode(read4)
-                if (functionKey4 == FunctionKey.UNKNOWN(83)) {
+                if (read4 == FunctionKey.SEP) {
                   val read5 = input.read()
-                  if (read5 == FunctionKey.CONTROL_KEY_ESCAPE) {
-                    val read6 = input.read()
-                    val functionKey6 = FunctionKey.fromCode(read6)
-                    if (functionKey6 == FunctionKey.UNKNOWN(84)) {
-                      reset()
-                      dispatchSystemEvent(SystemEvent.TurnedOnEvent)
-                    } else {
-                      kotlin.runCatching { input.reset() }
-                    }
+                  if (read5 == 0x54) {
+                    reset()
+                    dispatchSystemEvent(SystemEvent.TurnedOnEvent)
                   } else {
-                    kotlin.runCatching { input.reset() }
+                    val functionKey = FunctionKey.fromCode(read5.toUByte())
+                    dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
                   }
                 } else {
-                  kotlin.runCatching { input.reset() }
+                  dispatchReadEvent(ReadEvent.CharacterReadEvent(read4.toChar()))
                 }
               } else {
-                kotlin.runCatching { input.reset() }
+                val functionKey = FunctionKey.fromCode(read3.toUByte())
+                dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
               }
             } else {
-              kotlin.runCatching { input.reset() }
+              dispatchReadEvent(ReadEvent.CharacterReadEvent(read2.toChar()))
             }
           } else {
-            kotlin.runCatching { input.reset() }
+            val functionKey = FunctionKey.fromCode(read1.toUByte())
+            dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
           }
         } else {
           dispatchReadEvent(ReadEvent.CharacterReadEvent(read0.toChar()))
@@ -204,31 +197,35 @@ class Minitel(filePath: String) {
   }
 
   fun print(s: String): Int = out(s.replaceSpecialCharacters())
-  fun print(c: Char): Int = out(c)
+  fun print(c: Char): Int = out("$c".replaceSpecialCharacters())
 
   fun print(inputStream: InputStream) {
     inputStream.copyTo(fileOutputStream)
     fileOutputStream.flush()
   }
 
-  fun clearScreenAndHome() = out(CLEAR_SCREEN_AND_HOME)
+  fun clearScreenAndHome() {
+    out(CLEAR_SCREEN_AND_HOME)
+  }
 
-  fun graphicsMode(graphicsMode: Boolean): Int {
-    return out(if (graphicsMode) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
+  fun graphicsMode(graphicsMode: Boolean) {
+    out(if (graphicsMode) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
   }
 
   /**
    * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
    * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
    */
-  fun graphicsCharacter(value: Int) = out(Graphics.graphicsCharacter(value))
-
-  fun colorForeground(color0To7: Int): Int {
-    return out(Color.colorForeground(color0To7))
+  fun graphicsCharacter(value: Int) {
+    out(Graphics.graphicsCharacter(value))
   }
 
-  fun colorBackground(color0To7: Int): Int {
-    return out(Color.colorBackground(color0To7))
+  fun colorForeground(color0To7: Int) {
+    out(Color.colorForeground(color0To7))
+  }
+
+  fun colorBackground(color0To7: Int) {
+    out(Color.colorBackground(color0To7))
   }
 
   /**
@@ -241,8 +238,8 @@ class Minitel(filePath: String) {
     colorForeground(foreground0To7)
   }
 
-  fun inverse(inverse: Boolean): Int {
-    return out(if (inverse) Color.INVERSE_ON else Color.INVERSE_OFF)
+  fun inverse(inverse: Boolean) {
+    out(if (inverse) Color.INVERSE_ON else Color.INVERSE_OFF)
   }
 
   fun colorWithInverse(background0To7: Int, foreground0To7: Int) {
@@ -250,56 +247,46 @@ class Minitel(filePath: String) {
     color(foreground0To7, background0To7)
   }
 
-  fun blink(blink: Boolean): Int {
-    if (isBlink == blink) {
-      return 0
-    }
+  fun blink(blink: Boolean) {
+    if (isBlink == blink) return
     isBlink = blink
-    return out(if (blink) Formatting.BLINK_ON else Formatting.BLINK_OFF)
+    out(if (blink) Formatting.BLINK_ON else Formatting.BLINK_OFF)
   }
 
-  fun underline(underline: Boolean): Int {
-    if (isUnderline == underline) {
-      return 0
-    }
+  fun underline(underline: Boolean) {
+    if (isUnderline == underline) return
     isUnderline = underline
-    return out(if (underline) Formatting.UNDERLINE_ON else Formatting.UNDERLINE_OFF)
+    out(if (underline) Formatting.UNDERLINE_ON else Formatting.UNDERLINE_OFF)
   }
 
-  fun characterSize(characterSize: CharacterSize): Int {
-//    if (this.characterSize == characterSize) {
-//      return 0
-//    }
-    this.characterSize = characterSize
-    return out(characterSize.characterSizeCode)
+  fun characterSize(characterSize: CharacterSize) {
+    out(characterSize.characterSizeCode)
   }
 
-  fun showCursor(showCursor: Boolean): Int {
-    if (isCursorVisible == showCursor) {
-      return 0
-    }
+  fun showCursor(showCursor: Boolean) {
+    if (isCursorVisible == showCursor) return
     isCursorVisible = showCursor
-    return out(if (showCursor) SHOW_CURSOR else HIDE_CURSOR)
+    out(if (showCursor) SHOW_CURSOR else HIDE_CURSOR)
   }
 
-  fun moveCursor(x: Int, y: Int): Int {
-    return out(Cursor.moveCursor(x, y))
+  fun moveCursor(x: Int, y: Int) {
+    out(Cursor.moveCursor(x, y))
   }
 
-  fun moveCursorLeft(): Int {
-    return out(MOVE_CURSOR_LEFT)
+  fun moveCursorLeft() {
+    out(MOVE_CURSOR_LEFT)
   }
 
-  fun moveCursorRight(): Int {
-    return out(MOVE_CURSOR_RIGHT)
+  fun moveCursorRight() {
+    out(MOVE_CURSOR_RIGHT)
   }
 
-  fun moveCursorTop(): Int {
-    return out(MOVE_CURSOR_TOP)
+  fun moveCursorTop() {
+    out(MOVE_CURSOR_TOP)
   }
 
-  fun moveCursorBottom(): Int {
-    return out(MOVE_CURSOR_BOTTOM)
+  fun moveCursorBottom() {
+    out(MOVE_CURSOR_BOTTOM)
   }
 
   fun getCursorPosition(): Pair<Int, Int> {
@@ -312,42 +299,60 @@ class Minitel(filePath: String) {
     }
   }
 
-  fun clearEndOfLine() = out(CLEAR_END_OF_LINE)
-  fun clearBottomOfScreen() = out(CLEAR_BOTTOM_OF_SCREEN)
+  fun clearEndOfLine() {
+    out(CLEAR_END_OF_LINE)
+  }
 
-  fun repeatCharacter(c: Char, times: Int) = out(Control.repeatCharacter(c, times))
-  fun repeatLastCharacter(times: Int) = out(Control.repeatLastCharacter(times))
+  fun clearBottomOfScreen() {
+    out(CLEAR_BOTTOM_OF_SCREEN)
+  }
 
-  fun localEcho(localEcho: Boolean): Int {
-    if (isLocalEcho == localEcho) {
-      return 0
-    }
+  fun repeatCharacter(c: Char, times: Int) {
+    out(Control.repeatCharacter(c, times))
+  }
+
+  fun repeatLastCharacter(times: Int) {
+    out(Control.repeatLastCharacter(times))
+  }
+
+  fun localEcho(localEcho: Boolean) {
+    if (isLocalEcho == localEcho) return
     isLocalEcho = localEcho
-    // We get 5 bytes back when we change the local echo setting, ignore them
-    skipRead += 5
-    return out(if (localEcho) Control.LOCAL_ECHO_ON else Control.LOCAL_ECHO_OFF)
-  }
-
-  fun scroll(scroll: Boolean): Int {
-    if (isScroll == scroll) {
-      return 0
+    if (readAcknowledgements) {
+      // We get 5 bytes back when we change the local echo setting, ignore them
+      skipRead += 5
     }
-    isScroll = scroll
-    // We get 4 bytes back when we change the scroll setting, ignore them
-    skipRead += 4
-    return out(if (scroll) Control.SCROLL_ON else Control.SCROLL_OFF)
+    out(if (localEcho) Control.LOCAL_ECHO_ON else Control.LOCAL_ECHO_OFF)
   }
 
-  fun beep() = out(Control.BEEP)
+  fun scroll(scroll: Boolean) {
+    if (isScroll == scroll) return
+    isScroll = scroll
+    if (readAcknowledgements) {
+      // We get 4 bytes back when we change the scroll setting, ignore them
+      skipRead += 4
+    }
+    out(if (scroll) Control.SCROLL_ON else Control.SCROLL_OFF)
+  }
 
+  fun beep() {
+    out(Control.BEEP)
+  }
+
+  fun disableAcknowledgement() {
+    if (!readAcknowledgements) return
+    readAcknowledgements = false
+    out(Control.ACKNOWLEDGE_OFF)
+  }
 
   sealed class ReadEvent {
     data class CharacterReadEvent(val char: Char) : ReadEvent() {
       @OptIn(ExperimentalStdlibApi::class)
       override fun toString(): String {
-        return "$char (${char.code.toHexString()})"
+        return "$char (${char.code.toByte().toHexString()})"
       }
     }
+
     data class FunctionKeyReadEvent(val functionKey: FunctionKey) : ReadEvent()
   }
 

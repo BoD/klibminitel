@@ -62,24 +62,6 @@ class MinitelApp(
   fun start() {
     logd("MinitelApp start")
 
-    thread(name = "Date and time") {
-      while (true) {
-        Thread.sleep(System.currentTimeMillis() % 60_000)
-        if (mode == Mode.WAIT_FOR_INPUT) {
-          // Avoid moving the cursor while the user is typing
-          if (System.currentTimeMillis() - lastReadEvent < 1_000) {
-            continue
-          }
-          val cursorPosition = minitel.getCursorPosition()
-          minitel.showCursor(false)
-          drawDateTime()
-          minitel.moveCursor(cursorPosition.first, cursorPosition.second)
-          minitel.colorWithInverse(5, 0)
-          minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
-        }
-      }
-    }
-
     minitel.addReadListener { e ->
       logd("Read: ${e}")
       lastReadEvent = System.currentTimeMillis()
@@ -125,14 +107,39 @@ class MinitelApp(
         }
       }
     }
+
     minitel.addSystemListener { e ->
       logd("System: ${e}")
-      minitel.localEcho(false)
-      drawScreen()
+      when (e) {
+        is Minitel.SystemEvent.TurnedOnEvent -> {
+          minitel.disableAcknowledgement()
+          minitel.localEcho(false)
+          drawScreen()
+        }
+      }
     }
 
+    minitel.disableAcknowledgement()
     minitel.localEcho(false)
     drawScreen()
+
+    thread(name = "Date and time") {
+      while (true) {
+        Thread.sleep(System.currentTimeMillis() % 60_000)
+        if (mode == Mode.WAIT_FOR_INPUT) {
+          // Avoid moving the cursor while the user is typing
+          if (System.currentTimeMillis() - lastReadEvent < 1_000) {
+            continue
+          }
+          val cursorPosition = minitel.getCursorPosition()
+          minitel.showCursor(false)
+          drawDateTime()
+          minitel.moveCursor(cursorPosition.first, cursorPosition.second)
+          minitel.colorWithInverse(5, 0)
+          minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
+        }
+      }
+    }
   }
 
   private fun drawScreen() {
@@ -225,6 +232,12 @@ class MinitelApp(
 
   private fun handleInput() {
     logd("Input: $input")
+    val input = this.input
+    this.input = ""
+    mode = Mode.DRAWING
+    minitel.showCursor(false)
+    drawInputWindow()
+
     messages += OpenAIClient.Message.User(input)
     buffer += Line(input, isBot = false).splitIfTooLong(SCREEN_WIDTH_NORMAL)
 
@@ -246,9 +259,6 @@ class MinitelApp(
     messages.clear()
     messages.addAll(lastMessages)
 
-    input = ""
-    mode = Mode.DRAWING
-    drawInputWindow()
     drawBuffer()
     drawInput()
     waitForInput()

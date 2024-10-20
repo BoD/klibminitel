@@ -24,18 +24,20 @@
 
 package org.jraf.klibminitel.internal.codes
 
+import org.jraf.klibminitel.internal.codes.Control.ESC
 import org.jraf.klibminitel.internal.util.color.AwtColor
 import org.jraf.klibminitel.internal.util.color.rgbToHsl
 
+// See https://jbellue.github.io/stum1b/#2-2-1-2-4-2
 internal object Color {
-  const val COLOR_FOREGROUND_BLACK = "${Control.ESC}\u0040"
-  const val COLOR_FOREGROUND_RED = "${Control.ESC}\u0041"
-  const val COLOR_FOREGROUND_GREEN = "${Control.ESC}\u0042"
-  const val COLOR_FOREGROUND_YELLOW = "${Control.ESC}\u0043"
-  const val COLOR_FOREGROUND_BLUE = "${Control.ESC}\u0044"
-  const val COLOR_FOREGROUND_PURPLE = "${Control.ESC}\u0045"
-  const val COLOR_FOREGROUND_CYAN = "${Control.ESC}\u0046"
-  const val COLOR_FOREGROUND_WHITE = "${Control.ESC}\u0047"
+  const val COLOR_FOREGROUND_BLACK = "$ESC\u0040"
+  const val COLOR_FOREGROUND_RED = "$ESC\u0041"
+  const val COLOR_FOREGROUND_GREEN = "$ESC\u0042"
+  const val COLOR_FOREGROUND_YELLOW = "$ESC\u0043"
+  const val COLOR_FOREGROUND_BLUE = "$ESC\u0044"
+  const val COLOR_FOREGROUND_PURPLE = "$ESC\u0045"
+  const val COLOR_FOREGROUND_CYAN = "$ESC\u0046"
+  const val COLOR_FOREGROUND_WHITE = "$ESC\u0047"
 
   const val COLOR_FOREGROUND_0 = COLOR_FOREGROUND_BLACK
   const val COLOR_FOREGROUND_1 = COLOR_FOREGROUND_BLUE
@@ -46,14 +48,14 @@ internal object Color {
   const val COLOR_FOREGROUND_6 = COLOR_FOREGROUND_YELLOW
   const val COLOR_FOREGROUND_7 = COLOR_FOREGROUND_WHITE
 
-  const val COLOR_BACKGROUND_BLACK = "${Control.ESC}\u0050"
-  const val COLOR_BACKGROUND_RED = "${Control.ESC}\u0051"
-  const val COLOR_BACKGROUND_GREEN = "${Control.ESC}\u0052"
-  const val COLOR_BACKGROUND_YELLOW = "${Control.ESC}\u0053"
-  const val COLOR_BACKGROUND_BLUE = "${Control.ESC}\u0054"
-  const val COLOR_BACKGROUND_PURPLE = "${Control.ESC}\u0055"
-  const val COLOR_BACKGROUND_CYAN = "${Control.ESC}\u0056"
-  const val COLOR_BACKGROUND_WHITE = "${Control.ESC}\u0057"
+  const val COLOR_BACKGROUND_BLACK = "$ESC\u0050"
+  const val COLOR_BACKGROUND_RED = "$ESC\u0051"
+  const val COLOR_BACKGROUND_GREEN = "$ESC\u0052"
+  const val COLOR_BACKGROUND_YELLOW = "$ESC\u0053"
+  const val COLOR_BACKGROUND_BLUE = "$ESC\u0054"
+  const val COLOR_BACKGROUND_PURPLE = "$ESC\u0055"
+  const val COLOR_BACKGROUND_CYAN = "$ESC\u0056"
+  const val COLOR_BACKGROUND_WHITE = "$ESC\u0057"
 
   const val COLOR_BACKGROUND_0 = COLOR_BACKGROUND_BLACK
   const val COLOR_BACKGROUND_1 = COLOR_BACKGROUND_BLUE
@@ -64,8 +66,8 @@ internal object Color {
   const val COLOR_BACKGROUND_6 = COLOR_BACKGROUND_YELLOW
   const val COLOR_BACKGROUND_7 = COLOR_BACKGROUND_WHITE
 
-  const val INVERSE_ON = "${Control.ESC}\u005D"
-  const val INVERSE_OFF = "${Control.ESC}\u005C"
+  const val INVERSE_ON = "$ESC\u005D"
+  const val INVERSE_OFF = "$ESC\u005C"
 
   fun colorForeground(lightness: Float): String {
     return when {

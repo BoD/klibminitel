@@ -26,9 +26,14 @@ package org.jraf.klibminitel.internal.codes
 
 import org.jraf.klibminitel.internal.codes.Control.ESC
 
+// See https://jbellue.github.io/stum1b/#2-2-1-2-5-2
 internal object Screen {
   const val CLEAR_SCREEN_AND_HOME = '\u000C'
 
   const val CLEAR_END_OF_LINE = '\u0018'
-  const val CLEAR_BOTTOM_OF_SCREEN = "$ESC\u005B\u004A"
+
+  // See https://jbellue.github.io/stum1b/#2-2-1-2-4-1
+  const val CSI = "$ESC\u005B"
+
+  const val CLEAR_BOTTOM_OF_SCREEN = "$CSI\u004A"
 }

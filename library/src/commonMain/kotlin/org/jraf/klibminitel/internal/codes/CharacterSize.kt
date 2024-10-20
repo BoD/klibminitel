@@ -24,14 +24,12 @@
 
 package org.jraf.klibminitel.internal.codes
 
-internal object CharacterSize {
-  const val PARAM_SIZE_NORMAL = 'L'
-  const val PARAM_SIZE_TALL = 'M'
-  const val PARAM_SIZE_WIDE = 'N'
-  const val PARAM_SIZE_DOUBLE = 'O'
+import org.jraf.klibminitel.internal.codes.Control.ESC
 
-  const val SIZE_NORMAL = "${Control.ESC}$PARAM_SIZE_NORMAL"
-  const val SIZE_TALL = "${Control.ESC}$PARAM_SIZE_TALL"
-  const val SIZE_WIDE = "${Control.ESC}$PARAM_SIZE_WIDE"
-  const val SIZE_DOUBLE = "${Control.ESC}$PARAM_SIZE_DOUBLE"
+// See https://jbellue.github.io/stum1b/#2-2-1-2-4-2
+internal object CharacterSize {
+  const val SIZE_NORMAL = "$ESC\u004C"
+  const val SIZE_TALL = "$ESC\u004D"
+  const val SIZE_WIDE = "$ESC\u004E"
+  const val SIZE_DOUBLE = "$ESC\u004F"
 }

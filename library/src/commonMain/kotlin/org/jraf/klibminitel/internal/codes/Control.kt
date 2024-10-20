@@ -24,29 +24,45 @@
 
 package org.jraf.klibminitel.internal.codes
 
-// See http://millevaches.hydraule.org/info/minitel/specs/codes.htm
-// and https://archive.org/stream/minitel-stum1b/minitel-stum1b_djvu.txt
-// and https://grandzebu.net/informatique/utiles/videotex.rtf
 internal object Control {
   const val ESC = '\u001B'
 
-  private const val REPEAT = '\u0012'
+  // See https://jbellue.github.io/stum1b/#2-6-2
+  private const val PRO2 = '\u003A'
+  private const val PRO3 = '\u003B'
 
-  // See https://forum.arduino.cc/t/aller-plus-loin-avec-un-minitel/484922/9
-  // ESC, PRO3, AIGUILLAGE_OFF, RCPT_ECRAN, EMET_MODEM
-  const val LOCAL_ECHO_OFF = "$ESC\u003B\u0060\u0058\u0052"
-  // ESC, PRO3, AIGUILLAGE_ON, RCPT_ECRAN, EMET_MODEM
-  const val LOCAL_ECHO_ON = "$ESC\u003B\u0061\u0058\u0052"
+  // See https://jbellue.github.io/stum1b/#2-6-3-2
+  private const val ROUTING_OFF = '\u0060'
+  private const val ROUTING_ON = '\u0061'
 
-  // See https://jbellue.github.io/stum1b/
-  // ESC, PRO2, START, ROULEAU
-  const val SCROLL_ON = "$ESC\u003A\u0069\u0043"
+  // See https://jbellue.github.io/stum1b/#2-6-1
+  private const val SCREEN_SEND = '\u0050'
+  private const val SCREEN_RECEIVE = '\u0058'
+  private const val MODEM_SEND = '\u0052'
+  private const val SOCKET_SEND = '\u0053'
 
-  // ESC, PRO2, STOP, ROULEAU
-  const val SCROLL_OFF = "$ESC\u003A\u006A\u0043"
+  // This references the modem, because the keyboard goes through the modem and then to the screen in "local" mode
+  // See schema in https://jbellue.github.io/stum1b/#3-1
+  const val LOCAL_ECHO_OFF = "$ESC$PRO3$ROUTING_OFF$SCREEN_RECEIVE$MODEM_SEND"
+  const val LOCAL_ECHO_ON = "$ESC$PRO3$ROUTING_ON$SCREEN_RECEIVE$MODEM_SEND"
+
+  // See https://jbellue.github.io/stum1b/#2-6-11-1
+  private const val START = '\u0069'
+  private const val STOP = '\u006A'
+  private const val SCROLL = '\u0043'
+  const val SCROLL_ON = "$ESC$PRO2$START$SCROLL"
+  const val SCROLL_OFF = "$ESC$PRO2$STOP$SCROLL"
+
+  // See https://jbellue.github.io/stum1b/#2-6-4-2
+  private const val ACK_OFF = '\u0064'
+  private const val ACKNOWLEDGE_OFF_SCREEN = "$ESC$PRO2$ACK_OFF$SCREEN_SEND"
+  private const val ACKNOWLEDGE_OFF_SOCKET = "$ESC$PRO2$ACK_OFF$SOCKET_SEND"
+  const val ACKNOWLEDGE_OFF = "$ACKNOWLEDGE_OFF_SCREEN$ACKNOWLEDGE_OFF_SOCKET"
 
   const val BEEP = "$ESC\u0007"
 
-  fun repeatCharacter(c: Char, times: Int): String = "$c$REPEAT${(0x40 + times - 1).toChar()}"
-  fun repeatLastCharacter(times: Int): String = "$REPEAT${(0x40 + times).toChar()}"
+  // See https://jbellue.github.io/stum1b/#2-2-1-2-6-1
+  private const val REP = '\u0012'
+  fun repeatCharacter(c: Char, times: Int): String = "$c$REP${(0x40 + times - 1).toChar()}"
+  fun repeatLastCharacter(times: Int): String = "$REP${(0x40 + times).toChar()}"
 }
