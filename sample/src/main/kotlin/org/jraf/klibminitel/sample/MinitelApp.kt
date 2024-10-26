@@ -48,11 +48,6 @@ class MinitelApp(
   filePath: String,
   authBearerToken: String,
 ) {
-  //  private val minitel = Minitel(filePath)
-  private val minitel = Minitel(
-    keyboard = System.`in`.asSource().buffered(),
-    screen = System.out.asSink().buffered(),
-  )
   private val openAIClient = OpenAIClient(
     ClientConfiguration(authBearerToken = authBearerToken),
   )
@@ -70,61 +65,67 @@ class MinitelApp(
 
   private var lastReadEvent = 0L
 
-  private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+  private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
   suspend fun start() {
     logd("MinitelApp start")
-    minitel.addSystemListener { e ->
-      coroutineScope.launch { onSystemEvent(e) }
-    }
+    // val minitel = Minitel(filePath)
+    val minitel = Minitel(
+      keyboard = System.`in`.asSource().buffered(),
+      screen = System.out.asSink().buffered(),
+    )
 
-    minitel.addKeyboardListener { e ->
-      coroutineScope.launch { onKeyboardEvent(e) }
-    }
-
-    // Clock
-    coroutineScope.launch {
-      while (true) {
-        delay(System.currentTimeMillis() % 60_000)
-        if (mode == Mode.WAIT_FOR_INPUT) {
-          // Avoid moving the cursor while the user is typing
-          if (System.currentTimeMillis() - lastReadEvent < 1_000) {
-            continue
-          }
-          val savedCursorPosition = minitel.getCursorPosition()
-          minitel.showCursor(false)
-          drawDateTime()
-
-          // Go back to the input
-          minitel.moveCursor(savedCursorPosition.first, savedCursorPosition.second)
-          minitel.inverse(true)
-          minitel.color(background0To7 = 0, foreground0To7 = 5)
-          minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
+    minitel.connect {
+      coroutineScope.launch {
+        system.collect { e ->
+          onSystemEvent(e, screen)
         }
       }
-    }
 
-    coroutineScope.launch {
-      minitel.disableAcknowledgement()
-      minitel.localEcho(false)
-      drawScreen()
-    }
+      // Clock
+      coroutineScope.launch {
+        while (true) {
+          delay(System.currentTimeMillis() % 60_000)
+          if (mode == Mode.WAIT_FOR_INPUT) {
+            // Avoid moving the cursor while the user is typing
+            if (System.currentTimeMillis() - lastReadEvent < 1_000) {
+              continue
+            }
+            val savedCursorPosition = screen.getCursorPosition()
+            screen.showCursor(false)
+            screen.drawDateTime()
 
-    minitel.startReadLoop()
+            // Go back to the input
+            screen.moveCursor(savedCursorPosition.first, savedCursorPosition.second)
+            screen.inverse(true)
+            screen.color(background0To7 = 0, foreground0To7 = 5)
+            screen.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
+          }
+        }
+      }
+
+      screen.disableAcknowledgement()
+      screen.localEcho(false)
+      screen.drawScreen()
+
+      keyboard.collect { e ->
+        onKeyboardEvent(e, screen)
+      }
+    }
   }
 
-  private suspend fun onSystemEvent(e: Minitel.SystemEvent) {
+  private suspend fun onSystemEvent(e: Minitel.SystemEvent, screen: Minitel.Screen) {
     logd("System: ${e}")
     when (e) {
       is Minitel.SystemEvent.TurnedOnEvent -> {
-        minitel.disableAcknowledgement()
-        minitel.localEcho(false)
-        drawScreen()
+        screen.disableAcknowledgement()
+        screen.localEcho(false)
+        screen.drawScreen()
       }
     }
   }
 
-  private suspend fun onKeyboardEvent(e: Minitel.KeyboardEvent) {
+  private suspend fun onKeyboardEvent(e: Minitel.KeyboardEvent, screen: Minitel.Screen) {
     logd("Keyboard: ${e}")
     lastReadEvent = System.currentTimeMillis()
 
@@ -133,14 +134,14 @@ class MinitelApp(
         is Minitel.KeyboardEvent.CharacterEvent -> {
           if (e.char.isISOControl()) return
           if (input.length >= SCREEN_WIDTH_NORMAL * 3) {
-            minitel.beep()
+            screen.beep()
             return
           }
           val c = e.char.invertCase()
           input += c
-          minitel.print(c)
+          screen.print(c)
 
-          minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
+          screen.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
         }
 
         is Minitel.KeyboardEvent.FunctionKeyEvent -> {
@@ -148,19 +149,19 @@ class MinitelApp(
             FunctionKey.CORRECTION -> {
               if (input.isNotEmpty()) {
                 input = input.dropLast(1)
-                minitel.moveCursorLeft()
-                minitel.clearEndOfLine()
+                screen.moveCursorLeft()
+                screen.clearEndOfLine()
 
-                minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
+                screen.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
               }
             }
 
             FunctionKey.ENVOI -> {
-              handleInput()
+              screen.handleInput()
             }
 
             FunctionKey.REPETITION -> {
-              drawScreen()
+              screen.drawScreen()
             }
 
             else -> {}
@@ -170,10 +171,10 @@ class MinitelApp(
     }
   }
 
-  private suspend fun drawScreen() {
+  private suspend fun Minitel.Screen.drawScreen() {
     mode = Mode.DRAWING
-    minitel.showCursor(false)
-    minitel.clearScreenAndHome()
+    showCursor(false)
+    clearScreenAndHome()
     drawHeader()
     drawDateTime()
     bufferCursor = 0
@@ -183,75 +184,75 @@ class MinitelApp(
     waitForInput()
   }
 
-  private suspend fun drawHeader() {
-    minitel.moveCursor(0, 1)
-    minitel.color(background0To7 = 2, foreground0To7 = 5)
-    minitel.characterSize(CharacterSize.TALL)
-    minitel.print(" 3615 ")
-    minitel.characterSize(CharacterSize.DOUBLE)
-    minitel.print("Chat")
-    minitel.characterSize(CharacterSize.TALL)
-    minitel.print("!")
-    minitel.clearEndOfLine()
+  private suspend fun Minitel.Screen.drawHeader() {
+    moveCursor(0, 1)
+    color(background0To7 = 2, foreground0To7 = 5)
+    characterSize(CharacterSize.TALL)
+    print(" 3615 ")
+    characterSize(CharacterSize.DOUBLE)
+    print("Chat")
+    characterSize(CharacterSize.TALL)
+    print("!")
+    clearEndOfLine()
   }
 
-  private suspend fun drawDateTime() {
+  private suspend fun Minitel.Screen.drawDateTime() {
     val date = getDate()
-    minitel.moveCursor(SCREEN_WIDTH_NORMAL - date.length - 1, 0)
-    minitel.color(background0To7 = 2, foreground0To7 = 0)
-    minitel.print(date)
+    moveCursor(SCREEN_WIDTH_NORMAL - date.length - 1, 0)
+    color(background0To7 = 2, foreground0To7 = 0)
+    print(date)
 
     val time = getTime()
-    minitel.moveCursor(SCREEN_WIDTH_NORMAL - time.length - 1, 1)
-    minitel.color(background0To7 = 2, foreground0To7 = 0)
-    minitel.print(time)
+    moveCursor(SCREEN_WIDTH_NORMAL - time.length - 1, 1)
+    color(background0To7 = 2, foreground0To7 = 0)
+    print(time)
   }
 
-  private suspend fun drawInputWindow() {
-    minitel.moveCursor(0, SCREEN_HEIGHT_NORMAL - 3)
-    minitel.inverse(true)
-    minitel.color(background0To7 = 0, foreground0To7 = 5)
-    minitel.clearEndOfLine()
+  private suspend fun Minitel.Screen.drawInputWindow() {
+    moveCursor(0, SCREEN_HEIGHT_NORMAL - 3)
+    inverse(true)
+    color(background0To7 = 0, foreground0To7 = 5)
+    clearEndOfLine()
 
-    minitel.moveCursorBottom()
-    minitel.clearEndOfLine()
+    moveCursorBottom()
+    clearEndOfLine()
 
-    minitel.moveCursorBottom()
-    minitel.clearEndOfLine()
+    moveCursorBottom()
+    clearEndOfLine()
   }
 
-  private suspend fun drawInput() {
-    minitel.moveCursor(0, SCREEN_HEIGHT_NORMAL - 3)
-    minitel.inverse(true)
-    minitel.color(background0To7 = 0, foreground0To7 = 5)
-    minitel.print(input)
-    minitel.showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
+  private suspend fun Minitel.Screen.drawInput() {
+    moveCursor(0, SCREEN_HEIGHT_NORMAL - 3)
+    inverse(true)
+    color(background0To7 = 0, foreground0To7 = 5)
+    print(input)
+    showCursor(input.length < SCREEN_WIDTH_NORMAL * 3)
   }
 
   private var bufferCursor = 0
 
-  private suspend fun drawBuffer() {
-    minitel.showCursor(false)
+  private suspend fun Minitel.Screen.drawBuffer() {
+    showCursor(false)
     val bufferWindow = buffer.takeLast(SCREEN_HEIGHT_NORMAL - 3 - 2)
     if (bufferWindow.size < SCREEN_HEIGHT_NORMAL - 3 - 2) {
       val currentBufferCursor = bufferCursor
       for (i in bufferWindow.indices) {
         if (i >= currentBufferCursor) {
-          minitel.moveCursor(0, i + 2)
-          minitel.clearEndOfLine()
+          moveCursor(0, i + 2)
+          clearEndOfLine()
           val line = bufferWindow[i]
-          minitel.colorForeground(if (line.isBot) 7 else 3)
-          minitel.print(line.text)
+          colorForeground(if (line.isBot) 7 else 3)
+          print(line.text)
           bufferCursor++
         }
       }
     } else {
       for (i in bufferWindow.indices.reversed()) {
-        minitel.moveCursor(0, i + 2)
-        minitel.clearEndOfLine()
+        moveCursor(0, i + 2)
+        clearEndOfLine()
         val line = bufferWindow[i]
-        minitel.colorForeground(if (line.isBot) 7 else 3)
-        minitel.print(line.text)
+        colorForeground(if (line.isBot) 7 else 3)
+        print(line.text)
       }
     }
   }
@@ -260,12 +261,12 @@ class MinitelApp(
     mode = Mode.WAIT_FOR_INPUT
   }
 
-  private suspend fun handleInput() {
+  private suspend fun Minitel.Screen.handleInput() {
     logd("Input: $input")
-    val input = this.input
-    this.input = ""
+    val input = input
+    this@MinitelApp.input = ""
     mode = Mode.DRAWING
-    minitel.showCursor(false)
+    showCursor(false)
     drawInputWindow()
 
     messages += OpenAIClient.Message.User(input)
