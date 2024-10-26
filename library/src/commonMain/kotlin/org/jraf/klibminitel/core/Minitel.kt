@@ -24,6 +24,10 @@
 
 package org.jraf.klibminitel.core
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.withContext
 import kotlinx.io.Sink
 import kotlinx.io.Source
 import kotlinx.io.buffered
@@ -46,9 +50,6 @@ import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_BOTTOM_OF_SCREEN
 import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_END_OF_LINE
 import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_SCREEN_AND_HOME
 import org.jraf.klibminitel.internal.protocol.SpecialCharacters.replaceSpecialCharacters
-import java.util.concurrent.BlockingQueue
-import java.util.concurrent.LinkedBlockingDeque
-import kotlin.concurrent.thread
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class Minitel(
@@ -60,7 +61,7 @@ class Minitel(
     SystemFileSystem.sink(Path(filePath)).buffered(),
   )
 
-  private val readListeners = mutableSetOf<ReadListener>()
+  private val keyboardListeners = mutableSetOf<KeyboardListener>()
   private val systemListeners = mutableSetOf<SystemListener>()
 
   private var isCursorVisible: Boolean? = null
@@ -74,11 +75,7 @@ class Minitel(
   private var skipRead = 0
 
   private var isReadingCursorPosition = false
-  private var getCursorPositionBlockingQueue: BlockingQueue<Pair<Int, Int>> = LinkedBlockingDeque()
-
-  init {
-    startReadLoop()
-  }
+  private val cursorPositionResultChannel: Channel<Pair<Int, Int>> = Channel(1)
 
   private fun reset() {
     isCursorVisible = null
@@ -89,77 +86,99 @@ class Minitel(
     skipRead = 0
   }
 
-  private fun startReadLoop() {
-    thread(name = "Minitel-read-loop") {
-      while (true) {
-        val read0 = keyboard.readByte()
-        if (isReadingCursorPosition) {
-          // See https://jbellue.github.io/stum1b/#2-6-6-2
-          val read1 = keyboard.readByte()
-          val read2 = keyboard.readByte()
-          val x = read2 - 0x41
-          val y = read1 - 0x41
-          getCursorPositionBlockingQueue.offer(x to y)
-          continue
-        }
+  private suspend fun readKeyboard(): Byte = withContext(Dispatchers.IO) { keyboard.readByte() }
 
-        if (skipRead > 0) {
-          skipRead--
-          continue
-        }
-        if (read0 == FunctionKey.SEP) {
-          // Here's the sequence we receive when turning on: SEP 0x59 SEP 0x53 SEP 0x54 (See https://jbellue.github.io/stum1b/#2-6-13-1)
-          val read1 = keyboard.readByte()
-          if (read1 == FunctionKey.CONNEXION_FIN.code) {
-            val read2 = keyboard.readByte()
-            if (read2 == FunctionKey.SEP) {
-              val read3 = keyboard.readByte()
-              if (read3 == FunctionKey.TURN_ON_2.code) {
-                val read4 = keyboard.readByte()
-                if (read4 == FunctionKey.SEP) {
-                  val read5 = keyboard.readByte()
-                  if (read5 == FunctionKey.TURN_ON_3.code) {
-                    reset()
-                    dispatchSystemEvent(SystemEvent.TurnedOnEvent)
-                  } else {
-                    val functionKey = FunctionKey.fromCode(read5)
-                    dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
-                  }
+  private suspend fun writeToScreen(s: ByteArray) = withContext(Dispatchers.IO) {
+    screen.apply {
+      write(s)
+      flush()
+    }
+  }
+
+  private suspend fun writeToScreen(b: Byte) = withContext(Dispatchers.IO) {
+    screen.apply {
+      writeByte(b)
+      flush()
+    }
+  }
+
+  suspend fun startReadLoop() {
+    while (true) {
+      val read0 = readKeyboard()
+      if (isReadingCursorPosition) {
+        // See https://jbellue.github.io/stum1b/#2-6-6-2
+        val read1 = readKeyboard()
+        val read2 = readKeyboard()
+        val x = read2 - 0x41
+        val y = read1 - 0x41
+        cursorPositionResultChannel.send(x to y)
+        continue
+      }
+
+      if (skipRead > 0) {
+        skipRead--
+        continue
+      }
+      if (read0 == FunctionKey.SEP) {
+        // Here's the sequence we receive when turning on: SEP 0x59 SEP 0x53 SEP 0x54 (See https://jbellue.github.io/stum1b/#2-6-13-1)
+        val read1 = readKeyboard()
+        if (read1 == FunctionKey.CONNEXION_FIN.code) {
+          val read2 = readKeyboard()
+          if (read2 == FunctionKey.SEP) {
+            val read3 = readKeyboard()
+            if (read3 == FunctionKey.TURN_ON_2.code) {
+              val read4 = readKeyboard()
+              if (read4 == FunctionKey.SEP) {
+                val read5 = readKeyboard()
+                if (read5 == FunctionKey.TURN_ON_3.code) {
+                  reset()
+                  dispatchSystemEvent(SystemEvent.TurnedOnEvent)
                 } else {
-                  dispatchReadEvent(ReadEvent.CharacterReadEvent(Char(read4.toInt())))
+                  val functionKey = FunctionKey.fromCode(read5)
+                  dispatchKeyboardEvent(KeyboardEvent.FunctionKeyEvent(functionKey))
                 }
               } else {
-                val functionKey = FunctionKey.fromCode(read3)
-                dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
+                dispatchKeyboardEvent(KeyboardEvent.CharacterEvent(Char(read4.toInt())))
               }
             } else {
-              dispatchReadEvent(ReadEvent.CharacterReadEvent(Char(read2.toInt())))
+              val functionKey = FunctionKey.fromCode(read3)
+              dispatchKeyboardEvent(KeyboardEvent.FunctionKeyEvent(functionKey))
             }
           } else {
-            val functionKey = FunctionKey.fromCode(read1)
-            dispatchReadEvent(ReadEvent.FunctionKeyReadEvent(functionKey))
+            dispatchKeyboardEvent(KeyboardEvent.CharacterEvent(Char(read2.toInt())))
           }
         } else {
-          dispatchReadEvent(ReadEvent.CharacterReadEvent(Char(read0.toInt())))
+          val functionKey = FunctionKey.fromCode(read1)
+          dispatchKeyboardEvent(KeyboardEvent.FunctionKeyEvent(functionKey))
         }
+      } else {
+        dispatchKeyboardEvent(KeyboardEvent.CharacterEvent(Char(read0.toInt())))
       }
     }
   }
 
-  fun addReadListener(listener: ReadListener) {
-    readListeners += listener
+  /**
+   * Add a listener to be notified of keyboard events.
+   * Note: the listener will be notified on [Dispatchers.Default].
+   */
+  fun addKeyboardListener(listener: KeyboardListener) {
+    keyboardListeners += listener
   }
 
-  fun removeReadListener(listener: ReadListener) {
-    readListeners -= listener
+  fun removeKeyboardListener(listener: KeyboardListener) {
+    keyboardListeners -= listener
   }
 
-  private fun dispatchReadEvent(readEvent: ReadEvent) {
-    for (it in readListeners) {
-      it.onReadEvent(readEvent)
+  private fun dispatchKeyboardEvent(keyboardEvent: KeyboardEvent) {
+    for (it in keyboardListeners) {
+      it.onKeyboardEvent(keyboardEvent)
     }
   }
 
+  /**
+   * Add a listener to be notified of system events.
+   * Note: the listener will be notified on [Dispatchers.Default].
+   */
   fun addSystemListener(listener: SystemListener) {
     systemListeners += listener
   }
@@ -174,173 +193,167 @@ class Minitel(
     }
   }
 
-  private fun out(s: ByteArray) {
-    screen.apply {
-      write(s)
-      flush()
-    }
-  }
-
-  private fun out(b: Byte) {
-    screen.apply {
-      writeByte(b)
-      flush()
-    }
-  }
-
-  fun print(s: String): Int {
+  suspend fun print(s: String): Int {
     val replaced = s.replaceSpecialCharacters()
-    out(replaced.toByteArray())
+    writeToScreen(replaced.encodeToByteArray())
     return replaced.length
   }
 
-  fun print(c: Char): Int {
+  suspend fun print(c: Char): Int {
     return print("$c")
   }
 
-  fun clearScreenAndHome() {
-    out(CLEAR_SCREEN_AND_HOME)
+  suspend fun clearScreenAndHome() {
+    writeToScreen(CLEAR_SCREEN_AND_HOME)
   }
 
-  fun graphicsMode(graphicsMode: Boolean) {
-    out(if (graphicsMode) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
+  suspend fun graphicsMode(graphicsMode: Boolean) {
+    writeToScreen(if (graphicsMode) GRAPHICS_MODE_ON else GRAPHICS_MODE_OFF)
   }
 
   /**
    * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
    * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
    */
-  fun graphicsCharacter(value: Byte) {
-    out(Graphics.graphicsCharacter(value))
+
+  /**
+   * Pass a value made of 3 rows of 2 bits each, from top to bottom, left to right.
+   * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
+   */
+  suspend fun graphicsCharacter(value: Byte) {
+    writeToScreen(Graphics.graphicsCharacter(value))
   }
 
-  fun colorForeground(color0To7: Int) {
-    out(Color.colorForeground(color0To7))
+  suspend fun colorForeground(color0To7: Int) {
+    writeToScreen(Color.colorForeground(color0To7))
   }
 
-  fun colorBackground(color0To7: Int) {
-    out(Color.colorBackground(color0To7))
+  suspend fun colorBackground(color0To7: Int) {
+    writeToScreen(Color.colorBackground(color0To7))
   }
 
   /**
    * Note: the background color works only when printing at least one space.
    */
-  fun color(background0To7: Int, foreground0To7: Int) {
+
+  /**
+   * Note: the background color works only when printing at least one space.
+   */
+  suspend fun color(background0To7: Int, foreground0To7: Int) {
     colorBackground(background0To7)
     colorForeground(foreground0To7)
   }
 
-  fun inverse(inverse: Boolean) {
-    out(if (inverse) Color.INVERSE_ON else Color.INVERSE_OFF)
+  suspend fun inverse(inverse: Boolean) {
+    writeToScreen(if (inverse) Color.INVERSE_ON else Color.INVERSE_OFF)
   }
 
-  fun blink(blink: Boolean) {
-    out(if (blink) Formatting.BLINK_ON else Formatting.BLINK_OFF)
+  suspend fun blink(blink: Boolean) {
+    writeToScreen(if (blink) Formatting.BLINK_ON else Formatting.BLINK_OFF)
   }
 
-  fun underline(underline: Boolean) {
-    out(if (underline) Formatting.UNDERLINE_ON else Formatting.UNDERLINE_OFF)
+  suspend fun underline(underline: Boolean) {
+    writeToScreen(if (underline) Formatting.UNDERLINE_ON else Formatting.UNDERLINE_OFF)
   }
 
-  fun characterSize(characterSize: CharacterSize) {
-    out(characterSize.characterSizeCode)
+  suspend fun characterSize(characterSize: CharacterSize) {
+    writeToScreen(characterSize.characterSizeCode)
   }
 
-  fun showCursor(showCursor: Boolean) {
+  suspend fun showCursor(showCursor: Boolean) {
     if (isCursorVisible == showCursor) return
     isCursorVisible = showCursor
-    out(if (showCursor) SHOW_CURSOR else HIDE_CURSOR)
+    writeToScreen(if (showCursor) SHOW_CURSOR else HIDE_CURSOR)
   }
 
-  fun moveCursor(x: Int, y: Int) {
-    out(Cursor.moveCursor(x, y))
+  suspend fun moveCursor(x: Int, y: Int) {
+    writeToScreen(Cursor.moveCursor(x, y))
   }
 
-  fun moveCursorLeft() {
-    out(MOVE_CURSOR_LEFT)
+  suspend fun moveCursorLeft() {
+    writeToScreen(MOVE_CURSOR_LEFT)
   }
 
-  fun moveCursorRight() {
-    out(MOVE_CURSOR_RIGHT)
+  suspend fun moveCursorRight() {
+    writeToScreen(MOVE_CURSOR_RIGHT)
   }
 
-  fun moveCursorTop() {
-    out(MOVE_CURSOR_TOP)
+  suspend fun moveCursorTop() {
+    writeToScreen(MOVE_CURSOR_TOP)
   }
 
-  fun moveCursorBottom() {
-    out(MOVE_CURSOR_BOTTOM)
+  suspend fun moveCursorBottom() {
+    writeToScreen(MOVE_CURSOR_BOTTOM)
   }
 
-  fun getCursorPosition(): Pair<Int, Int> {
+  suspend fun getCursorPosition(): Pair<Int, Int> {
     isReadingCursorPosition = true
-    out(Cursor.GET_CURSOR_POSITION)
+    writeToScreen(Cursor.GET_CURSOR_POSITION)
     return try {
-      getCursorPositionBlockingQueue.take()
+      cursorPositionResultChannel.receive()
     } finally {
       isReadingCursorPosition = false
     }
   }
 
-  fun clearEndOfLine() {
-    out(CLEAR_END_OF_LINE)
+  suspend fun clearEndOfLine() {
+    writeToScreen(CLEAR_END_OF_LINE)
   }
 
-  fun clearBottomOfScreen() {
-    out(CLEAR_BOTTOM_OF_SCREEN)
+  suspend fun clearBottomOfScreen() {
+    writeToScreen(CLEAR_BOTTOM_OF_SCREEN)
   }
 
-  fun repeatCharacter(c: Char, times: Int) {
-    out(Control.repeatCharacter(c, times))
+  suspend fun repeatCharacter(c: Char, times: Int) {
+    writeToScreen(Control.repeatCharacter(c, times))
   }
 
-  fun repeatLastCharacter(times: Int) {
-    out(Control.repeatLastCharacter(times))
+  suspend fun repeatLastCharacter(times: Int) {
+    writeToScreen(Control.repeatLastCharacter(times))
   }
 
-  fun localEcho(localEcho: Boolean) {
+  suspend fun localEcho(localEcho: Boolean) {
     if (isLocalEcho == localEcho) return
     isLocalEcho = localEcho
     if (readAcknowledgements) {
       // We get 5 bytes back when we change the local echo setting, ignore them
       skipRead += 5
     }
-    out(if (localEcho) Control.LOCAL_ECHO_ON else Control.LOCAL_ECHO_OFF)
+    writeToScreen(if (localEcho) Control.LOCAL_ECHO_ON else Control.LOCAL_ECHO_OFF)
   }
 
-  fun scroll(scroll: Boolean) {
+  suspend fun scroll(scroll: Boolean) {
     if (isScroll == scroll) return
     isScroll = scroll
     if (readAcknowledgements) {
       // We get 4 bytes back when we change the scroll setting, ignore them
       skipRead += 4
     }
-    out(if (scroll) Control.SCROLL_ON else Control.SCROLL_OFF)
+    writeToScreen(if (scroll) Control.SCROLL_ON else Control.SCROLL_OFF)
   }
 
-  fun beep() {
-    out(Control.BEEP)
+  suspend fun beep() {
+    writeToScreen(Control.BEEP)
   }
 
-  fun disableAcknowledgement() {
+  suspend fun disableAcknowledgement() {
     if (!readAcknowledgements) return
     readAcknowledgements = false
-    out(Control.ACKNOWLEDGE_OFF)
+    writeToScreen(Control.ACKNOWLEDGE_OFF)
   }
 
-  sealed class ReadEvent {
-    data class CharacterReadEvent(val char: Char) : ReadEvent() {
-      @OptIn(ExperimentalStdlibApi::class)
+  sealed class KeyboardEvent {
+    data class CharacterEvent(val char: Char) : KeyboardEvent() {
       override fun toString(): String {
-        return "$char (${char.code.toByte().toHexString()})"
+        return "$char (${@OptIn(ExperimentalStdlibApi::class) char.code.toByte().toHexString()})"
       }
     }
 
-    data class FunctionKeyReadEvent(val functionKey: FunctionKey) : ReadEvent()
+    data class FunctionKeyEvent(val functionKey: FunctionKey) : KeyboardEvent()
   }
 
-  fun interface ReadListener {
-    fun onReadEvent(readEvent: ReadEvent)
+  fun interface KeyboardListener {
+    fun onKeyboardEvent(keyboardEvent: KeyboardEvent)
   }
 
   sealed class SystemEvent {

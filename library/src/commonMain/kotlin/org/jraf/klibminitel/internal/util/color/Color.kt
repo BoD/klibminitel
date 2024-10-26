@@ -28,11 +28,16 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-internal typealias AwtColor = java.awt.Color
+data class RgbColor(
+  val r: Float,
+  val g: Float,
+  val b: Float,
+) {
+  companion object
+}
 
-internal fun rgbToHsl(color: AwtColor): Triple<Float, Float, Float> {
-  val components = color.getRGBColorComponents(null)
-  return rgbToHsl(components[0], components[1], components[2])
+internal fun rgbToHsl(color: RgbColor): Triple<Float, Float, Float> {
+  return rgbToHsl(color.r, color.g, color.b)
 }
 
 internal fun rgbToHsl(r: Float, g: Float, b: Float): Triple<Float, Float, Float> {

@@ -25,7 +25,7 @@
 package org.jraf.klibminitel.internal.protocol
 
 import org.jraf.klibminitel.internal.protocol.Control.ESC
-import org.jraf.klibminitel.internal.util.color.AwtColor
+import org.jraf.klibminitel.internal.util.color.RgbColor
 import org.jraf.klibminitel.internal.util.color.rgbToHsl
 
 // See https://jbellue.github.io/stum1b/#2-2-1-2-4-2
@@ -95,7 +95,7 @@ internal object Color {
     }
   }
 
-  fun colorForeground(awtColor: AwtColor): ByteArray = colorForeground(rgbToHsl(awtColor).third)
+  fun colorForeground(rgbColor: RgbColor): ByteArray = colorForeground(rgbToHsl(rgbColor).third)
 
   fun colorBackground(lightness: Float): ByteArray {
     return when {
@@ -123,6 +123,6 @@ internal object Color {
     }
   }
 
-  fun colorBackground(awtColor: AwtColor): ByteArray =
-    colorBackground(rgbToHsl(awtColor).third)
+  fun colorBackground(rgbColor: RgbColor): ByteArray =
+    colorBackground(rgbToHsl(rgbColor).third)
 }

@@ -7,7 +7,7 @@
  *                              /___/
  * repository.
  *
- * Copyright (C) 2019-present Benoit 'BoD' Lubek (BoD@JRAF.org)
+ * Copyright (C) 2024-present Benoit 'BoD' Lubek (BoD@JRAF.org)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import org.jraf.klibminitel.internal.protocol.CharacterSize.SIZE_NORMAL
 import org.jraf.klibminitel.internal.protocol.CharacterSize.SIZE_TALL
 import org.jraf.klibminitel.internal.protocol.Color.COLOR_FOREGROUND_7
 import org.jraf.klibminitel.internal.protocol.Color.colorForeground
-import org.jraf.klibminitel.internal.util.color.AwtColor
+import org.jraf.klibminitel.internal.util.color.RgbColor
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
@@ -54,10 +54,10 @@ private fun escapeHtml(nodeList: NodeList, defaultColor: ByteArray, defaultSize:
         when (node.nodeName) {
           "font" -> {
             val color = element.getAttribute("color")
-            colorForeground(AwtColor.decode(color)) + escapeHtml(
+            colorForeground(RgbColor.decodeHtml(color)) + escapeHtml(
               node.childNodes,
               defaultColor,
-              defaultSize
+              defaultSize,
             ) + defaultColor
           }
 
@@ -65,7 +65,7 @@ private fun escapeHtml(nodeList: NodeList, defaultColor: ByteArray, defaultSize:
             SIZE_NORMAL + escapeHtml(
               node.childNodes,
               defaultColor,
-              defaultSize
+              defaultSize,
             ) + defaultSize
           }
 
@@ -75,4 +75,13 @@ private fun escapeHtml(nodeList: NodeList, defaultColor: ByteArray, defaultSize:
     }
   }
   return res
+}
+
+private fun RgbColor.Companion.decodeHtml(color: String): RgbColor {
+  val hex = color.substring(1)
+  return RgbColor(
+    r = hex.substring(0, 2).toInt(16) / 255f,
+    g = hex.substring(2, 4).toInt(16) / 255f,
+    b = hex.substring(4, 6).toInt(16) / 255f,
+  )
 }

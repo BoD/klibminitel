@@ -32,11 +32,13 @@ tasks {
 kotlin {
   jvm()
   jvmToolchain(11)
+  macosArm64()
 
   sourceSets {
     val commonMain by getting {
       kotlin.srcDir(tasks.getByName("generateVersionKt").outputs.files)
       dependencies {
+        implementation(KotlinX.coroutines.core)
         api("org.jetbrains.kotlinx:kotlinx-io-core:_")
       }
     }

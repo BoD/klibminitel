@@ -6,6 +6,7 @@ build
 captures
 .externalNativeBuild
 .cxx
+.kotlin
 
 .idea/*
 !.idea/codeStyles/
