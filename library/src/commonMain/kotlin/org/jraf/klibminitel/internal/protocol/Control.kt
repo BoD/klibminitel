@@ -63,6 +63,30 @@ internal object Control {
 
   // See https://jbellue.github.io/stum1b/#2-2-1-2-6-1
   private const val REP: Byte = 0x12
-  fun repeatCharacter(c: Char, times: Int): ByteArray = byteArrayOf(c.code.toByte(), REP, (0x40 + times - 1).toByte())
+  fun repeatCharacter(c: Char, times: Int): ByteArray {
+    val byte = c.code.toByte()
+    return when (times.coerceAtLeast(0)) {
+      0 -> {
+        byteArrayOf()
+      }
+
+      1 -> {
+        byteArrayOf(byte)
+      }
+
+      2 -> {
+        byteArrayOf(byte, byte)
+      }
+
+      3 -> {
+        byteArrayOf(byte, byte, byte)
+      }
+
+      else -> {
+        byteArrayOf(byte, REP, (0x40 + times - 1).toByte())
+      }
+    }
+  }
+
   fun repeatLastCharacter(times: Int): ByteArray = byteArrayOf(REP, (0x40 + times).toByte())
 }

@@ -42,10 +42,10 @@ import org.jraf.klibminitel.internal.protocol.Color
 import org.jraf.klibminitel.internal.protocol.Control
 import org.jraf.klibminitel.internal.protocol.Cursor
 import org.jraf.klibminitel.internal.protocol.Cursor.HIDE_CURSOR
-import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_BOTTOM
+import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_DOWN
 import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_LEFT
 import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_RIGHT
-import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_TOP
+import org.jraf.klibminitel.internal.protocol.Cursor.MOVE_CURSOR_UP
 import org.jraf.klibminitel.internal.protocol.Cursor.SHOW_CURSOR
 import org.jraf.klibminitel.internal.protocol.Formatting
 import org.jraf.klibminitel.internal.protocol.Graphics
@@ -83,7 +83,7 @@ class Minitel(
           screen = screen,
         ),
       )
-    } catch (e: Exception) {
+    } finally {
       readLoopJob.cancel()
     }
   }
@@ -203,6 +203,15 @@ class Minitel(
       }
     }
 
+    suspend fun raw(s: String): Int {
+      writeToScreen(s.encodeToByteArray())
+      return s.length
+    }
+
+    suspend fun raw(c: Char): Int {
+      return raw("$c")
+    }
+
     suspend fun print(s: String): Int {
       val replaced = s.replaceSpecialCharacters()
       writeToScreen(replaced.encodeToByteArray())
@@ -279,12 +288,12 @@ class Minitel(
       writeToScreen(MOVE_CURSOR_RIGHT)
     }
 
-    suspend fun moveCursorTop() {
-      writeToScreen(MOVE_CURSOR_TOP)
+    suspend fun moveCursorUp() {
+      writeToScreen(MOVE_CURSOR_UP)
     }
 
-    suspend fun moveCursorBottom() {
-      writeToScreen(MOVE_CURSOR_BOTTOM)
+    suspend fun moveCursorDown() {
+      writeToScreen(MOVE_CURSOR_DOWN)
     }
 
     suspend fun getCursorPosition(): Pair<Int, Int> {

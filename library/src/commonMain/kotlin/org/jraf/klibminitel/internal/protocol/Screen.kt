@@ -35,5 +35,6 @@ internal object Screen {
   // See https://jbellue.github.io/stum1b/#2-2-1-2-4-1
   val CSI = byteArrayOf(ESC, 0x5B)
 
+  // See https://jbellue.github.io/stum1b/#2-2-1-2-5-2
   val CLEAR_BOTTOM_OF_SCREEN = CSI + 0x4A
 }

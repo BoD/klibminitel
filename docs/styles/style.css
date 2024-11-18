@@ -85,7 +85,6 @@ html, body {
     height: 100%;
     width: 100%;
 }
-
 /* /--- root styles --- */
 
 /* --- global tags styles --- */
@@ -180,7 +179,6 @@ tbody > tr {
 td:first-child {
     width: 20vw;
 }
-
 /* /---  global tags styles --- */
 
 /* ---  utils classes --- */
@@ -212,7 +210,6 @@ td:first-child {
     clear: both;
     height: 0;
 }
-
 /* /---  utils classes --- */
 
 /* ---dark theme --- */
@@ -240,7 +237,6 @@ td:first-child {
 
     --sidemenu-section-active-color: var(--color-dark);
 }
-
 /* /---dark theme --- */
 
 .root {
@@ -317,7 +313,6 @@ td:first-child {
     height: 28px;
     width: 28px;
 }
-
 /* /--- Navigation MENU --- */
 
 .library-version {
@@ -344,7 +339,6 @@ td:first-child {
         padding: 5px 0 5px;
     }
 }
-
 /* --- Navigation controls --- */
 .navigation-controls {
     display: flex;
@@ -409,7 +403,6 @@ td:first-child {
 .navigation .platform-selector:not([data-active]) {
     color: #fff;
 }
-
 /* /--- Navigation controls --- */
 /* /--- Navigation styles --- */
 
@@ -479,7 +472,6 @@ td:first-child {
     padding-top: 22px;
     padding-bottom: 16px;
 }
-
 /* /--- Layout styles --- */
 
 /* --- Main Content styles --- */
@@ -505,7 +497,6 @@ td:first-child {
 .main-content :is(h1, h2) {
     font-weight: 530;
 }
-
 /* /--- Main Content styles --- */
 
 /* /--- Breadcrumbs styles --- */
@@ -522,7 +513,6 @@ td:first-child {
 .breadcrumbs .current {
     color: var(--default-font-color);
 }
-
 /* /--- Breadcrumbs styles --- */
 
 .tabs-section,
@@ -1367,7 +1357,6 @@ Just in case of possible performance degradation it excluding tabs with briefs o
     .keyValue {
         grid-template-columns: 20% 80%;
     }
-
     .keyValue > div:first-child {
         word-break: break-word;
     }
@@ -1479,7 +1468,6 @@ div.runnablesample {
 .footer .padded-icon::before {
     content: url("../images/footer-go-to-link.svg");
 }
-
 /* /--- footer --- */
 
 /* Logo styles */
@@ -1510,7 +1498,6 @@ div.runnablesample {
         display: none;
     }
 }
-
 /* / Logo styles */
 
 /*

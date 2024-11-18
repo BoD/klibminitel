@@ -30,6 +30,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.io.asSink
+import kotlinx.io.asSource
+import kotlinx.io.buffered
 import org.jraf.klibminitel.core.CharacterSize
 import org.jraf.klibminitel.core.FunctionKey
 import org.jraf.klibminitel.core.Minitel
@@ -66,7 +69,11 @@ class MinitelApp(
 
   suspend fun start() {
     logd("MinitelApp start")
-    val minitel = Minitel(filePath)
+//    val minitel = Minitel(filePath)
+    val minitel = Minitel(
+      keyboard = System.`in`.asSource().buffered(),
+      screen = System.out.asSink().buffered(),
+    )
     minitel.connect {
       coroutineScope.launch {
         system.collect { e ->
@@ -206,10 +213,10 @@ class MinitelApp(
     color(background0To7 = 0, foreground0To7 = 5)
     clearEndOfLine()
 
-    moveCursorBottom()
+    moveCursorDown()
     clearEndOfLine()
 
-    moveCursorBottom()
+    moveCursorDown()
     clearEndOfLine()
   }
 

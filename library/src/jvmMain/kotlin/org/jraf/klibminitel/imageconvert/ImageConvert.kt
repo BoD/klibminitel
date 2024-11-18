@@ -28,11 +28,12 @@ import org.jraf.klibminitel.core.SCREEN_HEIGHT_NORMAL
 import org.jraf.klibminitel.core.SCREEN_WIDTH_NORMAL
 import org.jraf.klibminitel.internal.protocol.Color.colorBackground
 import org.jraf.klibminitel.internal.protocol.Color.colorForeground
-import org.jraf.klibminitel.internal.protocol.Cursor.moveCursor
+import org.jraf.klibminitel.internal.protocol.Control.repeatCharacter
 import org.jraf.klibminitel.internal.protocol.Graphics.GRAPHICS_MODE_ON
 import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_SCREEN_AND_HOME
 import java.io.File
 import javax.imageio.ImageIO
+import kotlin.experimental.or
 
 object App {
   fun convertImage(inputPath: String, outputPath: String, colorAlgorithm: ColorAlgorithm) {
@@ -41,16 +42,16 @@ object App {
 
     for (y in 0 until SCREEN_HEIGHT_NORMAL) {
       val curLine = mutableListOf<MinitelCharacter>()
-      lines += curLine
       for (x in 0 until SCREEN_WIDTH_NORMAL) {
-        var char = 0
         val pixels6 = intArrayOf(
-          image.getRGB(x * 2, y * 3) and 0xFF,
-          image.getRGB(x * 2 + 1, y * 3) and 0xFF,
-          image.getRGB(x * 2, y * 3 + 1) and 0xFF,
-          image.getRGB(x * 2 + 1, y * 3 + 1) and 0xFF,
-          image.getRGB(x * 2, y * 3 + 2) and 0xFF,
-          image.getRGB(x * 2 + 1, y * 3 + 2) and 0xFF
+          image.getRGB(x * 2, y * 3) and 0xFF / 32,
+          image.getRGB(x * 2 + 1, y * 3) and 0xFF / 32,
+
+          image.getRGB(x * 2, y * 3 + 1) and 0xFF / 32,
+          image.getRGB(x * 2 + 1, y * 3 + 1) and 0xFF / 32,
+
+          image.getRGB(x * 2, y * 3 + 2) and 0xFF / 32,
+          image.getRGB(x * 2 + 1, y * 3 + 2) and 0xFF / 32,
         )
         val (bgColor, fgColor) = when (colorAlgorithm) {
           ColorAlgorithm.ACCURATE -> computeBgFgColorsAccurate(pixels6)
@@ -58,15 +59,17 @@ object App {
         }
         val avg = (bgColor + fgColor).toDouble() / 2.0
 
-        if (pixels6[0] > avg) char += 1
-        if (pixels6[1] > avg) char += 2
-        if (pixels6[2] > avg) char += 4
-        if (pixels6[3] > avg) char += 8
-        if (pixels6[4] > avg) char += 16
-        if (pixels6[5] > avg) char += 32
+        var b: Byte = 0
+        if (pixels6[0] > avg) b = b or 0b00_00_00_01
+        if (pixels6[1] > avg) b = b or 0b00_00_00_10
+        if (pixels6[2] > avg) b = b or 0b00_00_01_00
+        if (pixels6[3] > avg) b = b or 0b00_00_10_00
+        if (pixels6[4] > avg) b = b or 0b00_01_00_00
+        if (pixels6[5] > avg) b = b or 0b00_10_00_00
 
-        curLine += MinitelCharacter(char, bgColor, fgColor)
+        curLine += MinitelCharacter(b, bgColor, fgColor)
       }
+      lines += curLine
     }
 
     // Remove empty leading lines
@@ -105,15 +108,13 @@ object App {
     }
 
     val outputFile = File(outputPath)
-    val output = outputFile.printWriter()
-    output.print(CLEAR_SCREEN_AND_HOME)
-    output.print(GRAPHICS_MODE_ON)
+    val output = outputFile.outputStream()
+//    output.write(byteArrayOf(CLEAR_SCREEN_AND_HOME, GRAPHICS_MODE_ON))
 
     var y = emptyLeadingLines - 1
 
     var curBg = -1
     var curFg = -1
-    var needMoveCursor = false
     for (line in lines) {
       var x = 0
       y++
@@ -123,25 +124,25 @@ object App {
         line.removeAt(0)
         x++
       }
-
-      if (line.isEmpty()) continue
-
-      if (needMoveCursor) {
-        output.print(moveCursor(x, y))
-        output.print(GRAPHICS_MODE_ON)
+      if (line.isEmpty()) {
+        output.write(byteArrayOf('\r'.code.toByte(), '\n'.code.toByte()))
+        continue
+      }
+      if (x > 0) {
+        output.write(repeatCharacter(' ', x))
       }
       for (c in line) {
         if (curBg != c.bgColor) {
-          output.print(colorBackground(c.bgColor))
+          output.write(colorBackground(c.bgColor))
           curBg = c.bgColor
         }
         if (curFg != c.fgColor) {
-          output.print(colorForeground(c.fgColor))
+          output.write(colorForeground(c.fgColor))
           curFg = c.fgColor
         }
-        output.print((c.character + 32).toChar())
+        output.write(0x20 + c.character)
       }
-      needMoveCursor = line.size != SCREEN_WIDTH_NORMAL
+      output.write(byteArrayOf('\r'.code.toByte(), '\n'.code.toByte()))
     }
 
     output.flush()
@@ -149,7 +150,7 @@ object App {
   }
 
   private fun computeBgFgColorsContrast(pixels6: IntArray): Pair<Int, Int> {
-    return pixels6.min()!! to pixels6.max()!!
+    return pixels6.min() to pixels6.max()
   }
 
   private fun computeBgFgColorsAccurate(pixels6: IntArray): Pair<Int, Int> {
@@ -188,11 +189,11 @@ object App {
 }
 
 data class MinitelCharacter(
-    val character: Int,
-    val bgColor: Int,
-    val fgColor: Int,
+  val character: Byte,
+  val bgColor: Int,
+  val fgColor: Int,
 ) {
-  val isEmptyCharacter = character == 0 && fgColor == 0
+  val isEmptyCharacter = character == 0.toByte() && fgColor == 0
 }
 
 enum class ColorAlgorithm {
@@ -201,7 +202,7 @@ enum class ColorAlgorithm {
 }
 
 fun main() = App.convertImage(
-  "/Users/bod/Tmp/smallq.png",
-  "/Users/bod/Tmp/smallq.minitel",
-  ColorAlgorithm.CONTRAST
+  "/Users/bod/Tmp/Untitled.png",
+  "/Users/bod/Tmp/Untitled.vdt",
+  ColorAlgorithm.ACCURATE,
 )

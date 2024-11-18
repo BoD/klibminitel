@@ -61,12 +61,14 @@ $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/graphicsMode/#kotlin.Bo
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/inverse/#kotlin.Boolean/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/inverse.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/localEcho/#kotlin.Boolean/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/local-echo.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/moveCursor/#kotlin.Int#kotlin.Int/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor.html
-$dokka.location:org.jraf.klibminitel.core/Minitel.Screen/moveCursorBottom/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-bottom.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.Screen/moveCursorDown/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-down.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/moveCursorLeft/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-left.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/moveCursorRight/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-right.html
-$dokka.location:org.jraf.klibminitel.core/Minitel.Screen/moveCursorTop/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-top.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.Screen/moveCursorUp/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-up.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/print/#kotlin.Char/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/print.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/print/#kotlin.String/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/print.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.Screen/raw/#kotlin.Char/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/raw.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.Screen/raw/#kotlin.String/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/raw.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/repeatCharacter/#kotlin.Char#kotlin.Int/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/repeat-character.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/repeatLastCharacter/#kotlin.Int/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/repeat-last-character.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/scroll/#kotlin.Boolean/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/scroll.html
@@ -91,7 +93,7 @@ $dokka.location:org.jraf.klibminitel.imageconvert/ColorAlgorithm/entries/#/Point
 $dokka.location:org.jraf.klibminitel.imageconvert/ColorAlgorithm/valueOf/#kotlin.String/PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/-color-algorithm/value-of.html
 $dokka.location:org.jraf.klibminitel.imageconvert/ColorAlgorithm/values/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/-color-algorithm/values.html
 $dokka.location:org.jraf.klibminitel.imageconvert/MinitelCharacter///PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/-minitel-character/index.html
-$dokka.location:org.jraf.klibminitel.imageconvert/MinitelCharacter/MinitelCharacter/#kotlin.Int#kotlin.Int#kotlin.Int/PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/-minitel-character/-minitel-character.html
+$dokka.location:org.jraf.klibminitel.imageconvert/MinitelCharacter/MinitelCharacter/#kotlin.Byte#kotlin.Int#kotlin.Int/PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/-minitel-character/-minitel-character.html
 $dokka.location:org.jraf.klibminitel.imageconvert/MinitelCharacter/bgColor/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/-minitel-character/bg-color.html
 $dokka.location:org.jraf.klibminitel.imageconvert/MinitelCharacter/character/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/-minitel-character/character.html
 $dokka.location:org.jraf.klibminitel.imageconvert/MinitelCharacter/fgColor/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/-minitel-character/fg-color.html

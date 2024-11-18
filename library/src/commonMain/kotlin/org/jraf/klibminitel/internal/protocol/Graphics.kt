@@ -34,5 +34,32 @@ internal object Graphics {
    * For example, the value 0b00_11_00 will display the character ⠒, whereas 0b11_11_10 will display the character ⠟.
    */
   // See https://jbellue.github.io/stum1b/#schema2-6
-  fun graphicsCharacter(value: Byte): Byte = (0x20 + value).toByte()
+  fun graphicsCharacter(value: Byte): Byte = (0x20 + swapBits(value)).toByte()
+
+  /**
+   * The way bytes are converted to graphics on the Minitel is like this:
+   * ```
+   * Bit 0   Bit 1
+   * Bit 2   Bit 3
+   * Bit 4   Bit 5
+   * ```
+   *
+   * But what we want is:
+   * ```
+   * Bit 5   Bit 4
+   * Bit 3   Bit 2
+   * Bit 1   Bit 0
+   * ```
+   */
+  private fun swapBits(value: Byte): Byte {
+    // Not sure if there's a simpler way to do this
+    val v = value.toInt()
+    val bit0 = (v and 0b00_00_01) shl 5
+    val bit1 = (v and 0b00_00_10) shl 3
+    val bit2 = (v and 0b00_01_00) shl 1
+    val bit3 = (v and 0b00_10_00) shr 1
+    val bit4 = (v and 0b01_00_00) shr 3
+    val bit5 = (v and 0b10_00_00) shr 5
+    return (bit0 or bit1 or bit2 or bit3 or bit4 or bit5).toByte()
+  }
 }

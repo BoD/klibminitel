@@ -140,12 +140,12 @@
     ]
   },
   {
-    "name": "constructor(character: Int, bgColor: Int, fgColor: Int)",
+    "name": "constructor(character: Byte, bgColor: Int, fgColor: Int)",
     "description": "org.jraf.klibminitel.imageconvert.MinitelCharacter.MinitelCharacter",
     "location": "klibminitel/org.jraf.klibminitel.imageconvert/-minitel-character/-minitel-character.html",
     "searchKeys": [
       "MinitelCharacter",
-      "constructor(character: Int, bgColor: Int, fgColor: Int)",
+      "constructor(character: Byte, bgColor: Int, fgColor: Int)",
       "org.jraf.klibminitel.imageconvert.MinitelCharacter.MinitelCharacter"
     ]
   },
@@ -230,12 +230,12 @@
     ]
   },
   {
-    "name": "data class MinitelCharacter(val character: Int, val bgColor: Int, val fgColor: Int)",
+    "name": "data class MinitelCharacter(val character: Byte, val bgColor: Int, val fgColor: Int)",
     "description": "org.jraf.klibminitel.imageconvert.MinitelCharacter",
     "location": "klibminitel/org.jraf.klibminitel.imageconvert/-minitel-character/index.html",
     "searchKeys": [
       "MinitelCharacter",
-      "data class MinitelCharacter(val character: Int, val bgColor: Int, val fgColor: Int)",
+      "data class MinitelCharacter(val character: Byte, val bgColor: Int, val fgColor: Int)",
       "org.jraf.klibminitel.imageconvert.MinitelCharacter"
     ]
   },
@@ -710,13 +710,13 @@
     ]
   },
   {
-    "name": "suspend fun moveCursorBottom()",
-    "description": "org.jraf.klibminitel.core.Minitel.Screen.moveCursorBottom",
-    "location": "klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-bottom.html",
+    "name": "suspend fun moveCursorDown()",
+    "description": "org.jraf.klibminitel.core.Minitel.Screen.moveCursorDown",
+    "location": "klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-down.html",
     "searchKeys": [
-      "moveCursorBottom",
-      "suspend fun moveCursorBottom()",
-      "org.jraf.klibminitel.core.Minitel.Screen.moveCursorBottom"
+      "moveCursorDown",
+      "suspend fun moveCursorDown()",
+      "org.jraf.klibminitel.core.Minitel.Screen.moveCursorDown"
     ]
   },
   {
@@ -740,13 +740,13 @@
     ]
   },
   {
-    "name": "suspend fun moveCursorTop()",
-    "description": "org.jraf.klibminitel.core.Minitel.Screen.moveCursorTop",
-    "location": "klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-top.html",
+    "name": "suspend fun moveCursorUp()",
+    "description": "org.jraf.klibminitel.core.Minitel.Screen.moveCursorUp",
+    "location": "klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-up.html",
     "searchKeys": [
-      "moveCursorTop",
-      "suspend fun moveCursorTop()",
-      "org.jraf.klibminitel.core.Minitel.Screen.moveCursorTop"
+      "moveCursorUp",
+      "suspend fun moveCursorUp()",
+      "org.jraf.klibminitel.core.Minitel.Screen.moveCursorUp"
     ]
   },
   {
@@ -767,6 +767,26 @@
       "print",
       "suspend fun print(s: String): Int",
       "org.jraf.klibminitel.core.Minitel.Screen.print"
+    ]
+  },
+  {
+    "name": "suspend fun raw(c: Char): Int",
+    "description": "org.jraf.klibminitel.core.Minitel.Screen.raw",
+    "location": "klibminitel/org.jraf.klibminitel.core/-minitel/-screen/raw.html",
+    "searchKeys": [
+      "raw",
+      "suspend fun raw(c: Char): Int",
+      "org.jraf.klibminitel.core.Minitel.Screen.raw"
+    ]
+  },
+  {
+    "name": "suspend fun raw(s: String): Int",
+    "description": "org.jraf.klibminitel.core.Minitel.Screen.raw",
+    "location": "klibminitel/org.jraf.klibminitel.core/-minitel/-screen/raw.html",
+    "searchKeys": [
+      "raw",
+      "suspend fun raw(s: String): Int",
+      "org.jraf.klibminitel.core.Minitel.Screen.raw"
     ]
   },
   {
@@ -850,12 +870,12 @@
     ]
   },
   {
-    "name": "val character: Int",
+    "name": "val character: Byte",
     "description": "org.jraf.klibminitel.imageconvert.MinitelCharacter.character",
     "location": "klibminitel/org.jraf.klibminitel.imageconvert/-minitel-character/character.html",
     "searchKeys": [
       "character",
-      "val character: Int",
+      "val character: Byte",
       "org.jraf.klibminitel.imageconvert.MinitelCharacter.character"
     ]
   },

@@ -35,10 +35,10 @@ internal object Cursor {
   const val MOVE_CURSOR_RIGHT: Byte = 0x09
 
   /* Also known as Line Feed */
-  const val MOVE_CURSOR_BOTTOM: Byte = 0x0A
+  const val MOVE_CURSOR_DOWN: Byte = 0x0A
 
   /* Also known as Vertical Tabulation */
-  const val MOVE_CURSOR_TOP: Byte = 0x0B
+  const val MOVE_CURSOR_UP: Byte = 0x0B
 
   const val SHOW_CURSOR: Byte = 0x11
   const val HIDE_CURSOR: Byte = 0x14

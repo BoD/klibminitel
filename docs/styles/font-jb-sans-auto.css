@@ -9,7 +9,6 @@
     font-weight: 300;
     font-style: normal;
 }
-
 /* Regular weight */
 @font-face {
     font-family: 'JetBrains Sans';
@@ -17,7 +16,6 @@
     font-weight: 400;
     font-style: normal;
 }
-
 /* SemiBold weight */
 @font-face {
     font-family: 'JetBrains Sans';
