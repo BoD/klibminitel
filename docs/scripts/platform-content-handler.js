@@ -139,13 +139,13 @@ function handleAnchor() {
     }
 
     let findAnyTab = function (target) {
-        let result = null
+    	let result = null
         document.querySelectorAll('div[tabs-section] > button[data-togglable]')
-            .forEach(node => {
-                if (node.getAttribute("data-togglable").split(",").includes(target)) {
-                    result = node
-                }
-            })
+        .forEach(node => {
+            if(node.getAttribute("data-togglable").split(",").includes(target)) {
+            	result = node
+            }
+        })
         return result
     }
 
@@ -157,11 +157,11 @@ function handleAnchor() {
         if (element) {
             const content = element.nextElementSibling
             const contentStyle = window.getComputedStyle(content)
-            if (contentStyle.display == 'none') {
-                let tab = findAnyTab(searchForContentTarget(content))
-                if (tab) {
-                    toggleSections(tab)
-                }
+            if(contentStyle.display == 'none') {
+		 let tab = findAnyTab(searchForContentTarget(content))
+		 if (tab) {
+		     toggleSections(tab)
+		 }
             }
 
             if (content) {
@@ -291,11 +291,11 @@ function toggleSections(target) {
     const activateTabsBody = (containerClass) => {
         document.querySelectorAll("." + containerClass + " *[data-togglable]")
             .forEach(child => {
-                if (toggleTargets.includes(child.getAttribute("data-togglable"))) {
-                    child.setAttribute("data-active", "")
-                } else if (!child.classList.contains("sourceset-dependent-content")) { // data-togglable is used to switch source set as well, ignore it
-                    child.removeAttribute("data-active")
-                }
+                    if (toggleTargets.includes(child.getAttribute("data-togglable"))) {
+                        child.setAttribute("data-active", "")
+                    } else if(!child.classList.contains("sourceset-dependent-content")) { // data-togglable is used to switch source set as well, ignore it
+                        child.removeAttribute("data-active")
+                    }
             })
     }
     activateTabs("tabs-section")
@@ -350,7 +350,7 @@ function refreshPlaygroundSamples() {
 
 function refreshNoContentNotification() {
     const element = document.getElementsByClassName("main-content")[0]
-    if (filteringContext.activeFilters.length === 0) {
+    if(filteringContext.activeFilters.length === 0){
         element.style.display = "none";
 
         const appended = document.createElement("div")
@@ -359,7 +359,7 @@ function refreshNoContentNotification() {
         sourcesetNotification = appended
         element.parentNode.prepend(appended)
     } else {
-        if (sourcesetNotification) sourcesetNotification.remove()
+        if(sourcesetNotification) sourcesetNotification.remove()
         element.style.display = "block"
     }
 }

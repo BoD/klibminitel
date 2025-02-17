@@ -4,7 +4,7 @@
 
 // helps with some corner cases where <wbr> starts working already,
 // but the signature is not yet long enough to be wrapped
-(function () {
+(function() {
     const leftPaddingPx = 60;
 
     function createNbspIndent() {

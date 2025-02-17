@@ -5,7 +5,7 @@
     <title>FunctionKey</title>
     <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
     <script>var pathToRoot = "../../../";</script>
-  <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
     if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -14,420 +14,241 @@
         }
     } else {
         const savedDarkMode = JSON.parse(storage)
-        if (savedDarkMode === true) {
+        if(savedDarkMode === true) {
             document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
     }
     </script>
-  <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
-  <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
-  <link href="../../../styles/style.css" rel="Stylesheet">
-  <link href="../../../styles/main.css" rel="Stylesheet">
-  <link href="../../../styles/prism.css" rel="Stylesheet">
-  <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-  <link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
-  <script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
-  <script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
-  <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
-  <script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
-  <script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
-  <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
 </head>
 <body>
-<div class="root">
-  <nav class="navigation" id="navigation-wrapper">
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
     <div class="navigation--inner">
-      <div class="navigation-title">
-        <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
-        <div class="library-name">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
                     <a class="library-name--link" href="../../../index.html">
-                      klibminitel
+                            klibminitel
                     </a>
+            </div>
+            <div class="library-version">
+1.2.0            </div>
         </div>
-        <div class="library-version">
-          1.2.0
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":klibminitel:dokkaHtml/commonMain">common</button>
         </div>
-      </div>
-      <div class="filter-section" id="filter-section">
-        <button class="platform-tag platform-selector common-like" data-active="" data-filter=":klibminitel:dokkaHtml/commonMain">common
-        </button>
-      </div>
     </div>
     <div class="navigation-controls">
-      <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
-      <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
     </div>
-  </nav>
-  <div id="container">
-    <div class="sidebar" id="leftColumn">
-      <div class="sidebar--inner" id="sideMenu"></div>
-    </div>
-    <div id="main">
-      <div class="main-content" data-page-type="classlike" id="content"
-           pageIds="klibminitel::org.jraf.klibminitel.core/FunctionKey///PointingToDeclaration//2104698122">
-        <div class="breadcrumbs"><a href="../../../index.html">klibminitel</a><span class="delimiter">/</span><a href="../index.html">org.jraf.klibminitel.core</a><span
-          class="delimiter">/</span><span class="current">FunctionKey</span></div>
-        <div class="cover ">
-          <h1 class="cover"><span>Function</span>
-            <wbr></wbr>
-            <span><span>Key</span></span></h1>
-          <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-            <div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain">
-              <div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">class </span><a
-                href="index.html">FunctionKey</a></div>
-              <h4 class="">Inheritors</h4>
-              <div class="table">
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a href="-e-n-v-o-i/index.html">ENVOI</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a href="-r-e-t-o-u-r/index.html">RETOUR</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a href="-r-e-p-e-t-i-t-i-o-n/index.html">REPETITION</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a href="-g-u-i-d-e/index.html">GUIDE</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a href="-a-n-n-u-l-a-t-i-o-n/index.html">ANNULATION</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a href="-s-o-m-m-a-i-r-e/index.html">SOMMAIRE</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a href="-c-o-r-r-e-c-t-i-o-n/index.html">CORRECTION</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a href="-s-u-i-t-e/index.html">SUITE</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a
-                      href="-c-o-n-n-e-x-i-o-n_-f-i-n/index.html">CONNEXION_FIN</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><div><a href="-u-n-k-n-o-w-n/index.html">UNKNOWN</a></div></span></div>
-                    <div></div>
-                  </div>
-                </div>
-              </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
             </div>
-          </div>
-        </div>
-        <div class="tabbedcontent">
-          <div class="tabs-section" tabs-section="tabs-section">
-            <button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button>
-          </div>
-          <div class="tabs-section-body">
-            <div data-togglable="TYPE">
-              <h2 class="">Types</h2>
-              <div class="table"><a data-name="1549395672%2FClasslikes%2F2104698122" anchor-label="ANNULATION"
-                                    id="1549395672%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="klibminitel::org.jraf.klibminitel.core/FunctionKey///PointingToDeclaration//2104698122">
+  <div class="breadcrumbs"><a href="../../../index.html">klibminitel</a><span class="delimiter">/</span><a href="../index.html">org.jraf.klibminitel.core</a><span class="delimiter">/</span><span class="current">FunctionKey</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Function</span><wbr></wbr><span><span>Key</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">class </span><a href="index.html">FunctionKey</a></div><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-e-n-v-o-i/index.html">ENVOI</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-r-e-t-o-u-r/index.html">RETOUR</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-r-e-p-e-t-i-t-i-o-n/index.html">REPETITION</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-g-u-i-d-e/index.html">GUIDE</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-a-n-n-u-l-a-t-i-o-n/index.html">ANNULATION</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-s-o-m-m-a-i-r-e/index.html">SOMMAIRE</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-c-o-r-r-e-c-t-i-o-n/index.html">CORRECTION</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-s-u-i-t-e/index.html">SUITE</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-c-o-n-n-e-x-i-o-n_-f-i-n/index.html">CONNEXION_FIN</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-u-n-k-n-o-w-n/index.html">UNKNOWN</a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="1549395672%2FClasslikes%2F2104698122" anchor-label="ANNULATION" id="1549395672%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-a-n-n-u-l-a-t-i-o-n/index.html"><span><span>ANNULATION</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1549395672%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a
-                              href="-a-n-n-u-l-a-t-i-o-n/index.html">ANNULATION</a> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-a-n-n-u-l-a-t-i-o-n/index.html">ANNULATION</a> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
-                <a data-name="116597889%2FClasslikes%2F2104698122" anchor-label="Companion" id="116597889%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="116597889%2FClasslikes%2F2104698122" anchor-label="Companion" id="116597889%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="116597889%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
                 </div>
-                <a data-name="1245747256%2FClasslikes%2F2104698122" anchor-label="CONNEXION_FIN" id="1245747256%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="1245747256%2FClasslikes%2F2104698122" anchor-label="CONNEXION_FIN" id="1245747256%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-c-o-n-n-e-x-i-o-n_-f-i-n/index.html"><span><span>CONNEXION_FIN</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1245747256%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a
-                              href="-c-o-n-n-e-x-i-o-n_-f-i-n/index.html">CONNEXION_FIN</a> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-c-o-n-n-e-x-i-o-n_-f-i-n/index.html">CONNEXION_FIN</a> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
-                <a data-name="888485975%2FClasslikes%2F2104698122" anchor-label="CORRECTION" id="888485975%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="888485975%2FClasslikes%2F2104698122" anchor-label="CORRECTION" id="888485975%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-c-o-r-r-e-c-t-i-o-n/index.html"><span><span>CORRECTION</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="888485975%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a
-                              href="-c-o-r-r-e-c-t-i-o-n/index.html">CORRECTION</a> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-c-o-r-r-e-c-t-i-o-n/index.html">CORRECTION</a> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
-                <a data-name="-1563640218%2FClasslikes%2F2104698122" anchor-label="ENVOI" id="-1563640218%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="-1563640218%2FClasslikes%2F2104698122" anchor-label="ENVOI" id="-1563640218%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-e-n-v-o-i/index.html"><span><span>ENVOI</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1563640218%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a
-                              href="-e-n-v-o-i/index.html">ENVOI</a> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-e-n-v-o-i/index.html">ENVOI</a> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
-                <a data-name="215412881%2FClasslikes%2F2104698122" anchor-label="GUIDE" id="215412881%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="215412881%2FClasslikes%2F2104698122" anchor-label="GUIDE" id="215412881%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-g-u-i-d-e/index.html"><span><span>GUIDE</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="215412881%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a
-                              href="-g-u-i-d-e/index.html">GUIDE</a> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-g-u-i-d-e/index.html">GUIDE</a> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
-                <a data-name="804771492%2FClasslikes%2F2104698122" anchor-label="REPETITION" id="804771492%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="804771492%2FClasslikes%2F2104698122" anchor-label="REPETITION" id="804771492%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-r-e-p-e-t-i-t-i-o-n/index.html"><span><span>REPETITION</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="804771492%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a
-                              href="-r-e-p-e-t-i-t-i-o-n/index.html">REPETITION</a> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-r-e-p-e-t-i-t-i-o-n/index.html">REPETITION</a> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
-                <a data-name="-606161078%2FClasslikes%2F2104698122" anchor-label="RETOUR" id="-606161078%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="-606161078%2FClasslikes%2F2104698122" anchor-label="RETOUR" id="-606161078%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-r-e-t-o-u-r/index.html"><span><span>RETOUR</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-606161078%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a
-                              href="-r-e-t-o-u-r/index.html">RETOUR</a> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-r-e-t-o-u-r/index.html">RETOUR</a> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
-                <a data-name="-1774065794%2FClasslikes%2F2104698122" anchor-label="SOMMAIRE" id="-1774065794%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="-1774065794%2FClasslikes%2F2104698122" anchor-label="SOMMAIRE" id="-1774065794%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-s-o-m-m-a-i-r-e/index.html"><span><span>SOMMAIRE</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1774065794%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a
-                              href="-s-o-m-m-a-i-r-e/index.html">SOMMAIRE</a> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-s-o-m-m-a-i-r-e/index.html">SOMMAIRE</a> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
-                <a data-name="-1442838507%2FClasslikes%2F2104698122" anchor-label="SUITE" id="-1442838507%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="-1442838507%2FClasslikes%2F2104698122" anchor-label="SUITE" id="-1442838507%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-s-u-i-t-e/index.html"><span><span>SUITE</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1442838507%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a
-                              href="-s-u-i-t-e/index.html">SUITE</a> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-s-u-i-t-e/index.html">SUITE</a> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
-                <a data-name="-171544573%2FClasslikes%2F2104698122" anchor-label="UNKNOWN" id="-171544573%2FClasslikes%2F2104698122"
-                   data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain"
-                     data-filterable-set=":klibminitel:dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
+              </div>
+            </div>
+          </div>
+<a data-name="-171544573%2FClasslikes%2F2104698122" anchor-label="UNKNOWN" id="-171544573%2FClasslikes%2F2104698122" data-filterable-set=":klibminitel:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":klibminitel:dokkaHtml/commonMain" data-filterable-set=":klibminitel:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-u-n-k-n-o-w-n/index.html"><span><span>UNKNOWN</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-171544573%2FClasslikes%2F2104698122"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                          <div class="content sourceset-dependent-content" data-active=""
-                               data-togglable=":klibminitel:dokkaHtml/commonMain">
-                            <div class="symbol monospace"><span class="token keyword">data </span><span
-                              class="token keyword">class </span><a href="-u-n-k-n-o-w-n/index.html">UNKNOWN</a><span
-                              class="token punctuation">(</span><span class="parameters "><span class="parameter ">code<span
-                              class="token operator">: </span><a
-                              href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte/index.html">Byte</a></span></span><span
-                              class="token punctuation">)</span> : <a href="index.html">FunctionKey</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":klibminitel:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-u-n-k-n-o-w-n/index.html">UNKNOWN</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">code<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte/index.html">Byte</a></span></span><span class="token punctuation">)</span> : <a href="index.html">FunctionKey</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="footer">
-        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
-        class="pull-right"><span>Generated by </span><a
-        href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
-      </div>
     </div>
   </div>
 </div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
