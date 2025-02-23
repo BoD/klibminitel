@@ -24,6 +24,9 @@
 
 package org.jraf.klibminitel.sample
 
+import org.jraf.klibminitel.sample.debug.DebugApp
+
 suspend fun main(av: Array<String>) {
-  MinitelApp(filePath = av[0], authBearerToken = av[1]).start()
+//  MinitelApp(filePath = av[0], authBearerToken = av[1]).start()
+  DebugApp(filePath = av[0]).start()
 }

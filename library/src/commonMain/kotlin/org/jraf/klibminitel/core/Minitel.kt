@@ -24,15 +24,18 @@
 
 package org.jraf.klibminitel.core
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 import kotlinx.io.Sink
 import kotlinx.io.Source
 import kotlinx.io.buffered
@@ -55,6 +58,8 @@ import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_BOTTOM_OF_SCREEN
 import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_END_OF_LINE
 import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_SCREEN_AND_HOME
 import org.jraf.klibminitel.internal.protocol.SpecialCharacters.replaceSpecialCharacters
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class Minitel(
@@ -62,16 +67,23 @@ class Minitel(
   private val screen: Sink,
 ) {
   constructor(filePath: String) : this(
-    SystemFileSystem.source(Path(filePath)).buffered(),
-    SystemFileSystem.sink(Path(filePath)).buffered(),
+    keyboard = SystemFileSystem.source(Path(filePath)).buffered(),
+    screen = SystemFileSystem.sink(Path(filePath)).buffered(),
+  )
+
+  constructor(keyboardFilePath: String, screenFilePath: String) : this(
+    keyboard = SystemFileSystem.source(Path(keyboardFilePath)).buffered(),
+    screen = SystemFileSystem.sink(Path(screenFilePath)).buffered(),
   )
 
   private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+  private val keyboardDispatcher = Dispatchers.IO.limitedParallelism(1)
+  private val screenDispatcher = Dispatchers.IO.limitedParallelism(1)
 
   suspend fun connect(block: suspend Connection.() -> Unit) {
     val keyboardChannel = Channel<KeyboardEvent>(10)
     val systemChannel = Channel<SystemEvent>(10)
-    val screen = Screen(screen)
+    val screen = Screen(screen = screen, screenDispatcher = screenDispatcher)
     val readLoopJob = coroutineScope.launch {
       readLoop(screen, systemChannel, keyboardChannel)
     }
@@ -88,7 +100,30 @@ class Minitel(
     }
   }
 
-  private suspend fun readKeyboard(): Byte = withContext(Dispatchers.IO) { keyboard.readByte() }
+  private suspend fun readKeyboard(): Byte = withContext(keyboardDispatcher) { keyboard.readByte() }
+
+  /**
+   * This is a bit hacky, but that's what you get when mixing blocking IO with coroutines.
+   * `withTimeoutOrNull` wouldn't work here.
+   * Not sure if there's a better way to do this.
+   */
+  private suspend fun readKeyboardOrTimeout(timeout: Duration = 1.seconds): Byte? {
+    val timeoutInstant = Clock.System.now() + timeout
+    var hasByte = false
+    coroutineScope.launch {
+      hasByte = withContext(keyboardDispatcher) { keyboard.request(1) }
+    }
+    while (!hasByte && Clock.System.now() < timeoutInstant) {
+      delay(timeout / 10)
+    }
+    return if (hasByte) {
+      withContext(keyboardDispatcher) {
+        keyboard.readByte()
+      }
+    } else {
+      null
+    }
+  }
 
   private suspend fun readLoop(
     screen: Screen,
@@ -109,9 +144,12 @@ class Minitel(
 
       if (read0 == FunctionKey.SEP) {
         // Here's the sequence we receive when turning on: SEP 0x59 SEP 0x53 SEP 0x54 (See https://jbellue.github.io/stum1b/#2-6-13-1)
+        // Since it's the same beginning as CONNEXION_FIN, we need to check if CONNEXION_FIN is immediately followed by the rest of the
+        // sequence by using a timeout.
+        // If we don't receive anything after the timeout, it means it was just CONNEXION_FIN.
         val read1 = readKeyboard()
         if (read1 == FunctionKey.CONNEXION_FIN.code) {
-          val read2 = readKeyboard()
+          val read2 = readKeyboardOrTimeout()
           if (read2 == FunctionKey.SEP) {
             val read3 = readKeyboard()
             if (read3 == FunctionKey.TURN_ON_2.code) {
@@ -121,19 +159,13 @@ class Minitel(
                 if (read5 == FunctionKey.TURN_ON_3.code) {
                   screen.reset()
                   systemChannel.send(SystemEvent.TurnedOnEvent)
-                } else {
-                  val functionKey = FunctionKey.fromCode(read5)
-                  keyboardChannel.send(KeyboardEvent.FunctionKeyEvent(functionKey))
                 }
-              } else {
-                keyboardChannel.send(KeyboardEvent.CharacterEvent(Char(read4.toInt())))
               }
-            } else {
-              val functionKey = FunctionKey.fromCode(read3)
-              keyboardChannel.send(KeyboardEvent.FunctionKeyEvent(functionKey))
             }
           } else {
-            keyboardChannel.send(KeyboardEvent.CharacterEvent(Char(read2.toInt())))
+            if (read2 == null) {
+              keyboardChannel.send(KeyboardEvent.FunctionKeyEvent(FunctionKey.CONNEXION_FIN))
+            }
           }
         } else {
           val functionKey = FunctionKey.fromCode(read1)
@@ -146,13 +178,23 @@ class Minitel(
   }
 
   sealed class KeyboardEvent {
+    abstract fun raw(): ByteArray
+
     data class CharacterEvent(val char: Char) : KeyboardEvent() {
+      override fun raw(): ByteArray = byteArrayOf(char.code.toByte())
+
       override fun toString(): String {
         return "$char (${@OptIn(ExperimentalStdlibApi::class) char.code.toByte().toHexString()})"
       }
     }
 
-    data class FunctionKeyEvent(val functionKey: FunctionKey) : KeyboardEvent()
+    data class FunctionKeyEvent(val functionKey: FunctionKey) : KeyboardEvent() {
+      override fun raw(): ByteArray = byteArrayOf(FunctionKey.SEP, functionKey.code)
+
+      override fun toString(): String {
+        return functionKey.toString()
+      }
+    }
   }
 
   fun interface KeyboardListener {
@@ -175,6 +217,7 @@ class Minitel(
 
   class Screen internal constructor(
     private val screen: Sink,
+    private val screenDispatcher: CoroutineDispatcher,
   ) {
     private var isCursorVisible: Boolean? = null
     private var isLocalEcho: Boolean? = null
@@ -189,14 +232,14 @@ class Minitel(
     internal var isReadingCursorPosition = false
     internal val cursorPositionResultChannel: Channel<Pair<Int, Int>> = Channel(1)
 
-    private suspend fun writeToScreen(s: ByteArray) = withContext(Dispatchers.IO) {
+    private suspend fun writeToScreen(s: ByteArray) = withContext(screenDispatcher) {
       screen.apply {
         write(s)
         flush()
       }
     }
 
-    private suspend fun writeToScreen(b: Byte) = withContext(Dispatchers.IO) {
+    private suspend fun writeToScreen(b: Byte) = withContext(screenDispatcher) {
       screen.apply {
         writeByte(b)
         flush()
@@ -211,6 +254,17 @@ class Minitel(
     suspend fun raw(c: Char): Int {
       return raw("$c")
     }
+
+    suspend fun raw(b: Byte): Int {
+      writeToScreen(b)
+      return 1
+    }
+
+    suspend fun raw(b: ByteArray): Int {
+      writeToScreen(b)
+      return b.size
+    }
+
 
     suspend fun print(s: String): Int {
       val replaced = s.replaceSpecialCharacters()

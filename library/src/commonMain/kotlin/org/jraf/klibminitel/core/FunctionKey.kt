@@ -24,12 +24,34 @@
 
 package org.jraf.klibminitel.core
 
+import org.jraf.klibminitel.core.FunctionKey.ANNULATION
+import org.jraf.klibminitel.core.FunctionKey.CONNEXION_FIN
+import org.jraf.klibminitel.core.FunctionKey.CORRECTION
+import org.jraf.klibminitel.core.FunctionKey.ENVOI
+import org.jraf.klibminitel.core.FunctionKey.GUIDE
+import org.jraf.klibminitel.core.FunctionKey.REPETITION
+import org.jraf.klibminitel.core.FunctionKey.RETOUR
+import org.jraf.klibminitel.core.FunctionKey.SHIFT_CONNEXION_FIN
+import org.jraf.klibminitel.core.FunctionKey.SOMMAIRE
+import org.jraf.klibminitel.core.FunctionKey.SUITE
+
+private val knownKeys = arrayOf(
+  ENVOI,
+  RETOUR,
+  REPETITION,
+  GUIDE,
+  ANNULATION,
+  SOMMAIRE,
+  CORRECTION,
+  SUITE,
+  CONNEXION_FIN,
+  SHIFT_CONNEXION_FIN,
+)
+
 // See https://jbellue.github.io/stum1b/#2-3-6
 sealed class FunctionKey(internal open val code: Byte) {
   companion object {
     internal const val SEP: Byte = 0x13
-
-    private val knownKeys = arrayOf(ENVOI, RETOUR, REPETITION, GUIDE, ANNULATION, SOMMAIRE, CORRECTION, SUITE, CONNEXION_FIN)
 
     internal fun fromCode(code: Byte) = knownKeys.firstOrNull { it.code == code } ?: UNKNOWN(code)
   }
@@ -42,6 +64,8 @@ sealed class FunctionKey(internal open val code: Byte) {
   data object SOMMAIRE : FunctionKey(0x46)
   data object CORRECTION : FunctionKey(0x47)
   data object SUITE : FunctionKey(0x48)
+
+  data object SHIFT_CONNEXION_FIN : FunctionKey(0x49)
 
   // See https://jbellue.github.io/stum1b/#1-5-3-1-1
   data object CONNEXION_FIN : FunctionKey(0x59)

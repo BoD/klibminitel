@@ -25,7 +25,7 @@ tasks {
   register<Jar>("dokkaHtmlJar") {
     archiveClassifier.set("javadoc")
     from("${layout.buildDirectory}/dokka")
-    dependsOn(dokkaHtml)
+    dependsOn(dokkaGenerate)
   }
 }
 
@@ -39,6 +39,7 @@ kotlin {
       kotlin.srcDir(tasks.getByName("generateVersionKt").outputs.files)
       dependencies {
         implementation(KotlinX.coroutines.core)
+        implementation(KotlinX.datetime)
         api("org.jetbrains.kotlinx:kotlinx-io-core:_")
       }
     }
@@ -117,8 +118,10 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
   dependsOn(dependsOnTasks)
 }
 
-tasks.dokkaHtml.configure {
-  outputDirectory.set(rootProject.file("docs"))
+dokka {
+  dokkaPublications.html {
+    outputDirectory.set(rootProject.file("docs"))
+  }
 }
 
 // Run `./gradlew dokkaHtml` to generate the docs

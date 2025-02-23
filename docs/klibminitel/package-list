@@ -23,6 +23,7 @@ $dokka.location:org.jraf.klibminitel.core/FunctionKey.ENVOI///PointingToDeclarat
 $dokka.location:org.jraf.klibminitel.core/FunctionKey.GUIDE///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-function-key/-g-u-i-d-e/index.html
 $dokka.location:org.jraf.klibminitel.core/FunctionKey.REPETITION///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-function-key/-r-e-p-e-t-i-t-i-o-n/index.html
 $dokka.location:org.jraf.klibminitel.core/FunctionKey.RETOUR///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-function-key/-r-e-t-o-u-r/index.html
+$dokka.location:org.jraf.klibminitel.core/FunctionKey.SHIFT_CONNEXION_FIN///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-function-key/-s-h-i-f-t_-c-o-n-n-e-x-i-o-n_-f-i-n/index.html
 $dokka.location:org.jraf.klibminitel.core/FunctionKey.SOMMAIRE///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-function-key/-s-o-m-m-a-i-r-e/index.html
 $dokka.location:org.jraf.klibminitel.core/FunctionKey.SUITE///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-function-key/-s-u-i-t-e/index.html
 $dokka.location:org.jraf.klibminitel.core/FunctionKey.UNKNOWN///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-function-key/-u-n-k-n-o-w-n/index.html
@@ -37,11 +38,15 @@ $dokka.location:org.jraf.klibminitel.core/Minitel.Connection/system/#/PointingTo
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-character-event/index.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent/CharacterEvent/#kotlin.Char/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-character-event/-character-event.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent/char/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-character-event/char.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent/raw/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-character-event/raw.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent/toString/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-character-event/to-string.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-function-key-event/index.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent/FunctionKeyEvent/#org.jraf.klibminitel.core.FunctionKey/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-function-key-event/-function-key-event.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent/functionKey/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-function-key-event/function-key.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent/raw/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-function-key-event/raw.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent/toString/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/-function-key-event/to-string.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/index.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardEvent/raw/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-event/raw.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardListener///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-listener/index.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.KeyboardListener/onKeyboardEvent/#org.jraf.klibminitel.core.Minitel.KeyboardEvent/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-keyboard-listener/on-keyboard-event.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/index.html
@@ -67,6 +72,8 @@ $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/moveCursorRight/#/Point
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/moveCursorUp/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/move-cursor-up.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/print/#kotlin.Char/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/print.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/print/#kotlin.String/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/print.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.Screen/raw/#kotlin.Byte/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/raw.html
+$dokka.location:org.jraf.klibminitel.core/Minitel.Screen/raw/#kotlin.ByteArray/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/raw.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/raw/#kotlin.Char/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/raw.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/raw/#kotlin.String/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/raw.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.Screen/repeatCharacter/#kotlin.Char#kotlin.Int/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-screen/repeat-character.html
@@ -79,6 +86,7 @@ $dokka.location:org.jraf.klibminitel.core/Minitel.SystemEvent///PointingToDeclar
 $dokka.location:org.jraf.klibminitel.core/Minitel.SystemListener///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-system-listener/index.html
 $dokka.location:org.jraf.klibminitel.core/Minitel.SystemListener/onSystemEvent/#org.jraf.klibminitel.core.Minitel.SystemEvent/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-system-listener/on-system-event.html
 $dokka.location:org.jraf.klibminitel.core/Minitel///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/index.html
+$dokka.location:org.jraf.klibminitel.core/Minitel/Minitel/#kotlin.String#kotlin.String/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-minitel.html
 $dokka.location:org.jraf.klibminitel.core/Minitel/Minitel/#kotlin.String/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-minitel.html
 $dokka.location:org.jraf.klibminitel.core/Minitel/Minitel/#kotlinx.io.Source#kotlinx.io.Sink/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-minitel.html
 $dokka.location:org.jraf.klibminitel.core/Minitel/connect/#kotlin.coroutines.SuspendFunction1[org.jraf.klibminitel.core.Minitel.Connection,kotlin.Unit]/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/connect.html
@@ -108,4 +116,3 @@ $dokka.location:org.jraf.klibminitel.internal.util.color/RgbColor/r/#/PointingTo
 org.jraf.klibminitel.core
 org.jraf.klibminitel.imageconvert
 org.jraf.klibminitel.internal.util.color
-
