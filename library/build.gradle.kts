@@ -34,9 +34,10 @@ kotlin {
   jvmToolchain(11)
   macosArm64()
   linuxX64()
+  linuxArm64()
 
   sourceSets {
-    val commonMain by getting {
+    commonMain {
       kotlin.srcDir(tasks.getByName("generateVersionKt").outputs.files)
       dependencies {
         implementation(KotlinX.coroutines.core)
@@ -45,7 +46,7 @@ kotlin {
       }
     }
 
-    val jvmMain by getting {
+    jvmMain {
       dependencies {
         implementation(KotlinX.coroutines.jdk9)
       }

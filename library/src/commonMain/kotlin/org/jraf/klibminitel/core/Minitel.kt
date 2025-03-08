@@ -36,8 +36,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
+import kotlinx.io.Buffer
+import kotlinx.io.RawSource
 import kotlinx.io.Sink
-import kotlinx.io.Source
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
@@ -63,16 +64,16 @@ import kotlin.time.Duration.Companion.seconds
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class Minitel(
-  private val keyboard: Source,
+  private val keyboard: RawSource,
   private val screen: Sink,
 ) {
   constructor(filePath: String) : this(
-    keyboard = SystemFileSystem.source(Path(filePath)).buffered(),
+    keyboard = SystemFileSystem.source(Path(filePath)),
     screen = SystemFileSystem.sink(Path(filePath)).buffered(),
   )
 
   constructor(keyboardFilePath: String, screenFilePath: String) : this(
-    keyboard = SystemFileSystem.source(Path(keyboardFilePath)).buffered(),
+    keyboard = SystemFileSystem.source(Path(keyboardFilePath)),
     screen = SystemFileSystem.sink(Path(screenFilePath)).buffered(),
   )
 
@@ -100,7 +101,13 @@ class Minitel(
     }
   }
 
-  private suspend fun readKeyboard(): Byte = withContext(keyboardDispatcher) { keyboard.readByte() }
+  private val keyboardBuffer = Buffer()
+  private suspend fun readKeyboard(): Byte = withContext(keyboardDispatcher) {
+    if (keyboardBuffer.exhausted()) {
+      keyboard.readAtMostTo(keyboardBuffer, 1)
+    }
+    keyboardBuffer.readByte()
+  }
 
   /**
    * This is a bit hacky, but that's what you get when mixing blocking IO with coroutines.
@@ -109,16 +116,16 @@ class Minitel(
    */
   private suspend fun readKeyboardOrTimeout(timeout: Duration = 1.seconds): Byte? {
     val timeoutInstant = Clock.System.now() + timeout
-    var hasByte = false
+    var readBytes = 0L
     coroutineScope.launch {
-      hasByte = withContext(keyboardDispatcher) { keyboard.request(1) }
+      readBytes = withContext(keyboardDispatcher) { keyboard.readAtMostTo(keyboardBuffer, 1) }
     }
-    while (!hasByte && Clock.System.now() < timeoutInstant) {
+    while (readBytes == 0L && Clock.System.now() < timeoutInstant) {
       delay(timeout / 10)
     }
-    return if (hasByte) {
+    return if (readBytes > 0L) {
       withContext(keyboardDispatcher) {
-        keyboard.readByte()
+        keyboardBuffer.readByte()
       }
     } else {
       null

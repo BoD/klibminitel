@@ -88,7 +88,7 @@ $dokka.location:org.jraf.klibminitel.core/Minitel.SystemListener/onSystemEvent/#
 $dokka.location:org.jraf.klibminitel.core/Minitel///PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/index.html
 $dokka.location:org.jraf.klibminitel.core/Minitel/Minitel/#kotlin.String#kotlin.String/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-minitel.html
 $dokka.location:org.jraf.klibminitel.core/Minitel/Minitel/#kotlin.String/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-minitel.html
-$dokka.location:org.jraf.klibminitel.core/Minitel/Minitel/#kotlinx.io.Source#kotlinx.io.Sink/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-minitel.html
+$dokka.location:org.jraf.klibminitel.core/Minitel/Minitel/#kotlinx.io.RawSource#kotlinx.io.Sink/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/-minitel.html
 $dokka.location:org.jraf.klibminitel.core/Minitel/connect/#kotlin.coroutines.SuspendFunction1[org.jraf.klibminitel.core.Minitel.Connection,kotlin.Unit]/PointingToDeclaration/klibminitel/org.jraf.klibminitel.core/-minitel/connect.html
 $dokka.location:org.jraf.klibminitel.imageconvert////PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/index.html
 $dokka.location:org.jraf.klibminitel.imageconvert//main/#/PointingToDeclaration/klibminitel/org.jraf.klibminitel.imageconvert/main.html
