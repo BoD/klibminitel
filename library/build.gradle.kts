@@ -5,28 +5,27 @@ plugins {
   id("signing")
 }
 
-tasks {
-  // Generate a Version.kt file with a constant for the version name
-  register("generateVersionKt") {
-    val outputDir = layout.buildDirectory.dir("generated/source/kotlin").get().asFile
-    outputs.dir(outputDir)
-    doFirst {
-      val outputWithPackageDir = File(outputDir, "org/jraf/klibminitel/internal").apply { mkdirs() }
-      File(outputWithPackageDir, "Version.kt").writeText(
-        """
-          package org.jraf.klibminitel.internal
-          internal const val VERSION = "${project.version}"
-        """.trimIndent()
-      )
-    }
-  }
+// Generate a Version.kt file with a constant for the version name
+val generateVersionKtTask = tasks.register("generateVersionKt") {
+  val outputDir = layout.buildDirectory.dir("generated/source/kotlin").get().asFile
+  outputs.dir(outputDir)
+  doFirst {
+    val outputWithPackageDir = File(outputDir, "org/jraf/klibminitel/internal").apply { mkdirs() }
+    File(outputWithPackageDir, "Version.kt").writeText(
+      """
+        package org.jraf.klibminitel.internal
 
-  // Generate Javadoc (Dokka) Jar
-  register<Jar>("dokkaHtmlJar") {
-    archiveClassifier.set("javadoc")
-    from("${layout.buildDirectory}/dokka")
-    dependsOn(dokkaGenerate)
+        internal const val VERSION = "${project.version}"
+      """.trimIndent()
+    )
   }
+}
+
+// Generate Javadoc (Dokka) Jar
+tasks.register<Jar>("dokkaHtmlJar") {
+  archiveClassifier.set("javadoc")
+  from("${layout.buildDirectory}/dokka")
+  dependsOn(tasks.dokkaGenerate)
 }
 
 kotlin {
@@ -38,7 +37,7 @@ kotlin {
 
   sourceSets {
     commonMain {
-      kotlin.srcDir(tasks.getByName("generateVersionKt").outputs.files)
+      kotlin.srcDir(generateVersionKtTask)
       dependencies {
         implementation(KotlinX.coroutines.core)
         implementation(KotlinX.datetime)
