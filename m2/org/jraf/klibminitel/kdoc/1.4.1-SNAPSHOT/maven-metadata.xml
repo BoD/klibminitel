@@ -3,22 +3,22 @@
   <groupId>org.jraf.klibminitel</groupId>
   <artifactId>kdoc</artifactId>
   <versioning>
-    <lastUpdated>20251228175722</lastUpdated>
+    <lastUpdated>20251228175808</lastUpdated>
     <snapshot>
-      <timestamp>20251228.175722</timestamp>
+      <timestamp>20251228.175808</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
     <snapshotVersions>
       <snapshotVersion>
-        <classifier>javadoc</classifier>
-        <extension>jar</extension>
-        <value>1.4.1-20251228.175722-1</value>
-        <updated>20251228175722</updated>
+        <extension>pom</extension>
+        <value>1.4.1-20251228.175808-1</value>
+        <updated>20251228175808</updated>
       </snapshotVersion>
       <snapshotVersion>
-        <extension>pom</extension>
-        <value>1.4.1-20251228.175722-1</value>
-        <updated>20251228175722</updated>
+        <classifier>javadoc</classifier>
+        <extension>jar</extension>
+        <value>1.4.1-20251228.175808-1</value>
+        <updated>20251228175808</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
