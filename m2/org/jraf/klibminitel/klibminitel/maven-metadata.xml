@@ -3,11 +3,10 @@
   <groupId>org.jraf.klibminitel</groupId>
   <artifactId>klibminitel</artifactId>
   <versioning>
-    <latest>1.4.0</latest>
-    <release>1.4.0</release>
+    <latest>1.4.1-SNAPSHOT</latest>
     <versions>
-      <version>1.4.0</version>
+      <version>1.4.1-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20251228175247</lastUpdated>
+    <lastUpdated>20251228175917</lastUpdated>
   </versioning>
 </metadata>
