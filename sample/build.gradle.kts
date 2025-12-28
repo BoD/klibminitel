@@ -15,12 +15,19 @@ dependencies {
   // Kotlin
   implementation(KotlinX.coroutines.jdk9)
 
-  // Slf4j
-  implementation("org.slf4j:slf4j-simple:_")
+  // Logging
+  implementation("org.jraf.klibnanolog:klibnanolog:_")
 
   // Library
   implementation(project(":klibminitel"))
 
   // OpenAI
-  implementation("org.jraf:klibopenai:_")
+  implementation("org.jraf.klibopenai:klibopenai:_")
+}
+
+// See https://github.com/BoD/k2o/pull/4
+configurations.named { it == "mainSourceElements" }.configureEach {
+  attributes {
+    attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage::class.java, "sources"))
+  }
 }

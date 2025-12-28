@@ -1,34 +1,34 @@
 # klibminitel
 
-A Kotlin (KMP) library to interact with the [Minitel](https://en.wikipedia.org/wiki/Minitel).
+A Kotlin (Multiplatform) library to interact with the [Minitel](https://en.wikipedia.org/wiki/Minitel).
 
 ## Usage
 
 ```kotlin
-implementation("org.jraf:klibminitel:1.3.1")
+implementation("org.jraf.klibminitel:klibminitel:1.4.0")
 ```
 
 ```kotlin
-    val minitel = Minitel(filePath)
-    minitel.connect {
-      screen.disableAcknowledgement()
-      screen.localEcho(false)
-      screen.clearScreenAndHome()
-      screen.print("Hello, World!")
+val minitel = Minitel(filePath)
+minitel.connect {
+  screen.disableAcknowledgement()
+  screen.localEcho(false)
+  screen.clearScreenAndHome()
+  screen.print("Hello, World!")
 
-      coroutineScope.launch {
-        system.collect { e ->
-          onSystemEvent(e, screen)
-        }
-      }
-
-      keyboard.collect { e ->
-        onKeyboardEvent(e, screen)
-      }
+  coroutineScope.launch {
+    system.collect { e ->
+      onSystemEvent(e, screen)
     }
+  }
+
+  keyboard.collect { e ->
+    onKeyboardEvent(e, screen)
+  }
+}
 ```
 
-Full KDoc is available [here](https://github.com/BoD/klibminitel/tree/master/docs).
+Full KDoc is available [here](https://jraf.org/klibminitel/kdoc/).
 
 ## Author and License
 ```

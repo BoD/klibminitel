@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="doc"
+                 name="klibminitel"
+                 start-page="welcome.md">
+
+    <toc-element toc-title="GitHub" href="https://github.com/bod/klibminitel"/>
+    <toc-element toc-title="Kdoc" href="https://bod.github.io/klibminitel/kdoc"/>
+    <toc-element topic="welcome.md"/>
+</instance-profile>

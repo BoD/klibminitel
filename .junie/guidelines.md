@@ -11,9 +11,8 @@ klibminitel/
 ├── library/               # Main library module
 │   ├── src/
 │   │   ├── commonMain/    # Shared Kotlin code
-│   │   └── jvmMain/      # JVM-specific code
-├── sample/                # Sample applications
-└── docs/                  # Generated documentation
+│   │   └── jvmMain/       # JVM-specific code
+└── sample/                # Sample application
 ```
 
 ## Development Setup
@@ -28,7 +27,6 @@ klibminitel/
    ```
 
 ## Common Tasks
-- Generate documentation: `./gradlew dokkaHtml`
 - Publish to local Maven: `./gradlew publishToMavenLocal`
 - Update dependencies: `./gradlew refreshVersions`
 

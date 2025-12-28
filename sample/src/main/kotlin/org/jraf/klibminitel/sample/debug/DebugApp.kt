@@ -29,7 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.jraf.klibminitel.core.Minitel
-import org.jraf.klibminitel.sample.logd
+import org.jraf.klibnanolog.logd
 
 class DebugApp(
   private val filePath: String,

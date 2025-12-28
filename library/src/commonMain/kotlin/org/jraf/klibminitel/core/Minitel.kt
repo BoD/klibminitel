@@ -22,6 +22,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalTime::class)
+
 package org.jraf.klibminitel.core
 
 import kotlinx.coroutines.CoroutineDispatcher
@@ -35,7 +37,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock
 import kotlinx.io.Buffer
 import kotlinx.io.RawSource
 import kotlinx.io.Sink
@@ -59,8 +60,10 @@ import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_BOTTOM_OF_SCREEN
 import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_END_OF_LINE
 import org.jraf.klibminitel.internal.protocol.Screen.CLEAR_SCREEN_AND_HOME
 import org.jraf.klibminitel.internal.protocol.SpecialCharacters.replaceSpecialCharacters
+import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.ExperimentalTime
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class Minitel(

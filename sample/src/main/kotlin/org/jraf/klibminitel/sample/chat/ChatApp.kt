@@ -38,7 +38,7 @@ import org.jraf.klibminitel.core.FunctionKey
 import org.jraf.klibminitel.core.Minitel
 import org.jraf.klibminitel.core.SCREEN_HEIGHT_NORMAL
 import org.jraf.klibminitel.core.SCREEN_WIDTH_NORMAL
-import org.jraf.klibminitel.sample.logd
+import org.jraf.klibnanolog.logd
 import org.jraf.klibopenai.client.OpenAIClient
 import org.jraf.klibopenai.client.configuration.ClientConfiguration
 import java.text.SimpleDateFormat
