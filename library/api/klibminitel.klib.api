@@ -1,0 +1,231 @@
+// Klib ABI Dump
+// Targets: [linuxArm64, linuxX64, macosArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <org.jraf.klibminitel:klibminitel>
+final enum class org.jraf.klibminitel.core/CharacterSize : kotlin/Enum<org.jraf.klibminitel.core/CharacterSize> { // org.jraf.klibminitel.core/CharacterSize|null[0]
+    enum entry DOUBLE // org.jraf.klibminitel.core/CharacterSize.DOUBLE|null[0]
+    enum entry NORMAL // org.jraf.klibminitel.core/CharacterSize.NORMAL|null[0]
+    enum entry TALL // org.jraf.klibminitel.core/CharacterSize.TALL|null[0]
+    enum entry WIDE // org.jraf.klibminitel.core/CharacterSize.WIDE|null[0]
+
+    final val characterHeight // org.jraf.klibminitel.core/CharacterSize.characterHeight|{}characterHeight[0]
+        final fun <get-characterHeight>(): kotlin/Int // org.jraf.klibminitel.core/CharacterSize.characterHeight.<get-characterHeight>|<get-characterHeight>(){}[0]
+    final val characterWidth // org.jraf.klibminitel.core/CharacterSize.characterWidth|{}characterWidth[0]
+        final fun <get-characterWidth>(): kotlin/Int // org.jraf.klibminitel.core/CharacterSize.characterWidth.<get-characterWidth>|<get-characterWidth>(){}[0]
+    final val entries // org.jraf.klibminitel.core/CharacterSize.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<org.jraf.klibminitel.core/CharacterSize> // org.jraf.klibminitel.core/CharacterSize.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val maxCharactersHorizontal // org.jraf.klibminitel.core/CharacterSize.maxCharactersHorizontal|{}maxCharactersHorizontal[0]
+        final fun <get-maxCharactersHorizontal>(): kotlin/Int // org.jraf.klibminitel.core/CharacterSize.maxCharactersHorizontal.<get-maxCharactersHorizontal>|<get-maxCharactersHorizontal>(){}[0]
+    final val maxCharactersVertical // org.jraf.klibminitel.core/CharacterSize.maxCharactersVertical|{}maxCharactersVertical[0]
+        final fun <get-maxCharactersVertical>(): kotlin/Int // org.jraf.klibminitel.core/CharacterSize.maxCharactersVertical.<get-maxCharactersVertical>|<get-maxCharactersVertical>(){}[0]
+
+    final fun valueOf(kotlin/String): org.jraf.klibminitel.core/CharacterSize // org.jraf.klibminitel.core/CharacterSize.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<org.jraf.klibminitel.core/CharacterSize> // org.jraf.klibminitel.core/CharacterSize.values|values#static(){}[0]
+}
+
+final class org.jraf.klibminitel.core/Minitel { // org.jraf.klibminitel.core/Minitel|null[0]
+    constructor <init>(kotlin/String) // org.jraf.klibminitel.core/Minitel.<init>|<init>(kotlin.String){}[0]
+    constructor <init>(kotlin/String, kotlin/String) // org.jraf.klibminitel.core/Minitel.<init>|<init>(kotlin.String;kotlin.String){}[0]
+    constructor <init>(kotlinx.io/RawSource, kotlinx.io/Sink) // org.jraf.klibminitel.core/Minitel.<init>|<init>(kotlinx.io.RawSource;kotlinx.io.Sink){}[0]
+
+    final suspend fun connect(kotlin.coroutines/SuspendFunction1<org.jraf.klibminitel.core/Minitel.Connection, kotlin/Unit>) // org.jraf.klibminitel.core/Minitel.connect|connect(kotlin.coroutines.SuspendFunction1<org.jraf.klibminitel.core.Minitel.Connection,kotlin.Unit>){}[0]
+
+    abstract fun interface KeyboardListener { // org.jraf.klibminitel.core/Minitel.KeyboardListener|null[0]
+        abstract fun onKeyboardEvent(org.jraf.klibminitel.core/Minitel.KeyboardEvent) // org.jraf.klibminitel.core/Minitel.KeyboardListener.onKeyboardEvent|onKeyboardEvent(org.jraf.klibminitel.core.Minitel.KeyboardEvent){}[0]
+    }
+
+    abstract fun interface SystemListener { // org.jraf.klibminitel.core/Minitel.SystemListener|null[0]
+        abstract fun onSystemEvent(org.jraf.klibminitel.core/Minitel.SystemEvent) // org.jraf.klibminitel.core/Minitel.SystemListener.onSystemEvent|onSystemEvent(org.jraf.klibminitel.core.Minitel.SystemEvent){}[0]
+    }
+
+    final class Connection { // org.jraf.klibminitel.core/Minitel.Connection|null[0]
+        constructor <init>(kotlinx.coroutines.flow/Flow<org.jraf.klibminitel.core/Minitel.KeyboardEvent>, kotlinx.coroutines.flow/Flow<org.jraf.klibminitel.core/Minitel.SystemEvent>, org.jraf.klibminitel.core/Minitel.Screen) // org.jraf.klibminitel.core/Minitel.Connection.<init>|<init>(kotlinx.coroutines.flow.Flow<org.jraf.klibminitel.core.Minitel.KeyboardEvent>;kotlinx.coroutines.flow.Flow<org.jraf.klibminitel.core.Minitel.SystemEvent>;org.jraf.klibminitel.core.Minitel.Screen){}[0]
+
+        final val keyboard // org.jraf.klibminitel.core/Minitel.Connection.keyboard|{}keyboard[0]
+            final fun <get-keyboard>(): kotlinx.coroutines.flow/Flow<org.jraf.klibminitel.core/Minitel.KeyboardEvent> // org.jraf.klibminitel.core/Minitel.Connection.keyboard.<get-keyboard>|<get-keyboard>(){}[0]
+        final val screen // org.jraf.klibminitel.core/Minitel.Connection.screen|{}screen[0]
+            final fun <get-screen>(): org.jraf.klibminitel.core/Minitel.Screen // org.jraf.klibminitel.core/Minitel.Connection.screen.<get-screen>|<get-screen>(){}[0]
+        final val system // org.jraf.klibminitel.core/Minitel.Connection.system|{}system[0]
+            final fun <get-system>(): kotlinx.coroutines.flow/Flow<org.jraf.klibminitel.core/Minitel.SystemEvent> // org.jraf.klibminitel.core/Minitel.Connection.system.<get-system>|<get-system>(){}[0]
+    }
+
+    final class Screen { // org.jraf.klibminitel.core/Minitel.Screen|null[0]
+        final suspend fun beep() // org.jraf.klibminitel.core/Minitel.Screen.beep|beep(){}[0]
+        final suspend fun blink(kotlin/Boolean) // org.jraf.klibminitel.core/Minitel.Screen.blink|blink(kotlin.Boolean){}[0]
+        final suspend fun characterSize(org.jraf.klibminitel.core/CharacterSize) // org.jraf.klibminitel.core/Minitel.Screen.characterSize|characterSize(org.jraf.klibminitel.core.CharacterSize){}[0]
+        final suspend fun clearBottomOfScreen() // org.jraf.klibminitel.core/Minitel.Screen.clearBottomOfScreen|clearBottomOfScreen(){}[0]
+        final suspend fun clearEndOfLine() // org.jraf.klibminitel.core/Minitel.Screen.clearEndOfLine|clearEndOfLine(){}[0]
+        final suspend fun clearScreenAndHome() // org.jraf.klibminitel.core/Minitel.Screen.clearScreenAndHome|clearScreenAndHome(){}[0]
+        final suspend fun color(kotlin/Int, kotlin/Int) // org.jraf.klibminitel.core/Minitel.Screen.color|color(kotlin.Int;kotlin.Int){}[0]
+        final suspend fun colorBackground(kotlin/Int) // org.jraf.klibminitel.core/Minitel.Screen.colorBackground|colorBackground(kotlin.Int){}[0]
+        final suspend fun colorForeground(kotlin/Int) // org.jraf.klibminitel.core/Minitel.Screen.colorForeground|colorForeground(kotlin.Int){}[0]
+        final suspend fun disableAcknowledgement() // org.jraf.klibminitel.core/Minitel.Screen.disableAcknowledgement|disableAcknowledgement(){}[0]
+        final suspend fun getCursorPosition(): kotlin/Pair<kotlin/Int, kotlin/Int> // org.jraf.klibminitel.core/Minitel.Screen.getCursorPosition|getCursorPosition(){}[0]
+        final suspend fun graphicsCharacter(kotlin/Byte) // org.jraf.klibminitel.core/Minitel.Screen.graphicsCharacter|graphicsCharacter(kotlin.Byte){}[0]
+        final suspend fun graphicsMode(kotlin/Boolean) // org.jraf.klibminitel.core/Minitel.Screen.graphicsMode|graphicsMode(kotlin.Boolean){}[0]
+        final suspend fun inverse(kotlin/Boolean) // org.jraf.klibminitel.core/Minitel.Screen.inverse|inverse(kotlin.Boolean){}[0]
+        final suspend fun localEcho(kotlin/Boolean) // org.jraf.klibminitel.core/Minitel.Screen.localEcho|localEcho(kotlin.Boolean){}[0]
+        final suspend fun moveCursor(kotlin/Int, kotlin/Int) // org.jraf.klibminitel.core/Minitel.Screen.moveCursor|moveCursor(kotlin.Int;kotlin.Int){}[0]
+        final suspend fun moveCursorDown() // org.jraf.klibminitel.core/Minitel.Screen.moveCursorDown|moveCursorDown(){}[0]
+        final suspend fun moveCursorLeft() // org.jraf.klibminitel.core/Minitel.Screen.moveCursorLeft|moveCursorLeft(){}[0]
+        final suspend fun moveCursorRight() // org.jraf.klibminitel.core/Minitel.Screen.moveCursorRight|moveCursorRight(){}[0]
+        final suspend fun moveCursorUp() // org.jraf.klibminitel.core/Minitel.Screen.moveCursorUp|moveCursorUp(){}[0]
+        final suspend fun print(kotlin/Char): kotlin/Int // org.jraf.klibminitel.core/Minitel.Screen.print|print(kotlin.Char){}[0]
+        final suspend fun print(kotlin/String): kotlin/Int // org.jraf.klibminitel.core/Minitel.Screen.print|print(kotlin.String){}[0]
+        final suspend fun raw(kotlin/Byte): kotlin/Int // org.jraf.klibminitel.core/Minitel.Screen.raw|raw(kotlin.Byte){}[0]
+        final suspend fun raw(kotlin/ByteArray): kotlin/Int // org.jraf.klibminitel.core/Minitel.Screen.raw|raw(kotlin.ByteArray){}[0]
+        final suspend fun raw(kotlin/Char): kotlin/Int // org.jraf.klibminitel.core/Minitel.Screen.raw|raw(kotlin.Char){}[0]
+        final suspend fun raw(kotlin/String): kotlin/Int // org.jraf.klibminitel.core/Minitel.Screen.raw|raw(kotlin.String){}[0]
+        final suspend fun repeatCharacter(kotlin/Char, kotlin/Int) // org.jraf.klibminitel.core/Minitel.Screen.repeatCharacter|repeatCharacter(kotlin.Char;kotlin.Int){}[0]
+        final suspend fun repeatLastCharacter(kotlin/Int) // org.jraf.klibminitel.core/Minitel.Screen.repeatLastCharacter|repeatLastCharacter(kotlin.Int){}[0]
+        final suspend fun scroll(kotlin/Boolean) // org.jraf.klibminitel.core/Minitel.Screen.scroll|scroll(kotlin.Boolean){}[0]
+        final suspend fun showCursor(kotlin/Boolean) // org.jraf.klibminitel.core/Minitel.Screen.showCursor|showCursor(kotlin.Boolean){}[0]
+        final suspend fun underline(kotlin/Boolean) // org.jraf.klibminitel.core/Minitel.Screen.underline|underline(kotlin.Boolean){}[0]
+    }
+
+    sealed class KeyboardEvent { // org.jraf.klibminitel.core/Minitel.KeyboardEvent|null[0]
+        abstract fun raw(): kotlin/ByteArray // org.jraf.klibminitel.core/Minitel.KeyboardEvent.raw|raw(){}[0]
+
+        final class CharacterEvent : org.jraf.klibminitel.core/Minitel.KeyboardEvent { // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent|null[0]
+            constructor <init>(kotlin/Char) // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent.<init>|<init>(kotlin.Char){}[0]
+
+            final val char // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent.char|{}char[0]
+                final fun <get-char>(): kotlin/Char // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent.char.<get-char>|<get-char>(){}[0]
+
+            final fun component1(): kotlin/Char // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent.component1|component1(){}[0]
+            final fun copy(kotlin/Char = ...): org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent.copy|copy(kotlin.Char){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent.hashCode|hashCode(){}[0]
+            final fun raw(): kotlin/ByteArray // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent.raw|raw(){}[0]
+            final fun toString(): kotlin/String // org.jraf.klibminitel.core/Minitel.KeyboardEvent.CharacterEvent.toString|toString(){}[0]
+        }
+
+        final class FunctionKeyEvent : org.jraf.klibminitel.core/Minitel.KeyboardEvent { // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent|null[0]
+            constructor <init>(org.jraf.klibminitel.core/FunctionKey) // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent.<init>|<init>(org.jraf.klibminitel.core.FunctionKey){}[0]
+
+            final val functionKey // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent.functionKey|{}functionKey[0]
+                final fun <get-functionKey>(): org.jraf.klibminitel.core/FunctionKey // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent.functionKey.<get-functionKey>|<get-functionKey>(){}[0]
+
+            final fun component1(): org.jraf.klibminitel.core/FunctionKey // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent.component1|component1(){}[0]
+            final fun copy(org.jraf.klibminitel.core/FunctionKey = ...): org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent.copy|copy(org.jraf.klibminitel.core.FunctionKey){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent.hashCode|hashCode(){}[0]
+            final fun raw(): kotlin/ByteArray // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent.raw|raw(){}[0]
+            final fun toString(): kotlin/String // org.jraf.klibminitel.core/Minitel.KeyboardEvent.FunctionKeyEvent.toString|toString(){}[0]
+        }
+    }
+
+    sealed class SystemEvent { // org.jraf.klibminitel.core/Minitel.SystemEvent|null[0]
+        final object TurnedOnEvent : org.jraf.klibminitel.core/Minitel.SystemEvent { // org.jraf.klibminitel.core/Minitel.SystemEvent.TurnedOnEvent|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/Minitel.SystemEvent.TurnedOnEvent.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/Minitel.SystemEvent.TurnedOnEvent.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // org.jraf.klibminitel.core/Minitel.SystemEvent.TurnedOnEvent.toString|toString(){}[0]
+        }
+    }
+}
+
+final class org.jraf.klibminitel.internal.util.color/RgbColor { // org.jraf.klibminitel.internal.util.color/RgbColor|null[0]
+    constructor <init>(kotlin/Float, kotlin/Float, kotlin/Float) // org.jraf.klibminitel.internal.util.color/RgbColor.<init>|<init>(kotlin.Float;kotlin.Float;kotlin.Float){}[0]
+
+    final val b // org.jraf.klibminitel.internal.util.color/RgbColor.b|{}b[0]
+        final fun <get-b>(): kotlin/Float // org.jraf.klibminitel.internal.util.color/RgbColor.b.<get-b>|<get-b>(){}[0]
+    final val g // org.jraf.klibminitel.internal.util.color/RgbColor.g|{}g[0]
+        final fun <get-g>(): kotlin/Float // org.jraf.klibminitel.internal.util.color/RgbColor.g.<get-g>|<get-g>(){}[0]
+    final val r // org.jraf.klibminitel.internal.util.color/RgbColor.r|{}r[0]
+        final fun <get-r>(): kotlin/Float // org.jraf.klibminitel.internal.util.color/RgbColor.r.<get-r>|<get-r>(){}[0]
+
+    final fun component1(): kotlin/Float // org.jraf.klibminitel.internal.util.color/RgbColor.component1|component1(){}[0]
+    final fun component2(): kotlin/Float // org.jraf.klibminitel.internal.util.color/RgbColor.component2|component2(){}[0]
+    final fun component3(): kotlin/Float // org.jraf.klibminitel.internal.util.color/RgbColor.component3|component3(){}[0]
+    final fun copy(kotlin/Float = ..., kotlin/Float = ..., kotlin/Float = ...): org.jraf.klibminitel.internal.util.color/RgbColor // org.jraf.klibminitel.internal.util.color/RgbColor.copy|copy(kotlin.Float;kotlin.Float;kotlin.Float){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.internal.util.color/RgbColor.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // org.jraf.klibminitel.internal.util.color/RgbColor.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // org.jraf.klibminitel.internal.util.color/RgbColor.toString|toString(){}[0]
+
+    final object Companion // org.jraf.klibminitel.internal.util.color/RgbColor.Companion|null[0]
+}
+
+sealed class org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey|null[0]
+    final class UNKNOWN : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.UNKNOWN|null[0]
+        constructor <init>(kotlin/Byte) // org.jraf.klibminitel.core/FunctionKey.UNKNOWN.<init>|<init>(kotlin.Byte){}[0]
+
+        final fun copy(kotlin/Byte = ...): org.jraf.klibminitel.core/FunctionKey.UNKNOWN // org.jraf.klibminitel.core/FunctionKey.UNKNOWN.copy|copy(kotlin.Byte){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.UNKNOWN.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.UNKNOWN.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.UNKNOWN.toString|toString(){}[0]
+    }
+
+    final object ANNULATION : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.ANNULATION|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.ANNULATION.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.ANNULATION.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.ANNULATION.toString|toString(){}[0]
+    }
+
+    final object CONNEXION_FIN : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.CONNEXION_FIN|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.CONNEXION_FIN.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.CONNEXION_FIN.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.CONNEXION_FIN.toString|toString(){}[0]
+    }
+
+    final object CORRECTION : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.CORRECTION|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.CORRECTION.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.CORRECTION.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.CORRECTION.toString|toString(){}[0]
+    }
+
+    final object Companion // org.jraf.klibminitel.core/FunctionKey.Companion|null[0]
+
+    final object ENVOI : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.ENVOI|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.ENVOI.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.ENVOI.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.ENVOI.toString|toString(){}[0]
+    }
+
+    final object GUIDE : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.GUIDE|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.GUIDE.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.GUIDE.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.GUIDE.toString|toString(){}[0]
+    }
+
+    final object REPETITION : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.REPETITION|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.REPETITION.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.REPETITION.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.REPETITION.toString|toString(){}[0]
+    }
+
+    final object RETOUR : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.RETOUR|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.RETOUR.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.RETOUR.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.RETOUR.toString|toString(){}[0]
+    }
+
+    final object SHIFT_CONNEXION_FIN : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.SHIFT_CONNEXION_FIN|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.SHIFT_CONNEXION_FIN.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.SHIFT_CONNEXION_FIN.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.SHIFT_CONNEXION_FIN.toString|toString(){}[0]
+    }
+
+    final object SOMMAIRE : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.SOMMAIRE|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.SOMMAIRE.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.SOMMAIRE.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.SOMMAIRE.toString|toString(){}[0]
+    }
+
+    final object SUITE : org.jraf.klibminitel.core/FunctionKey { // org.jraf.klibminitel.core/FunctionKey.SUITE|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // org.jraf.klibminitel.core/FunctionKey.SUITE.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // org.jraf.klibminitel.core/FunctionKey.SUITE.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // org.jraf.klibminitel.core/FunctionKey.SUITE.toString|toString(){}[0]
+    }
+}
+
+final const val org.jraf.klibminitel.core/SCREEN_HEIGHT_NORMAL // org.jraf.klibminitel.core/SCREEN_HEIGHT_NORMAL|{}SCREEN_HEIGHT_NORMAL[0]
+    final fun <get-SCREEN_HEIGHT_NORMAL>(): kotlin/Int // org.jraf.klibminitel.core/SCREEN_HEIGHT_NORMAL.<get-SCREEN_HEIGHT_NORMAL>|<get-SCREEN_HEIGHT_NORMAL>(){}[0]
+final const val org.jraf.klibminitel.core/SCREEN_WIDTH_NORMAL // org.jraf.klibminitel.core/SCREEN_WIDTH_NORMAL|{}SCREEN_WIDTH_NORMAL[0]
+    final fun <get-SCREEN_WIDTH_NORMAL>(): kotlin/Int // org.jraf.klibminitel.core/SCREEN_WIDTH_NORMAL.<get-SCREEN_WIDTH_NORMAL>|<get-SCREEN_WIDTH_NORMAL>(){}[0]
+
+final val org.jraf.klibminitel/VERSION // org.jraf.klibminitel/VERSION|{}VERSION[0]
+    final fun <get-VERSION>(): kotlin/String // org.jraf.klibminitel/VERSION.<get-VERSION>|<get-VERSION>(){}[0]

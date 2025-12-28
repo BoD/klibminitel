@@ -1,0 +1,257 @@
+public final class org/jraf/klibminitel/VersionKt {
+	public static final field VERSION Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/CharacterSize : java/lang/Enum {
+	public static final field DOUBLE Lorg/jraf/klibminitel/core/CharacterSize;
+	public static final field NORMAL Lorg/jraf/klibminitel/core/CharacterSize;
+	public static final field TALL Lorg/jraf/klibminitel/core/CharacterSize;
+	public static final field WIDE Lorg/jraf/klibminitel/core/CharacterSize;
+	public final fun getCharacterHeight ()I
+	public final fun getCharacterWidth ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getMaxCharactersHorizontal ()I
+	public final fun getMaxCharactersVertical ()I
+	public static fun valueOf (Ljava/lang/String;)Lorg/jraf/klibminitel/core/CharacterSize;
+	public static fun values ()[Lorg/jraf/klibminitel/core/CharacterSize;
+}
+
+public abstract class org/jraf/klibminitel/core/FunctionKey {
+	public static final field Companion Lorg/jraf/klibminitel/core/FunctionKey$Companion;
+	public synthetic fun <init> (BLkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$ANNULATION : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$ANNULATION;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$CONNEXION_FIN : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$CONNEXION_FIN;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$CORRECTION : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$CORRECTION;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$Companion {
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$ENVOI : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$ENVOI;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$GUIDE : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$GUIDE;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$REPETITION : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$REPETITION;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$RETOUR : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$RETOUR;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$SHIFT_CONNEXION_FIN : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$SHIFT_CONNEXION_FIN;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$SOMMAIRE : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$SOMMAIRE;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$SUITE : org/jraf/klibminitel/core/FunctionKey {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/FunctionKey$SUITE;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/FunctionKey$UNKNOWN : org/jraf/klibminitel/core/FunctionKey {
+	public fun <init> (B)V
+	public final fun copy (B)Lorg/jraf/klibminitel/core/FunctionKey$UNKNOWN;
+	public static synthetic fun copy$default (Lorg/jraf/klibminitel/core/FunctionKey$UNKNOWN;BILjava/lang/Object;)Lorg/jraf/klibminitel/core/FunctionKey$UNKNOWN;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/Minitel {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Lkotlinx/io/RawSource;Lkotlinx/io/Sink;)V
+	public final fun connect (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class org/jraf/klibminitel/core/Minitel$Connection {
+	public fun <init> (Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/flow/Flow;Lorg/jraf/klibminitel/core/Minitel$Screen;)V
+	public final fun getKeyboard ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getScreen ()Lorg/jraf/klibminitel/core/Minitel$Screen;
+	public final fun getSystem ()Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract class org/jraf/klibminitel/core/Minitel$KeyboardEvent {
+	public abstract fun raw ()[B
+}
+
+public final class org/jraf/klibminitel/core/Minitel$KeyboardEvent$CharacterEvent : org/jraf/klibminitel/core/Minitel$KeyboardEvent {
+	public fun <init> (C)V
+	public final fun component1 ()C
+	public final fun copy (C)Lorg/jraf/klibminitel/core/Minitel$KeyboardEvent$CharacterEvent;
+	public static synthetic fun copy$default (Lorg/jraf/klibminitel/core/Minitel$KeyboardEvent$CharacterEvent;CILjava/lang/Object;)Lorg/jraf/klibminitel/core/Minitel$KeyboardEvent$CharacterEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChar ()C
+	public fun hashCode ()I
+	public fun raw ()[B
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/core/Minitel$KeyboardEvent$FunctionKeyEvent : org/jraf/klibminitel/core/Minitel$KeyboardEvent {
+	public fun <init> (Lorg/jraf/klibminitel/core/FunctionKey;)V
+	public final fun component1 ()Lorg/jraf/klibminitel/core/FunctionKey;
+	public final fun copy (Lorg/jraf/klibminitel/core/FunctionKey;)Lorg/jraf/klibminitel/core/Minitel$KeyboardEvent$FunctionKeyEvent;
+	public static synthetic fun copy$default (Lorg/jraf/klibminitel/core/Minitel$KeyboardEvent$FunctionKeyEvent;Lorg/jraf/klibminitel/core/FunctionKey;ILjava/lang/Object;)Lorg/jraf/klibminitel/core/Minitel$KeyboardEvent$FunctionKeyEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFunctionKey ()Lorg/jraf/klibminitel/core/FunctionKey;
+	public fun hashCode ()I
+	public fun raw ()[B
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class org/jraf/klibminitel/core/Minitel$KeyboardListener {
+	public abstract fun onKeyboardEvent (Lorg/jraf/klibminitel/core/Minitel$KeyboardEvent;)V
+}
+
+public final class org/jraf/klibminitel/core/Minitel$Screen {
+	public final fun beep (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun blink (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun characterSize (Lorg/jraf/klibminitel/core/CharacterSize;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun clearBottomOfScreen (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun clearEndOfLine (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun clearScreenAndHome (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun color (IILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun colorBackground (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun colorForeground (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun disableAcknowledgement (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getCursorPosition (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun graphicsCharacter (BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun graphicsMode (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun inverse (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun localEcho (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun moveCursor (IILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun moveCursorDown (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun moveCursorLeft (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun moveCursorRight (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun moveCursorUp (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun print (CLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun print (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun raw (BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun raw (CLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun raw (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun raw ([BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun repeatCharacter (CILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun repeatLastCharacter (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun scroll (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun showCursor (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun underline (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class org/jraf/klibminitel/core/Minitel$SystemEvent {
+}
+
+public final class org/jraf/klibminitel/core/Minitel$SystemEvent$TurnedOnEvent : org/jraf/klibminitel/core/Minitel$SystemEvent {
+	public static final field INSTANCE Lorg/jraf/klibminitel/core/Minitel$SystemEvent$TurnedOnEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class org/jraf/klibminitel/core/Minitel$SystemListener {
+	public abstract fun onSystemEvent (Lorg/jraf/klibminitel/core/Minitel$SystemEvent;)V
+}
+
+public final class org/jraf/klibminitel/core/ScreenKt {
+	public static final field SCREEN_HEIGHT_NORMAL I
+	public static final field SCREEN_WIDTH_NORMAL I
+}
+
+public final class org/jraf/klibminitel/imageconvert/App {
+	public static final field INSTANCE Lorg/jraf/klibminitel/imageconvert/App;
+	public final fun convertImage (Ljava/lang/String;Ljava/lang/String;Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;)V
+}
+
+public final class org/jraf/klibminitel/imageconvert/ColorAlgorithm : java/lang/Enum {
+	public static final field ACCURATE Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;
+	public static final field CONTRAST Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;
+	public static fun values ()[Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;
+}
+
+public final class org/jraf/klibminitel/imageconvert/ImageConvertKt {
+	public static final fun main ()V
+	public static synthetic fun main ([Ljava/lang/String;)V
+}
+
+public final class org/jraf/klibminitel/imageconvert/MinitelCharacter {
+	public fun <init> (BII)V
+	public final fun component1 ()B
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (BII)Lorg/jraf/klibminitel/imageconvert/MinitelCharacter;
+	public static synthetic fun copy$default (Lorg/jraf/klibminitel/imageconvert/MinitelCharacter;BIIILjava/lang/Object;)Lorg/jraf/klibminitel/imageconvert/MinitelCharacter;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBgColor ()I
+	public final fun getCharacter ()B
+	public final fun getFgColor ()I
+	public fun hashCode ()I
+	public final fun isEmptyCharacter ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/internal/util/color/RgbColor {
+	public static final field Companion Lorg/jraf/klibminitel/internal/util/color/RgbColor$Companion;
+	public fun <init> (FFF)V
+	public final fun component1 ()F
+	public final fun component2 ()F
+	public final fun component3 ()F
+	public final fun copy (FFF)Lorg/jraf/klibminitel/internal/util/color/RgbColor;
+	public static synthetic fun copy$default (Lorg/jraf/klibminitel/internal/util/color/RgbColor;FFFILjava/lang/Object;)Lorg/jraf/klibminitel/internal/util/color/RgbColor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getB ()F
+	public final fun getG ()F
+	public final fun getR ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/jraf/klibminitel/internal/util/color/RgbColor$Companion {
+}
+
