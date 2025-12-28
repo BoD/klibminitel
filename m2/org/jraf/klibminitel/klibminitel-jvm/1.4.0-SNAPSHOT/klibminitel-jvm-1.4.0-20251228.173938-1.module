@@ -1,0 +1,152 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../klibminitel/1.4.0-SNAPSHOT/klibminitel-1.4.0-SNAPSHOT.module",
+    "group": "org.jraf.klibminitel",
+    "module": "klibminitel",
+    "version": "1.4.0-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-io-core",
+          "version": {
+            "requires": "0.8.2",
+            "rejects": [
+              "_"
+            ]
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "klibminitel-jvm-1.4.0-SNAPSHOT.jar",
+          "url": "klibminitel-jvm-1.4.0-SNAPSHOT.jar",
+          "size": 92811,
+          "sha512": "90d2db2634cf96c06ddea9075ac5d3f91d5bea36ef0a36c9ab22ed309220910213e48c822131aba4e881e77e0eb01fbdae28e6e5800992d2135d455c47ed174c",
+          "sha256": "d1320cac20a9be12e41891fbe4e6a5adaf76cde7100953a28d5d41ae0fefd73f",
+          "sha1": "1c495bb305a4315046780e3a04ffc336b02e76f4",
+          "md5": "081ca463736286373f76d3988da19c37"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-io-core",
+          "version": {
+            "requires": "0.8.2",
+            "rejects": [
+              "_"
+            ]
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-jdk9",
+          "version": {
+            "requires": "1.10.2",
+            "rejects": [
+              "_"
+            ]
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2",
+            "rejects": [
+              "_"
+            ]
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.7.1",
+            "rejects": [
+              "_"
+            ]
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "klibminitel-jvm-1.4.0-SNAPSHOT.jar",
+          "url": "klibminitel-jvm-1.4.0-SNAPSHOT.jar",
+          "size": 92811,
+          "sha512": "90d2db2634cf96c06ddea9075ac5d3f91d5bea36ef0a36c9ab22ed309220910213e48c822131aba4e881e77e0eb01fbdae28e6e5800992d2135d455c47ed174c",
+          "sha256": "d1320cac20a9be12e41891fbe4e6a5adaf76cde7100953a28d5d41ae0fefd73f",
+          "sha1": "1c495bb305a4315046780e3a04ffc336b02e76f4",
+          "md5": "081ca463736286373f76d3988da19c37"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "klibminitel-jvm-1.4.0-SNAPSHOT-sources.jar",
+          "url": "klibminitel-jvm-1.4.0-SNAPSHOT-sources.jar",
+          "size": 23600,
+          "sha512": "2f1036e6ad6baae367dd353af2ade7896e8a2027203b780c3ec8075e1bbbbdf65f044fe8ae21fdb83df99ac7377e6b46a67297dd5dd0208310ce5256f9a0bb73",
+          "sha256": "3bfca939b3b3f330102340f14dc0b0b4bc8804c42d068e0cd5c575f96a548f4a",
+          "sha1": "60939fbdd4b88ffb35ea8c31b5322fcd3c73d42a",
+          "md5": "e57bc0c2f587479b41202b841b92aea0"
+        }
+      ]
+    }
+  ]
+}
