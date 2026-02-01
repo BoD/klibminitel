@@ -3,44 +3,44 @@
   <groupId>org.jraf.klibminitel</groupId>
   <artifactId>klibminitel</artifactId>
   <versioning>
-    <lastUpdated>20260201142015</lastUpdated>
+    <lastUpdated>20260201142101</lastUpdated>
     <snapshot>
-      <timestamp>20260201.142015</timestamp>
+      <timestamp>20260201.142101</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
     <snapshotVersions>
       <snapshotVersion>
-        <classifier>javadoc</classifier>
-        <extension>jar</extension>
-        <value>1.4.1-20260201.142015-1</value>
-        <updated>20260201142015</updated>
+        <extension>pom</extension>
+        <value>1.4.1-20260201.142101-1</value>
+        <updated>20260201142101</updated>
       </snapshotVersion>
       <snapshotVersion>
+        <classifier>javadoc</classifier>
         <extension>jar</extension>
-        <value>1.4.1-20260201.142015-1</value>
-        <updated>20260201142015</updated>
+        <value>1.4.1-20260201.142101-1</value>
+        <updated>20260201142101</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>kotlin-tooling-metadata</classifier>
         <extension>json</extension>
-        <value>1.4.1-20260201.142015-1</value>
-        <updated>20260201142015</updated>
+        <value>1.4.1-20260201.142101-1</value>
+        <updated>20260201142101</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>sources</classifier>
         <extension>jar</extension>
-        <value>1.4.1-20260201.142015-1</value>
-        <updated>20260201142015</updated>
+        <value>1.4.1-20260201.142101-1</value>
+        <updated>20260201142101</updated>
       </snapshotVersion>
       <snapshotVersion>
-        <extension>pom</extension>
-        <value>1.4.1-20260201.142015-1</value>
-        <updated>20260201142015</updated>
+        <extension>jar</extension>
+        <value>1.4.1-20260201.142101-1</value>
+        <updated>20260201142101</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>module</extension>
-        <value>1.4.1-20260201.142015-1</value>
-        <updated>20260201142015</updated>
+        <value>1.4.1-20260201.142101-1</value>
+        <updated>20260201142101</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
