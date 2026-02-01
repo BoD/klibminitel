@@ -1,8 +1,9 @@
 import com.gradleup.librarian.gradle.Librarian
 
 plugins {
-  kotlin("multiplatform").apply(false)
-  id("com.gradleup.librarian").apply(false)
+  alias(libs.plugins.kotlin.multiplatform).apply(false)
+  alias(libs.plugins.kotlin.jvm).apply(false)
+  alias(libs.plugins.librarian).apply(false)
 }
 
 Librarian.root(project)

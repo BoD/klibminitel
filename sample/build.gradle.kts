@@ -1,5 +1,5 @@
 plugins {
-  kotlin("jvm")
+  alias(libs.plugins.kotlin.jvm)
   application
 }
 
@@ -13,16 +13,16 @@ application {
 
 dependencies {
   // Kotlin
-  implementation(KotlinX.coroutines.jdk9)
+  implementation(libs.kotlinx.coroutines.jdk9)
 
   // Logging
-  implementation("org.jraf.klibnanolog:klibnanolog:_")
+  implementation(libs.klibnanolog)
 
   // Library
   implementation(project(":klibminitel"))
 
   // OpenAI
-  implementation("org.jraf.klibopenai:klibopenai:_")
+  implementation(libs.klibopenai)
 }
 
 // See https://github.com/BoD/k2o/pull/4

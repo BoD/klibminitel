@@ -1,7 +1,7 @@
 import com.gradleup.librarian.gradle.Librarian
 
 plugins {
-  kotlin("multiplatform")
+  alias(libs.plugins.kotlin.multiplatform)
 }
 
 kotlin {
@@ -13,15 +13,15 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation(KotlinX.coroutines.core)
-        implementation(KotlinX.datetime)
-        api("org.jetbrains.kotlinx:kotlinx-io-core:_")
+        implementation(libs.kotlinx.coroutines.core)
+        implementation(libs.kotlinx.datetime)
+        api(libs.kotlinx.io.core)
       }
     }
 
     jvmMain {
       dependencies {
-        implementation(KotlinX.coroutines.jdk9)
+        implementation(libs.kotlinx.coroutines.jdk9)
       }
     }
   }
