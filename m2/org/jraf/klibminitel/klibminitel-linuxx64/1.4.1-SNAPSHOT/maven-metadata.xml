@@ -3,38 +3,38 @@
   <groupId>org.jraf.klibminitel</groupId>
   <artifactId>klibminitel-linuxx64</artifactId>
   <versioning>
-    <lastUpdated>20260201142101</lastUpdated>
+    <lastUpdated>20260201142353</lastUpdated>
     <snapshot>
-      <timestamp>20260201.142101</timestamp>
+      <timestamp>20260201.142353</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
     <snapshotVersions>
       <snapshotVersion>
-        <extension>module</extension>
-        <value>1.4.1-20260201.142101-1</value>
-        <updated>20260201142101</updated>
-      </snapshotVersion>
-      <snapshotVersion>
-        <classifier>javadoc</classifier>
-        <extension>jar</extension>
-        <value>1.4.1-20260201.142101-1</value>
-        <updated>20260201142101</updated>
+        <extension>klib</extension>
+        <value>1.4.1-20260201.142353-1</value>
+        <updated>20260201142353</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>sources</classifier>
         <extension>jar</extension>
-        <value>1.4.1-20260201.142101-1</value>
-        <updated>20260201142101</updated>
+        <value>1.4.1-20260201.142353-1</value>
+        <updated>20260201142353</updated>
       </snapshotVersion>
       <snapshotVersion>
-        <extension>klib</extension>
-        <value>1.4.1-20260201.142101-1</value>
-        <updated>20260201142101</updated>
+        <classifier>javadoc</classifier>
+        <extension>jar</extension>
+        <value>1.4.1-20260201.142353-1</value>
+        <updated>20260201142353</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>module</extension>
+        <value>1.4.1-20260201.142353-1</value>
+        <updated>20260201142353</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom</extension>
-        <value>1.4.1-20260201.142101-1</value>
-        <updated>20260201142101</updated>
+        <value>1.4.1-20260201.142353-1</value>
+        <updated>20260201142353</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>

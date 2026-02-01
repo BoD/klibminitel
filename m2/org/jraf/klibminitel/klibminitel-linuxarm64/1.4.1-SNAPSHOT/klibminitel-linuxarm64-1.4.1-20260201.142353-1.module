@@ -1,0 +1,100 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../klibminitel/1.4.1-SNAPSHOT/klibminitel-1.4.1-SNAPSHOT.module",
+    "group": "org.jraf.klibminitel",
+    "module": "klibminitel",
+    "version": "1.4.1-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.3.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "linuxArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "linux_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.20-Beta2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-io-core",
+          "version": {
+            "requires": "0.8.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.7.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "klibminitel-linuxArm64Main-1.4.1-SNAPSHOT.klib",
+          "url": "klibminitel-linuxarm64-1.4.1-SNAPSHOT.klib",
+          "size": 69693,
+          "sha512": "b3fc2a5efe5f709c37b84a9d77064e638ffd2e72b45fcb46bb406b071993e70dd8ab376b8406469a8d52a0fe05144741352ef182a206e69aace35482709a4731",
+          "sha256": "6ed42aca00eb284616413efad4d6cd2c4a8a06c789fdf5742bb3bf04f6695496",
+          "sha1": "1a6611ed4ff63d5c8c447a14170a133f52236eaf",
+          "md5": "9da3bb3a7fdaa72f2dadab86ccf5f306"
+        }
+      ]
+    },
+    {
+      "name": "linuxArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "linux_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "files": [
+        {
+          "name": "klibminitel-linuxarm64-1.4.1-SNAPSHOT-sources.jar",
+          "url": "klibminitel-linuxarm64-1.4.1-SNAPSHOT-sources.jar",
+          "size": 18894,
+          "sha512": "29823cd4a9c9789d0e50dfdb05cc235e5782169abc143260f631aa880bc8d3f2d1558ece5c23423e35bca7292a1decf67592154ac17fd2d56583af6401960bcc",
+          "sha256": "d36d75f60378080ef6437c84545458d33776e9e915075b7b789a8bc2f06a29bf",
+          "sha1": "bb3ea6a0fafd727cc7c9e713f7fd9e2dbb0515b9",
+          "md5": "93b049f6f1974685c9e54127239ee708"
+        }
+      ]
+    }
+  ]
+}
