@@ -86,7 +86,7 @@ class ImageConverter(
     val output = output.outputStream()
     var curBg = -1
     var curFg = -1
-    for (line in lines) {
+    for ((i, line) in lines.withIndex()) {
       // Special case: empty line
       if (line.all { it.isEmptyCharacter }) {
         output.write(colorBackground(0))
@@ -108,7 +108,7 @@ class ImageConverter(
         }
         output.write(repeatCharacter((0x20 + c.character.character).toChar(), c.repeated))
       }
-      if (line.size < SCREEN_WIDTH_NORMAL) {
+      if (line.size < SCREEN_WIDTH_NORMAL && i != lines.lastIndex) {
         output.write(byteArrayOf('\r'.code.toByte(), '\n'.code.toByte()))
       }
     }

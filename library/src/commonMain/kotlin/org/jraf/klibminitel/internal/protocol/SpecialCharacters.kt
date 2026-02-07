@@ -144,6 +144,8 @@ internal object SpecialCharacters {
     .replace("’", "'")
     .replace("…", "...")
     .replace("”", "\"")
+    .replace("«", "\"")
+    .replace("»", "\"")
     .replace("€", "e")
     .replace("™", "TM")
     .replace("\n", "\r\n")
