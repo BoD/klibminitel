@@ -1,0 +1,50 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2026-07-11T13:40:50.950089794"><title>klibminitel | klibminitel</title><script type="application/json" id="virtual-toc-data">[{"id":"usage","level":0,"title":"Usage","anchor":"#usage"},{"id":"author-and-license","level":0,"title":"Author and License","anchor":"#author-and-license"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b575/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="klibminitel | klibminitel"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="klibminitel Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/welcome.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="klibminitel | klibminitel"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/welcome.html#webpage",
+    "url": "writerside-documentation/welcome.html",
+    "name": "klibminitel | klibminitel",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "klibminitel Help"
+}</script><!-- End Schema.org --></head><body data-id="welcome" data-main-title="klibminitel" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="" data-edit-url="https://github.com/BoD/klibminitel/edit/main/Writerside/topics/welcome.md"><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>klibminitel  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="welcome" id="welcome.md">klibminitel</h1><p id="s3z6c2_2"><a href="https://central.sonatype.com/namespace/org.jraf.klibminitel" id="s3z6c2_7" data-external="true" rel="noopener noreferrer"><img alt="Maven Central" src="https://img.shields.io/maven-metadata/v?metadataUrl=https://repo1.maven.org/maven2/org/jraf/klibminitel/klibminitel/maven-metadata.xml&amp;style=flat-square&amp;label=maven-central&amp;strategy=latestProperty" class="inline-icon-" title="Maven Central" id="s3z6c2_9"></a> <a href="https://central.sonatype.com/repository/maven-snapshots/org/jraf/klibminitel" id="s3z6c2_8" data-external="true" rel="noopener noreferrer"><img alt="Maven Snapshots" src="https://img.shields.io/maven-metadata/v?metadataUrl=https://central.sonatype.com/repository/maven-snapshots/org/jraf/klibminitel/klibminitel/maven-metadata.xml&amp;style=flat-square&amp;label=snapshots&amp;color=%2315252D&amp;strategy=latestProperty" class="inline-icon-" title="Maven Snapshots" id="s3z6c2_10"></a></p><p id="s3z6c2_4">A Kotlin (Multiplatform) library to interact with the <a href="https://en.wikipedia.org/wiki/Minitel" id="s3z6c2_11" data-external="true" rel="noopener noreferrer">Minitel</a>.</p><section class="chapter"><h2 id="usage" data-toc="usage">Usage</h2><div class="code-block" data-lang="kotlin">
+implementation(&quot;org.jraf.klibminitel:klibminitel:1.4.0&quot;)
+</div><div class="code-block" data-lang="kotlin">
+val minitel = Minitel(filePath)
+minitel.connect {
+  screen.disableAcknowledgement()
+  screen.localEcho(false)
+  screen.clearScreenAndHome()
+  screen.print(&quot;Hello, World!&quot;)
+
+  coroutineScope.launch {
+    system.collect { e -&gt;
+      onSystemEvent(e, screen)
+    }
+  }
+
+  keyboard.collect { e -&gt;
+    onKeyboardEvent(e, screen)
+  }
+}
+</div><p id="s3z6c2_14">Full KDoc is available <a href="https://jraf.org/klibminitel/kdoc/" id="s3z6c2_15" data-external="true" rel="noopener noreferrer">here</a>.</p></section><section class="chapter"><h2 id="author-and-license" data-toc="author-and-license">Author and License</h2><div class="code-block" data-lang="none">
+Copyright (C) 2019-present Benoit 'BoD' Lubek (BoD@JRAF.org)
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</div></section><div class="last-modified">Last modified: 11 July 2026</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b575/app.js"></script></body></html>
