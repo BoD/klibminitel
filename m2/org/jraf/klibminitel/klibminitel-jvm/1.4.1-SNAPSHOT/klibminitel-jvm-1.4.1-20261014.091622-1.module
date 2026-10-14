@@ -1,0 +1,137 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../klibminitel/1.4.1-SNAPSHOT/klibminitel-1.4.1-SNAPSHOT.module",
+    "group": "org.jraf.klibminitel",
+    "module": "klibminitel",
+    "version": "1.4.1-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.8.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-io-core",
+          "version": {
+            "requires": "0.9.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "klibminitel-jvm-1.4.1-SNAPSHOT.jar",
+          "url": "klibminitel-jvm-1.4.1-SNAPSHOT.jar",
+          "size": 128062,
+          "sha512": "331699a30a6831b063261f8c14227547e63b71482f9847507d8d94add6dc7de16d869e8cc5cd18024c71347bb04b77d690de184ba00717b3d9148e92314fd62f",
+          "sha256": "916f1391e977a9a481003f2707421b8cefcd51088a7b53af994b318c2096b652",
+          "sha1": "7c065e74a728aec05cc105d549b1061b09414e01",
+          "md5": "1beb6f083fedbcbdc4d1b12c1b2703ce"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-io-core",
+          "version": {
+            "requires": "0.9.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-jdk9",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.8.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "klibminitel-jvm-1.4.1-SNAPSHOT.jar",
+          "url": "klibminitel-jvm-1.4.1-SNAPSHOT.jar",
+          "size": 128062,
+          "sha512": "331699a30a6831b063261f8c14227547e63b71482f9847507d8d94add6dc7de16d869e8cc5cd18024c71347bb04b77d690de184ba00717b3d9148e92314fd62f",
+          "sha256": "916f1391e977a9a481003f2707421b8cefcd51088a7b53af994b318c2096b652",
+          "sha1": "7c065e74a728aec05cc105d549b1061b09414e01",
+          "md5": "1beb6f083fedbcbdc4d1b12c1b2703ce"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "klibminitel-jvm-1.4.1-SNAPSHOT-sources.jar",
+          "url": "klibminitel-jvm-1.4.1-SNAPSHOT-sources.jar",
+          "size": 24198,
+          "sha512": "2d92ec4e544a5ef69f16844890d49cfaaaef9862ac19a2b3bcd318920a9235f31fa5b02690ff33b2402f532725b3a97b018eb1ce686af852daddd02217c39bab",
+          "sha256": "7dc48a8275ddb3258669886d781c4ab5c15e5a427aeff4faf2b832942983ce25",
+          "sha1": "76cabbf5aa96a460a2e14587a16a70d215b648ee",
+          "md5": "eb2050b74e173073338c946bf6a6f0a5"
+        }
+      ]
+    }
+  ]
+}
