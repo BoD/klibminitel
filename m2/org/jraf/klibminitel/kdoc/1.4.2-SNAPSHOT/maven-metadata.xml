@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>org.jraf.klibminitel</groupId>
+  <artifactId>kdoc</artifactId>
+  <versioning>
+    <lastUpdated>20261014092125</lastUpdated>
+    <snapshot>
+      <timestamp>20261014.092125</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.4.2-20261014.092125-1</value>
+        <updated>20261014092125</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <classifier>javadoc</classifier>
+        <extension>jar</extension>
+        <value>1.4.2-20261014.092125-1</value>
+        <updated>20261014092125</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+  <version>1.4.2-SNAPSHOT</version>
+</metadata>
