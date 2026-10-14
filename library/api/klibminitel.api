@@ -202,38 +202,22 @@ public final class org/jraf/klibminitel/core/ScreenKt {
 	public static final field SCREEN_WIDTH_NORMAL I
 }
 
-public final class org/jraf/klibminitel/imageconvert/App {
-	public static final field INSTANCE Lorg/jraf/klibminitel/imageconvert/App;
-	public final fun convertImage (Ljava/lang/String;Ljava/lang/String;Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;)V
+public final class org/jraf/klibminitel/imageconvert/ImageConverter {
+	public fun <init> (Ljava/io/File;Ljava/io/File;Lorg/jraf/klibminitel/imageconvert/ImageConverter$ColorAlgorithm;)V
+	public final fun convert ()V
 }
 
-public final class org/jraf/klibminitel/imageconvert/ColorAlgorithm : java/lang/Enum {
-	public static final field ACCURATE Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;
-	public static final field CONTRAST Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;
+public final class org/jraf/klibminitel/imageconvert/ImageConverter$ColorAlgorithm : java/lang/Enum {
+	public static final field Accurate Lorg/jraf/klibminitel/imageconvert/ImageConverter$ColorAlgorithm;
+	public static final field Contrast Lorg/jraf/klibminitel/imageconvert/ImageConverter$ColorAlgorithm;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;
-	public static fun values ()[Lorg/jraf/klibminitel/imageconvert/ColorAlgorithm;
+	public static fun valueOf (Ljava/lang/String;)Lorg/jraf/klibminitel/imageconvert/ImageConverter$ColorAlgorithm;
+	public static fun values ()[Lorg/jraf/klibminitel/imageconvert/ImageConverter$ColorAlgorithm;
 }
 
-public final class org/jraf/klibminitel/imageconvert/ImageConvertKt {
+public final class org/jraf/klibminitel/imageconvert/ImageConverterKt {
 	public static final fun main ()V
 	public static synthetic fun main ([Ljava/lang/String;)V
-}
-
-public final class org/jraf/klibminitel/imageconvert/MinitelCharacter {
-	public fun <init> (BII)V
-	public final fun component1 ()B
-	public final fun component2 ()I
-	public final fun component3 ()I
-	public final fun copy (BII)Lorg/jraf/klibminitel/imageconvert/MinitelCharacter;
-	public static synthetic fun copy$default (Lorg/jraf/klibminitel/imageconvert/MinitelCharacter;BIIILjava/lang/Object;)Lorg/jraf/klibminitel/imageconvert/MinitelCharacter;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBgColor ()I
-	public final fun getCharacter ()B
-	public final fun getFgColor ()I
-	public fun hashCode ()I
-	public final fun isEmptyCharacter ()Z
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class org/jraf/klibminitel/internal/util/color/RgbColor {
