@@ -3,44 +3,44 @@
   <groupId>org.jraf.klibminitel</groupId>
   <artifactId>klibminitel-macosarm64</artifactId>
   <versioning>
-    <lastUpdated>20261014092125</lastUpdated>
+    <lastUpdated>20261014092233</lastUpdated>
     <snapshot>
-      <timestamp>20261014.092125</timestamp>
+      <timestamp>20261014.092233</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
     <snapshotVersions>
       <snapshotVersion>
-        <extension>klib</extension>
-        <value>1.4.2-20261014.092125-1</value>
-        <updated>20261014092125</updated>
-      </snapshotVersion>
-      <snapshotVersion>
-        <extension>pom</extension>
-        <value>1.4.2-20261014.092125-1</value>
-        <updated>20261014092125</updated>
-      </snapshotVersion>
-      <snapshotVersion>
         <extension>module</extension>
-        <value>1.4.2-20261014.092125-1</value>
-        <updated>20261014092125</updated>
+        <value>1.4.2-20261014.092233-1</value>
+        <updated>20261014092233</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>javadoc</classifier>
         <extension>jar</extension>
-        <value>1.4.2-20261014.092125-1</value>
-        <updated>20261014092125</updated>
+        <value>1.4.2-20261014.092233-1</value>
+        <updated>20261014092233</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>sources</classifier>
         <extension>jar</extension>
-        <value>1.4.2-20261014.092125-1</value>
-        <updated>20261014092125</updated>
+        <value>1.4.2-20261014.092233-1</value>
+        <updated>20261014092233</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>klib</extension>
+        <value>1.4.2-20261014.092233-1</value>
+        <updated>20261014092233</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>metadata</classifier>
         <extension>jar</extension>
-        <value>1.4.2-20261014.092125-1</value>
-        <updated>20261014092125</updated>
+        <value>1.4.2-20261014.092233-1</value>
+        <updated>20261014092233</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.4.2-20261014.092233-1</value>
+        <updated>20261014092233</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
