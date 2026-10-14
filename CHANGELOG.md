@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.1 (2026-10-14)
+- Handle a few more special characters
+- Dependency updates
+
 ## v1.4.0 (2025-12-28)
 - [BREAKING] The library coordinates are now `org.jraf.klibminitel:klibminitel`
 - Update dependencies

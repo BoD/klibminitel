@@ -11,3 +11,5 @@ captures
 .idea/*
 !.idea/codeStyles/
 !.idea/copyright/
+
+versions.properties
